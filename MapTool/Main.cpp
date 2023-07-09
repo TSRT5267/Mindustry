@@ -3,11 +3,15 @@
 
 Main::Main()
 {
-	map = new ObTileMap();
-	map->file = "map2.txt";
-	//map->Load();
-	map->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
-	tileSize = Int2(20, 20);
+	for (int i = 0;i < MAXLAYER;i++)
+	{
+		map[i] = new ObTileMap();
+		
+		//map->Load();
+		map[i]->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+		tileSize = Int2(32, 32);
+	}
+	//map[i]->file = "map2.txt";
 
 	LineX = new ObRect();
 	LineX->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
