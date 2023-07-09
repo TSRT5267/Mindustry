@@ -1,10 +1,12 @@
 #pragma once
+#define MAXLAYER 3
+
 
 class Main : public Scene
 {
 private:
 
-	ObTileMap*	map;
+	ObTileMap*	map[MAXLAYER];
 	//ObIso*	map;
 	Int2		tileSize;
 	ObRect*		LineX, *LineY;
