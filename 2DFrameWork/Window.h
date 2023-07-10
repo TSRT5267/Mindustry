@@ -8,6 +8,7 @@ private:
 	//member
 private:
 	static Scene* main;
+	
 
 public:
 	void	Create();

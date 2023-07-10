@@ -11,15 +11,19 @@ Camera::Camera()
     D3D->GetDC()->RSSetViewports(1, viewport.Get11());
 }
 
-void Camera::Set()
+
+
+void Camera::Set(float S)
 {
     //뷰행렬 역이동행렬
     V = Matrix::CreateTranslation(-position.x, -position.y, 0.0f);
     //프로젝션행렬 투영행렬
-    P = Matrix::CreateOrthographic(app.GetWidth(), app.GetHeight(), 0.0f, 10.0f);
+    P = Matrix::CreateOrthographic(app.GetWidth()*S, app.GetHeight()*S, 0.0f, 10.0f);
 
     VP = V * P;
 }
+
+
 
 void Camera::ResizeScreen()
 {

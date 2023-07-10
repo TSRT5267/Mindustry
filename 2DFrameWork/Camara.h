@@ -11,7 +11,9 @@ public:
 
 public:
     Camera();
+   
     void          Set();
+    void          Set(float S);
     void          ResizeScreen();
     const Matrix& GetP() { return P; };
     const Matrix& GetVP() { return VP; };

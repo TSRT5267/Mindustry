@@ -1,6 +1,6 @@
 #pragma once
 #define MAXLAYER 3
-
+#define TILESIZE 10
 
 class Main : public Scene
 {
@@ -10,6 +10,7 @@ private:
 	//ObIso*	map;
 	Int2		tileSize;
 	ObRect*		LineX, *LineY;
+	int			layer;
 
 	int			brushImgIdx;
 	Int2		brushFrame;

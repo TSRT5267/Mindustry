@@ -9,8 +9,9 @@ Main::Main()
 		
 		//map->Load();
 		map[i]->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
-		tileSize = Int2(32, 32);
+		
 	}
+	
 	//map[i]->file = "map2.txt";
 
 	LineX = new ObRect();
@@ -24,8 +25,6 @@ Main::Main()
 	LineY->pivot = OFFSET_N;
 	LineY->scale.x = 5.0f;
 	LineY->scale.y = 20000.0f;
-
-	
 
 	brushImgIdx = 0;
 	brushFrame.x = 0;
@@ -41,6 +40,14 @@ Main::~Main()
 
 void Main::Init()
 {
+	layer = 0;
+	/*for (int i = 0;i < MAXLAYER;i++)
+	{
+		map[i]->ResizeTile(Int2(50, 50));
+	}*/
+	map[0]->ResizeTile(Int2(TILESIZE, TILESIZE));
+	map[0]->scale = Vector2(32,32);
+	map[0]->SetWorldPos(Vector2(-TILESIZE*16,-TILESIZE * 16));
 }
 
 void Main::Release()
@@ -69,28 +76,6 @@ void Main::Update()
 		CAM->position += RIGHT * 300.0f * DELTA;
 	}
 
-	//TileSize
-	if (ImGui::SliderInt2("TileSize", (int*)&tileSize, 1, 100))
-	{
-		map->ResizeTile(tileSize);
-	}
-
-	//TileScale
-	//ImGui::SliderFloat2("TileScale", (float*)&map->scale, 1.0f, 200.0f);
-	if (ImGui::InputFloat("TileScale", (float*)&map->scale.x, 1.0f, 200.0f))
-	{
-		map->scale.y = map->scale.x;
-	}
-
-	//TilePos
-	Vector2 pos = map->GetWorldPos();
-	if (ImGui::SliderFloat2("TilePos", (float*)&pos, -1000.0f, 1000.0f))
-	{
-		map->SetWorldPos(pos);
-	}
-
-
-
 	for (int i = 0; i < 4; i++)
 	{
 		string str = "Texture" + to_string(i);
@@ -101,10 +86,10 @@ void Main::Update()
 			Utility::Replace(&path, "\\", "/");
 			size_t tok = path.find("/Images/") + 8;
 			path = path.substr(tok, path.length());
-			SafeDelete(map->tileImages[i]);
+			SafeDelete(map[0]->tileImages[i]);
 			wstring wImgFile = L"";
 			wImgFile.assign(path.begin(), path.end());
-			map->tileImages[i] = new ObImage(wImgFile);
+			map[0]->tileImages[i] = new ObImage(wImgFile);
 			break;
 		}
 		if (i < 3)
@@ -120,17 +105,17 @@ void Main::Update()
 	{
 		brushImgIdx = Utility::Saturate(brushImgIdx, 0, 3);
 
-		if (not map->tileImages[brushImgIdx])
+		if (not map[0]->tileImages[brushImgIdx])
 		{
 			brushImgIdx = 0;
 		}
 	}
 	//maxFrame
-	ImGui::InputInt2("maxFrame", (int*)&map->tileImages[brushImgIdx]->maxFrame);
+	ImGui::InputInt2("maxFrame", (int*)&map[0]->tileImages[brushImgIdx]->maxFrame);
 
 
 
-	Int2 MF = map->tileImages[brushImgIdx]->maxFrame;
+	Int2 MF = map[0]->tileImages[brushImgIdx]->maxFrame;
 	ImVec2 size;
 	size.x = 300.0f / (float)MF.x;
 	size.y = 300.0f / (float)MF.y;
@@ -152,7 +137,7 @@ void Main::Update()
 			RB.y = 1.0f / MF.y * (i + 1);
 
 			ImGui::PushID(index);
-			if (ImGui::ImageButton((void*)map->tileImages[brushImgIdx]->GetSRV()
+			if (ImGui::ImageButton((void*)map[0]->tileImages[brushImgIdx]->GetSRV()
 				, size, LT, RB))
 			{
 				brushFrame.x = j;
@@ -170,14 +155,14 @@ void Main::Update()
 
 	if (ImGui::Button("SAVE"))
 	{
-		map->file = "map2.txt";
-		map->Save();
+		map[0]->file = "map2.txt";
+		map[0]->Save();
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("LOAD"))
 	{
-		map->file = "map2.txt";
-		map->Load();
+		map[0]->file = "map2.txt";
+		map[0]->Load();
 	}
 	//SaveLoad
 	//if (GUI->FileImGui("Save", "Save Map",
@@ -212,14 +197,17 @@ void Main::Update()
 	{
 		Int2 Idx;
 		//?
-		if (map->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+		if (map[0]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			map->SetTile(Idx, brushFrame, brushImgIdx, brushState,brushColor);
+			map[0]->SetTile(Idx, brushFrame, brushImgIdx, brushState,brushColor);
 		}
 
 	}
 
-	map->Update();
+	for (int i = 0;i < MAXLAYER;i++)
+	{
+		map[i]->Update();
+	}
 	LineX->Update();
 	LineY->Update();
 }
@@ -230,14 +218,18 @@ void Main::LateUpdate()
 
 void Main::Render()
 {
-	map->Render();
-
+	/*for (int i = 0;i < MAXLAYER;i++)
+	{
+		map[i]->Render();
+	}*/
+	map[0]->Render();
 	LineX->Render();
 	LineY->Render();
 }
 
 void Main::ResizeScreen()
 {
+	
 }
 
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, int command)

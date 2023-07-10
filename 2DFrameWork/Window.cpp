@@ -2,6 +2,7 @@
 
 Application	 app;
 Scene* Window::main = nullptr;
+float zoomsize=1;
 
 WPARAM Window::Run(Scene* main)
 {
@@ -32,7 +33,7 @@ WPARAM Window::Run(Scene* main)
 			GUI->Update();
 			main->Update();
 			main->LateUpdate();
-			CAM->Set();
+			CAM->Set(zoomsize);
 			Light::GetInstance()->Set();
 			D3D->SetRenderTarget();
 			D3D->Clear(app.background);
@@ -193,6 +194,14 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		INPUT->mouseScreenPos.x = (float)LOWORD(lParam);
 		INPUT->mouseScreenPos.y = (float)HIWORD(lParam);
 	}
+
+	if (message == WM_MOUSEWHEEL)
+	{
+		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+		if (zDelta >= 0) zoomsize -= 0.1f;
+		if (zDelta < 0)zoomsize += 0.1f;		
+	}
+	
 
 	if (message == WM_SIZE)
 	{

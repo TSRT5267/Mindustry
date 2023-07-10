@@ -9,10 +9,10 @@ ObTileMap::ObTileMap()
     for (int i = 0; i < 4; i++)
         SafeDelete(tileImages[i]);
 
-    tileSize.x = 20;
-    tileSize.y = 20;
+    tileSize.x = 50;
+    tileSize.y = 50;
     file = "map1.txt";
-    scale = Vector2(50.0f, 50.0f);
+    scale = Vector2(32.0f, 32.0f);
     tileImages[0] = new ObImage(L"Tile.png");
     tileImages[0]->maxFrame = Int2(8, 6);
     tileImages[1] = new ObImage(L"Tile2.png");
