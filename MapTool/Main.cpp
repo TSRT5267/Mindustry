@@ -18,12 +18,12 @@ Main::Main()
 	LineX->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
 	LineX->pivot = OFFSET_N;
 	LineX->scale.x = 20000.0f;
-	LineX->scale.y = 5.0f;
+	LineX->scale.y = 2.0f;
 
 	LineY = new ObRect();
 	LineY->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
 	LineY->pivot = OFFSET_N;
-	LineY->scale.x = 5.0f;
+	LineY->scale.x = 2.0f;
 	LineY->scale.y = 20000.0f;
 
 	brushImgIdx = 0;
@@ -237,7 +237,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, in
 {
     app.SetAppName(L"MapTool");
     app.SetInstance(instance);
-	app.InitWidthHeight(1600.f,900.0f);
+	app.InitWidthHeight(900.0f,600.0f);
     app.background = Color(0.3, 0.3, 0.3);
 	WIN->Create();
 	Main* main = new Main();
