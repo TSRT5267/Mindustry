@@ -12,7 +12,7 @@ Main::Main()
 		
 	}
 	
-	//map[i]->file = "map2.txt";
+	map[0]->file = "map1.txt";
 
 	LineX = new ObRect();
 	LineX->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
@@ -155,13 +155,13 @@ void Main::Update()
 
 	if (ImGui::Button("SAVE"))
 	{
-		map[0]->file = "map2.txt";
+		map[0]->file = "map1.txt";
 		map[0]->Save();
 	}
 	ImGui::SameLine();
 	if (ImGui::Button("LOAD"))
 	{
-		map[0]->file = "map2.txt";
+		map[0]->file = "map1.txt";
 		map[0]->Load();
 	}
 	//SaveLoad
@@ -204,10 +204,11 @@ void Main::Update()
 
 	}
 
-	for (int i = 0;i < MAXLAYER;i++)
+	/*for (int i = 0;i < MAXLAYER;i++)
 	{
 		map[i]->Update();
-	}
+	}*/
+	map[0]->Update();
 	LineX->Update();
 	LineY->Update();
 }
