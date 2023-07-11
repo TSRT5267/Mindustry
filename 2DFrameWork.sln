@@ -28,7 +28,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Txt", "Txt", "{BC1DD457-26F
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Images", "Images", "{23927E1A-8E5E-46EE-82F6-D613BF3CD580}"
 	ProjectSection(SolutionItems) = preProject
+		Contents\Images\block\mechanical_drill.png = Contents\Images\block\mechanical_drill.png
 		..\..\..\Downloads\Mindustry-master\core\assets-raw\sprites\blocks\environment\metal_floor.png = ..\..\..\Downloads\Mindustry-master\core\assets-raw\sprites\blocks\environment\metal_floor.png
+		Contents\Images\environment\ore_copper.png = Contents\Images\environment\ore_copper.png
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TileMap", "TileMap", "{756C6D6D-2355-4D5E-8B98-383D1E157D8C}"

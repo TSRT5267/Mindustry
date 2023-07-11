@@ -87,6 +87,45 @@ void ObTileMap::SetTile(Int2 TileIdx, Int2 FrameIdx, int ImgIdx, int TileState, 
     (vertexBuffer, 0, NULL, vertices, 0, 0);
 }
 
+void ObTileMap::SetTile2(Int2 TileIdx, Int2 FrameIdx, int ImgIdx, int TileState, Color color)
+{
+    for (int i = 0;i < 2;i++)
+    {
+        for (int j = 0;j < 2;j++)
+        {
+            int tileIdx = tileSize.x * (TileIdx.y-i) + (TileIdx.x+j);
+            vertices[tileIdx * 6 + 0].uv.x = FrameIdx.x / (float)tileImages[ImgIdx]->maxFrame.x;
+            vertices[tileIdx * 6 + 1].uv.x = FrameIdx.x / (float)tileImages[ImgIdx]->maxFrame.x;
+            vertices[tileIdx * 6 + 5].uv.x = FrameIdx.x / (float)tileImages[ImgIdx]->maxFrame.x;
+
+
+            vertices[tileIdx * 6 + 2].uv.x = (FrameIdx.x + 1.0f) / (float)tileImages[ImgIdx]->maxFrame.x;
+            vertices[tileIdx * 6 + 3].uv.x = (FrameIdx.x + 1.0f) / (float)tileImages[ImgIdx]->maxFrame.x;
+            vertices[tileIdx * 6 + 4].uv.x = (FrameIdx.x + 1.0f) / (float)tileImages[ImgIdx]->maxFrame.x;
+
+            vertices[tileIdx * 6 + 3].uv.y = FrameIdx.y / (float)tileImages[ImgIdx]->maxFrame.y;
+            vertices[tileIdx * 6 + 1].uv.y = FrameIdx.y / (float)tileImages[ImgIdx]->maxFrame.y;
+            vertices[tileIdx * 6 + 5].uv.y = FrameIdx.y / (float)tileImages[ImgIdx]->maxFrame.y;
+
+            vertices[tileIdx * 6 + 2].uv.y = (FrameIdx.y + 1.0f) / (float)tileImages[ImgIdx]->maxFrame.y;
+            vertices[tileIdx * 6 + 0].uv.y = (FrameIdx.y + 1.0f) / (float)tileImages[ImgIdx]->maxFrame.y;
+            vertices[tileIdx * 6 + 4].uv.y = (FrameIdx.y + 1.0f) / (float)tileImages[ImgIdx]->maxFrame.y;
+
+            for (int k = 0; k < 6; k++)
+            {
+                vertices[tileIdx * 6 + k].tileMapIdx = ImgIdx;
+                vertices[tileIdx * 6 + k].color = color;
+                vertices[tileIdx * 6 + k].tileState = TileState;
+            }
+        }
+    }
+    
+
+
+    D3D->GetDC()->UpdateSubresource
+    (vertexBuffer, 0, NULL, vertices, 0, 0);
+}
+
 int ObTileMap::GetTileState(Int2 TileIdx)
 {
     int tileIdx = tileSize.x * TileIdx.y + TileIdx.x;

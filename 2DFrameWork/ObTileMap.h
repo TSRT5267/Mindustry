@@ -65,6 +65,8 @@ public:
     void    Render() override;
     void    SetTile(Int2 TileIdx, Int2 FrameIdx, int ImgIdx = 0,
         int TileState = TILE_NONE, Color color = Color(0.5f, 0.5f, 0.5f, 0.5f));
+    void    SetTile2(Int2 TileIdx, Int2 FrameIdx, int ImgIdx = 0,
+        int TileState = TILE_NONE, Color color = Color(0.5f, 0.5f, 0.5f, 0.5f));
     void    Save();
     virtual void    Load();
     Int2    GetTileSize() { return tileSize; };
