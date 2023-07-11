@@ -11,6 +11,8 @@ private:
 	
 
 public:
+	
+
 	void	Create();
 	void	Destroy();
 	WPARAM	Run(Scene* main);

@@ -8,7 +8,7 @@ private:
 public:
     //카메라위치
     Vector2             position;
-
+    float               scale;
 public:
     Camera();
    

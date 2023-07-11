@@ -85,6 +85,8 @@ void Window::Create()
 	wndClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 
+	zoomsize = 1;
+
 	WORD wHr = RegisterClassExW(&wndClass);
 	assert(wHr != 0);
 
@@ -199,7 +201,7 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 	{
 		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 		if (zDelta >= 0) zoomsize -= 0.1f;
-		if (zDelta < 0)zoomsize += 0.1f;		
+		if (zDelta < 0)zoomsize += 0.1f;	
 	}
 	
 

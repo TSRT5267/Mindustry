@@ -19,7 +19,7 @@ void Camera::Set(float S)
     V = Matrix::CreateTranslation(-position.x, -position.y, 0.0f);
     //프로젝션행렬 투영행렬
     P = Matrix::CreateOrthographic(app.GetWidth()*S, app.GetHeight()*S, 0.0f, 10.0f);
-
+    scale = S;
     VP = V * P;
 }
 

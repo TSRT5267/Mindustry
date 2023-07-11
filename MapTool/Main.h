@@ -11,6 +11,7 @@ private:
 	Int2		tileSize;
 	ObRect*		LineX, *LineY;
 	int			layer;
+	bool		lookall;
 
 	int			brushImgIdx;
 	Int2		brushFrame;

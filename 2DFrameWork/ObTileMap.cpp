@@ -13,10 +13,10 @@ ObTileMap::ObTileMap()
     tileSize.y = 50;
     file = "map1.txt";
     scale = Vector2(32.0f, 32.0f);
-    tileImages[0] = new ObImage(L"metal_floor.png");
+    tileImages[0] = new ObImage(L"ground/metal_floor.png");
     tileImages[0]->maxFrame = Int2(1, 1);
-    tileImages[1] = new ObImage(L"Tile2.png");
-    tileImages[1]->maxFrame = Int2(11, 7);
+    tileImages[1] = new ObImage(L"environment/ore_copper.png");
+    tileImages[1]->maxFrame = Int2(1, 1);
     tileImages[2] = nullptr;
     tileImages[3] = nullptr;
 

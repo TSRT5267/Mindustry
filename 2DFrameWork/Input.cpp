@@ -8,6 +8,7 @@ Input::Input()
 	ZeroMemory(keyMap, sizeof(keyMap));
 }
 
+
 Input::~Input()
 {
 }
@@ -29,11 +30,12 @@ bool Input::KeyUp(int KeyCode)
 
 void Input::Update()
 {
+   
     //Screen To World
-    mouseWorldPos.x = mouseScreenPos.x - app.GetHalfWidth() + CAM->position.x;
+    mouseWorldPos.x = mouseScreenPos.x - app.GetHalfWidth() + CAM->position.x/ CAM->scale;
     //mouseWorldPos.y = app.GetHeight() - app.GetHalfHeight() - mouseScreenPos.y ;
-    mouseWorldPos.y = app.GetHalfHeight() - mouseScreenPos.y + CAM->position.y;
-
+    mouseWorldPos.y = app.GetHalfHeight() - mouseScreenPos.y + CAM->position.y/ CAM->scale;
+    mouseWorldPos *= CAM->scale;
     //메모리복사 keyOldState = keyState 
     memcpy(keyOldState, keyState, sizeof(keyOldState));
 

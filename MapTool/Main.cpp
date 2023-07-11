@@ -6,13 +6,16 @@ Main::Main()
 	for (int i = 0;i < MAXLAYER;i++)
 	{
 		map[i] = new ObTileMap();
-		
-		//map->Load();
 		map[i]->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
 		
 	}
+	map[0]->file = "ground.txt";
+	map[0]->Load();
+	map[1]->file = "environment.txt";
+	map[1]->Load();
+	map[2]->file = "block.txt";
+	map[2]->Load();
 	
-	map[0]->file = "map1.txt";
 
 	LineX = new ObRect();
 	LineX->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
@@ -41,13 +44,13 @@ Main::~Main()
 void Main::Init()
 {
 	layer = 0;
-	/*for (int i = 0;i < MAXLAYER;i++)
+	for (int i = 0;i < MAXLAYER;i++)
 	{
-		map[i]->ResizeTile(Int2(50, 50));
-	}*/
-	map[0]->ResizeTile(Int2(TILESIZE, TILESIZE));
-	map[0]->scale = Vector2(32,32);
-	map[0]->SetWorldPos(Vector2(-TILESIZE*16,-TILESIZE * 16));
+		map[i]->ResizeTile(Int2(TILESIZE, TILESIZE));
+		map[i]->scale = Vector2(32, 32);
+		map[i]->SetWorldPos(Vector2(-TILESIZE * 16, -TILESIZE * 16));
+	}
+	
 }
 
 void Main::Release()
@@ -76,6 +79,43 @@ void Main::Update()
 		CAM->position += RIGHT * 300.0f * DELTA;
 	}
 
+	//저장,불러오기
+	if (ImGui::Button("save"))
+	{		
+		map[0]->Save();
+		map[1]->Save();
+		map[2]->Save();		
+	}
+
+	if (GUI->FileImGui("Save", "Save Map",".txt", "../Contents/TileMap"))
+	{
+		string path = ImGuiFileDialog::Instance()->GetFilePathName();
+		Utility::Replace(&path, "\\", "/");
+		size_t tok = path.find_last_of("/") + 1;
+		path = path.substr(tok, path.length() - tok);
+		for (int i = 0;i < MAXLAYER;i++)
+		{
+			map[i]->file = path;
+			map[i]->Save();
+		}	
+	}
+	ImGui::SameLine();
+
+	if (GUI->FileImGui("Load", "Load Map", ".txt", "../Contents/TileMap"))
+	{
+		string path = ImGuiFileDialog::Instance()->GetFilePathName();
+		Utility::Replace(&path, "\\", "/");
+		size_t tok = path.find_last_of("/") + 1;
+		path = path.substr(tok, path.length() - tok);
+		for (int i = 0;i < MAXLAYER;i++)
+		{
+			map[i]->file = path;
+			map[i]->Load();
+			tileSize = map[i]->GetTileSize();
+		}
+	}
+
+	//이미지 불러오기
 	for (int i = 0; i < 4; i++)
 	{
 		string str = "Texture" + to_string(i);
@@ -87,9 +127,13 @@ void Main::Update()
 			size_t tok = path.find("/Images/") + 8;
 			path = path.substr(tok, path.length());
 			SafeDelete(map[0]->tileImages[i]);
+			SafeDelete(map[1]->tileImages[i]);
+			SafeDelete(map[2]->tileImages[i]);
 			wstring wImgFile = L"";
 			wImgFile.assign(path.begin(), path.end());
 			map[0]->tileImages[i] = new ObImage(wImgFile);
+			map[1]->tileImages[i] = new ObImage(wImgFile);
+			map[2]->tileImages[i] = new ObImage(wImgFile);
 			break;
 		}
 		if (i < 3)
@@ -98,9 +142,40 @@ void Main::Update()
 		}
 	}
 
-	//"감바스";
-	//L"감바스";
-	//ImgIdx
+	
+	
+	//레이어 선택
+	if (ImGui::Button("ground"))
+	{
+		layer = 0;
+		brushImgIdx = 0;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("environment"))
+	{
+		layer = 1;
+		brushImgIdx = 1;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("block"))
+	{
+		layer = 2;
+		brushImgIdx = 2;
+	}
+	ImGui::SameLine();
+	if (ImGui::Button("lookall"))
+	{
+		if (lookall == false) lookall = true;
+		else if (lookall == true) lookall = false;	
+	}
+	
+	ImGui::Text("now layer : %d", layer);
+	ImGui::SameLine();
+	ImGui::Text("lookall : %d", lookall);
+
+
+
+
 	if (ImGui::InputInt("ImgIdx", &brushImgIdx))
 	{
 		brushImgIdx = Utility::Saturate(brushImgIdx, 0, 3);
@@ -112,9 +187,15 @@ void Main::Update()
 	}
 	//maxFrame
 	ImGui::InputInt2("maxFrame", (int*)&map[0]->tileImages[brushImgIdx]->maxFrame);
+	
+	//NULL image
+	if (ImGui::Button("clear"))
+	{
+		brushFrame.x = 0;
+		brushFrame.y = 0;
+	}
 
-
-
+	//팔렛트 제작
 	Int2 MF = map[0]->tileImages[brushImgIdx]->maxFrame;
 	ImVec2 size;
 	size.x = 300.0f / (float)MF.x;
@@ -148,67 +229,31 @@ void Main::Update()
 		}
 	}
 
-	//TileState
-	ImGui::SliderInt("TileState", &brushState, TILE_NONE, TILE_SIZE-1);
-	//TileColor
-	ImGui::ColorEdit4("TileColor", (float*)&brushColor, ImGuiColorEditFlags_PickerHueWheel);
-
-	if (ImGui::Button("SAVE"))
+	
+	/*Int2 pos;
+	if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), pos))
 	{
-		map[0]->file = "map1.txt";
-		map[0]->Save();
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("LOAD"))
-	{
-		map[0]->file = "map1.txt";
-		map[0]->Load();
-	}
-	//SaveLoad
-	//if (GUI->FileImGui("Save", "Save Map",
-	//	".txt", "../Contents/TileMap"))
-	//{
-	///*	string path = ImGuiFileDialog::Instance()->GetFilePathName();
-	//	Utility::Replace(&path, "\\", "/");
-	//	size_t tok = path.find("/TileMap/") + 9;
-	//	path = path.substr(tok, path.length());*/
-	//	//path = "map1.txt";
-	//	map->file = "map1.txt";
-	//	map->Save();
-	//}
-	//ImGui::SameLine();
-	//if (GUI->FileImGui("Load", "Load Map",
-	//	".txt", "../Contents/TileMap"))
-	//{
+		Color C = { 0.5,0,0,0.5 };
+		map[layer]->SetTile(pos, brushFrame, brushImgIdx, brushState, C);
+	}*/
 
-
-	//	/*string path = ImGuiFileDialog::Instance()->GetFilePathName();
-
-	//	Utility::Replace(&path, "\\", "/");
-	//	size_t tok = path.find("/TileMap/") + 9;
-	//	path = path.substr(tok, path.length());
-	//	map->file = path;*/
-	//	map->file = "map1.txt";
-	//	map->Load();
-	//	tileSize = map->GetTileSize();
-	//}
-
+	
+	
+	//타일 수정
 	if (INPUT->KeyPress(VK_LBUTTON))
 	{
 		Int2 Idx;
 		//?
-		if (map[0]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			map[0]->SetTile(Idx, brushFrame, brushImgIdx, brushState,brushColor);
+			map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState,brushColor);
 		}
-
 	}
 
-	/*for (int i = 0;i < MAXLAYER;i++)
+	for (int i = 0;i < MAXLAYER;i++)
 	{
 		map[i]->Update();
-	}*/
-	map[0]->Update();
+	}
 	LineX->Update();
 	LineY->Update();
 }
@@ -219,11 +264,16 @@ void Main::LateUpdate()
 
 void Main::Render()
 {
-	/*for (int i = 0;i < MAXLAYER;i++)
+	if (lookall == true)
 	{
-		map[i]->Render();
-	}*/
-	map[0]->Render();
+		for (int i = 0;i < MAXLAYER;i++)
+		{
+			map[i]->Render();
+		}
+	}
+	else map[layer]->Render();
+	
+	
 	LineX->Render();
 	LineY->Render();
 }
