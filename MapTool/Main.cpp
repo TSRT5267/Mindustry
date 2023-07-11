@@ -199,6 +199,8 @@ void Main::Update()
 	{
 		//브러시(2x2) 제작
 		Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
+		//MF.x *= 2;
+		//MF.y *= 2;
 		ImVec2 size;
 		size.x = 300.0f / (float)MF.x;
 		size.y = 300.0f / (float)MF.y;
@@ -227,6 +229,13 @@ void Main::Update()
 					brushFrame.y = i;
 					brushColor = Color{ 0.5,0.5,0.5,0.5 };
 				}
+
+				//if(ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV(),))
+
+
+
+
+
 				index++;
 				ImGui::PopID();
 			}
@@ -288,21 +297,12 @@ void Main::Update()
 		Int2 Idx;
 		if (layer == 2)
 		{
-			if(map[layer]->GetTileState())
+			//if(map[layer]->GetTileState())
 
 			if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 			{
-				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-				Int2 Idx1 = Idx;
-				Idx1.x += 1;
-				map[layer]->SetTile2(Idx1, brushFrame, brushImgIdx, brushState, brushColor);
-				Int2 Idx2 = Idx;
-				Idx2.y -= 1;
-				map[layer]->SetTile2(Idx2, brushFrame, brushImgIdx, brushState, brushColor);
-				Int2 Idx3 = Idx;
-				Idx3.x += 1;
-				Idx3.y -= 1;
-				map[layer]->SetTile2(Idx3, brushFrame, brushImgIdx, brushState, brushColor);
+				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);				
+				
 			}
 		}
 		else
