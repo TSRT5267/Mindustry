@@ -230,12 +230,6 @@ void Main::Update()
 					brushColor = Color{ 0.5,0.5,0.5,0.5 };
 				}
 
-				//if(ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV(),))
-
-
-
-
-
 				index++;
 				ImGui::PopID();
 			}
