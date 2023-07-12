@@ -186,8 +186,20 @@ void Main::Update()
 		}
 	}
 	//maxFrame
-	ImGui::InputInt2("maxFrame", (int*)&map[layer]->tileImages[brushImgIdx]->maxFrame);
-	
+	//ImGui::InputInt2("maxFrame", (int*)&map[layer]->tileImages[brushImgIdx]->maxFrame);
+	ImGui::InputInt2("maxFrame", (int*)&MAXframe);
+	if (layer == 2)
+	{
+		map[layer]->tileImages[brushImgIdx]->maxFrame.x= MAXframe.x*2;
+		map[layer]->tileImages[brushImgIdx]->maxFrame.y= MAXframe.y*2;
+	}
+	else
+	{
+		map[layer]->tileImages[brushImgIdx]->maxFrame.x = MAXframe.x ;
+		map[layer]->tileImages[brushImgIdx]->maxFrame.y = MAXframe.y ;
+	}
+
+
 	//NULL image
 	if (ImGui::Button("clear"))
 	{
@@ -198,12 +210,12 @@ void Main::Update()
 	if (layer == 2)
 	{
 		//브러시(2x2) 제작
-		Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
-		//MF.x *= 2;
-		//MF.y *= 2;
+		Int2 MF= map[layer]->tileImages[brushImgIdx]->maxFrame;
+		MF.x /= 2;
+		MF.y /= 2;
 		ImVec2 size;
-		size.x = 300.0f / (float)MF.x;
-		size.y = 300.0f / (float)MF.y;
+		size.x = 300.0f / (float)MF.x/2;
+		size.y = 300.0f / (float)MF.y/2;
 		ImVec2 LT, RB;
 		int index = 0;
 		for (UINT i = 0; i < MF.y; i++)
@@ -235,38 +247,9 @@ void Main::Update()
 			}
 		}
 
-		MF.x *= 2;
-		MF.y *= 2;
-		size.x = 300.0f / (float)MF.x;
-		size.y = 300.0f / (float)MF.y;
-		for (UINT i = 0; i < MF.y; i++)
-		{
-			for (UINT j = 0; j < MF.x; j++)
-			{
-				if (j != 0)
-				{
-					//같은줄에 배치
-					ImGui::SameLine();
-				}
-				//텍스쳐 좌표
-				LT.x = 1.0f / MF.x * j;
-				LT.y = 1.0f / MF.y * i;
-				RB.x = 1.0f / MF.x * (j + 1);
-				RB.y = 1.0f / MF.y * (i + 1);
-
-				ImGui::PushID(index);
-				if (ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV()
-					, size, LT, RB))
-				{
-					brushFrame.x = j;
-					brushFrame.y = i;
-					brushColor = Color{ 0.5,0.5,0.5,0.5 };
-				}
-
-				index++;
-				ImGui::PopID();
-			}
-		}
+		
+		
+		
 
 
 	}

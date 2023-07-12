@@ -18,6 +18,7 @@ private:
 	int			brushState;
 	Color		brushColor;
 
+	Int2		MAXframe = Int2{1,1};
 
 public:
 	Main();
