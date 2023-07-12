@@ -47,8 +47,8 @@ void Main::Init()
 	for (int i = 0;i < MAXLAYER;i++)
 	{
 		map[i]->ResizeTile(Int2(TILESIZE, TILESIZE));
-		map[i]->scale = Vector2(32, 32);
-		map[i]->SetWorldPos(Vector2(-TILESIZE * 16, -TILESIZE * 16));
+		map[i]->scale = Vector2(TILESCALE, TILESCALE);
+		map[i]->SetWorldPos(Vector2(-TILESIZE * TILESCALE/2, -TILESIZE * TILESCALE/2));
 	}
 	
 }
@@ -78,6 +78,12 @@ void Main::Update()
 	{
 		CAM->position += RIGHT * 300.0f * DELTA;
 	}
+
+
+
+
+
+
 
 	//저장,불러오기
 	if (ImGui::Button("save"))
@@ -157,21 +163,20 @@ void Main::Update()
 		brushImgIdx = 1;
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("block"))
+	if (ImGui::Button("1x1 block"))
 	{
 		layer = 2;
 		brushImgIdx = 2;
 	}
 	ImGui::SameLine();
-	if (ImGui::Button("lookall"))
+	if (ImGui::Button("2x2 block"))
 	{
-		if (lookall == false) lookall = true;
-		else if (lookall == true) lookall = false;	
+		layer = 2;
+		brushImgIdx = 3;
 	}
-	
-	ImGui::Text("now layer : %d", layer);
 	ImGui::SameLine();
-	ImGui::Text("lookall : %d", lookall);
+	ImGui::Text("now layer : %d", layer);
+	
 
 
 
@@ -188,7 +193,7 @@ void Main::Update()
 	//maxFrame
 	//ImGui::InputInt2("maxFrame", (int*)&map[layer]->tileImages[brushImgIdx]->maxFrame);
 	ImGui::InputInt2("maxFrame", (int*)&MAXframe);
-	if (layer == 2)
+	if (brushImgIdx == 3)
 	{
 		map[layer]->tileImages[brushImgIdx]->maxFrame.x= MAXframe.x*2;
 		map[layer]->tileImages[brushImgIdx]->maxFrame.y= MAXframe.y*2;
@@ -207,15 +212,15 @@ void Main::Update()
 	}
 
 	//브러시
-	if (layer == 2)
+	if (brushImgIdx == 3)
 	{
 		//브러시(2x2) 제작
 		Int2 MF= map[layer]->tileImages[brushImgIdx]->maxFrame;
 		MF.x /= 2;
 		MF.y /= 2;
 		ImVec2 size;
-		size.x = 300.0f / (float)MF.x/2;
-		size.y = 300.0f / (float)MF.y/2;
+		size.x = 150.0f / (float)MF.x;
+		size.y = 150.0f / (float)MF.y;
 		ImVec2 LT, RB;
 		int index = 0;
 		for (UINT i = 0; i < MF.y; i++)
@@ -258,8 +263,8 @@ void Main::Update()
 		//브러시(1x1) 제작
 		Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
 		ImVec2 size;
-		size.x = 300.0f / (float)MF.x;
-		size.y = 300.0f / (float)MF.y;
+		size.x = 150.0f / (float)MF.x;
+		size.y = 150.0f / (float)MF.y;
 		ImVec2 LT, RB;
 		int index = 0;
 		for (UINT i = 0; i < MF.y; i++)
@@ -293,41 +298,99 @@ void Main::Update()
 	
 
 	
-	
-	/*Int2 pos;
-	if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), pos))
+	//설치전 잔상 (보류)
+	/*if (layer >= 1)
 	{
-		Color C = { 0.5,0,0,0.5 };
-		map[layer]->SetTile(pos, brushFrame, brushImgIdx, brushState, C);
+		if (brushColor != Color{ 0.5,0.5,0.5,0.0 })
+		{
+			Int2 pos;
+			if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), pos))
+			{
+				Color C = { 0.5,0.5,0.5,0.2 };
+				Color D = { 0.5,0.5,0.5,0.0 };
+				Int2 range;
+				for (int i = 0;i < 3;i++)
+				{
+					for (int j = 0;j < 3;j++)
+					{
+						range.x = pos.x - 1 + i;
+						range.y = pos.y + 1 - j;
+
+						if (map[layer]->GetTileColor(range) == C)
+						{
+							if(brushImgIdx ==3) map[layer]->SetTile2(range, brushFrame, brushImgIdx, brushState, D);
+							else map[layer]->SetTile(range, brushFrame, brushImgIdx, brushState, D);
+						}
+
+					}
+				}
+				if (map[layer]->GetTileColor(pos) == D)
+				{
+					if (brushImgIdx == 3) map[layer]->SetTile2(pos, brushFrame, brushImgIdx, brushState, C);
+					else map[layer]->SetTile(pos, brushFrame, brushImgIdx, brushState, C);
+				}
+			}
+		}
+		
 	}*/
+	
+
+
+
+
 
 	
 	
 	//타일 수정
 	if (INPUT->KeyPress(VK_LBUTTON))
 	{
-		Int2 Idx;
-		if (layer == 2)
+		Color BUILDED = { 0.5,0.5,0.5,0.5 };
+		Int2 Idx;			
+		//설치
+		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			//if(map[layer]->GetTileState())
-
-			if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+			if (brushImgIdx == 3)
 			{
-				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);				
-				
-			}
-		}
-		else
-		{
-			if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
-			{
-				map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-			}
-		}
+				int confirmB=0;
+				int confirmC=0;
+				//건설
+				for (int i = 0;i < 2;i++)
+				{
+					for (int j = 0;j < 2;j++)
+					{
+						Int2 range;
+						range.x = Idx.x  + i;
+						range.y = Idx.y  - j;
+						if (map[layer]->GetTileColor(range) != BUILDED) confirmB++;
+					}
+				}
+				//지우기
+				for (int i = 0;i < 2;i++)
+				{
+					for (int j = 0;j < 2;j++)
+					{
+						Int2 range;
+						range.x = Idx.x + i;
+						range.y = Idx.y - j;
+						if (map[layer]->GetTileIdx(range) == 3) confirmC++;
+					}
+				}
 
-		
+				if(confirmB==4) 
+					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);		
+				if(map[layer]->GetTileIdx(Idx) == 3 and )
+					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+			}
+			else
+			{
+				if (map[layer]->GetTileColor(Idx) != BUILDED)
+					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);					
+				if (brushColor == Color{ 0.5,0.5,0.5,0.0 })
+					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+			}											
+		}	
 	}
-
+	
 	for (int i = 0;i < MAXLAYER;i++)
 	{
 		map[i]->Update();
@@ -349,7 +412,7 @@ void Main::Render()
 			map[i]->Render();
 		}
 	}
-	else map[layer]->Render();
+	
 	
 	
 	LineX->Render();

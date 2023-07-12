@@ -1,7 +1,7 @@
 #pragma once
 #define MAXLAYER 3
 #define TILESIZE 10
-
+#define TILESCALE 32
 class Main : public Scene
 {
 private:
@@ -19,6 +19,10 @@ private:
 	Color		brushColor;
 
 	Int2		MAXframe = Int2{1,1};
+
+
+
+
 
 public:
 	Main();

@@ -143,6 +143,27 @@ int ObTileMap::GetTileState(Vector2 WorldPos)
     return TILE_SIZE;
 }
 
+Color ObTileMap::GetTileColor(Int2 TileIdx)
+{
+    int tileIdx = tileSize.x * TileIdx.y + TileIdx.x;
+    
+    return vertices[tileIdx * 6 ].color ;
+}
+
+int ObTileMap::GetTileIdx(Int2 TileIdx)
+{
+    int tileIdx = tileSize.x * TileIdx.y + TileIdx.x;
+
+    return  vertices[tileIdx * 6 ].tileMapIdx  ;
+}
+
+Int2 ObTileMap::GetTileFrame(Int2 TileIdx)
+{
+    int tileIdx = tileSize.x * TileIdx.y + TileIdx.x;
+
+    return;
+}
+
 Vector2 ObTileMap::GetTilePosition(Int2 TileIdx)
 {
     int tileIdx = tileSize.x * TileIdx.y + TileIdx.x;

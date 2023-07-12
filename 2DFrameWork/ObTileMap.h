@@ -75,6 +75,9 @@ public:
 
     int     GetTileState(Int2 TileIdx);
     int     GetTileState(Vector2 WorldPos);
+    Color   GetTileColor(Int2 TileIdx);
+    int     GetTileIdx(Int2 TileIdx);
+    Int2    GetTileFrame(Int2 TileIdx);
     bool    PathFinding(Int2 sour, Int2 dest, OUT vector<Tile*>& way);
     bool    PathFinding(Vector2 sour, Vector2 dest, OUT vector<Tile*>& way);
 };
