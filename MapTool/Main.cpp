@@ -69,7 +69,12 @@ void Main::Update()
 	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
 	
 
-	CAM->position = player->GetWorldPivot();
+	//CAM->position = player->GetWorldPivot();
+
+	Vector2 minus = player->GetWorldPivot() - CAM->position;
+	CAM->position += minus * DELTA*2;
+
+	
 	/*if (INPUT->KeyPress('W'))
 	{
 		CAM->position += UP * 300.0f * DELTA;
@@ -101,33 +106,7 @@ void Main::Update()
 		map[2]->Save();		
 	}
 
-	if (GUI->FileImGui("Save", "Save Map",".txt", "../Contents/TileMap"))
-	{
-		string path = ImGuiFileDialog::Instance()->GetFilePathName();
-		Utility::Replace(&path, "\\", "/");
-		size_t tok = path.find_last_of("/") + 1;
-		path = path.substr(tok, path.length() - tok);
-		for (int i = 0;i < MAXLAYER;i++)
-		{
-			map[i]->file = path;
-			map[i]->Save();
-		}	
-	}
-	ImGui::SameLine();
-
-	if (GUI->FileImGui("Load", "Load Map", ".txt", "../Contents/TileMap"))
-	{
-		string path = ImGuiFileDialog::Instance()->GetFilePathName();
-		Utility::Replace(&path, "\\", "/");
-		size_t tok = path.find_last_of("/") + 1;
-		path = path.substr(tok, path.length() - tok);
-		for (int i = 0;i < MAXLAYER;i++)
-		{
-			map[i]->file = path;
-			map[i]->Load();
-			tileSize = map[i]->GetTileSize();
-		}
-	}
+	
 
 	//이미지 불러오기
 	for (int i = 0; i < 4; i++)
@@ -349,13 +328,6 @@ void Main::Update()
 		
 	}*/
 	
-
-
-
-
-
-	
-	
 	//타일 수정
 	if (INPUT->KeyPress(VK_LBUTTON))
 	{
@@ -448,7 +420,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, in
 {
     app.SetAppName(L"MapTool");
     app.SetInstance(instance);
-	app.InitWidthHeight(900.0f,600.0f);
+	app.InitWidthHeight(900.0f,700.0f);
     app.background = Color(0.3, 0.3, 0.3);
 	WIN->Create();
 	Main* main = new Main();

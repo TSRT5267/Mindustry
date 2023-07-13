@@ -1,11 +1,11 @@
 #pragma once
 #define MOVESPEED 22.5
-#define TILESCALE 32
+#define MAXBULLET 30
 
 
 class Player : public ObCircle
 {
-private:
+private: //본체
 
 	ObImage*	alpha;
 	
@@ -13,6 +13,9 @@ private:
 	bool		isMove;
 	Vector2		attdir;
 	
+private: //공격
+	class Bullet bullet[MAXBULLET];
+
 
 public:
 

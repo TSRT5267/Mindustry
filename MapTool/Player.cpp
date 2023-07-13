@@ -1,24 +1,37 @@
 #include "stdafx.h"
 #include "Player.h"
-
+#include "Bullet.h"
 
 Player::Player()
 {
+    //본체
     alpha = new ObImage(L"unit/alpha.gif");
     alpha->maxFrame = Int2{1,1};
-    alpha->scale.x = alpha->imageSize.x ;
-    alpha->scale.y = alpha->imageSize.y ;
+    alpha->scale.x = alpha->imageSize.x;
+    alpha->scale.y = alpha->imageSize.y;
 
+    scale.x = alpha->imageSize.x;
+    scale.y = alpha->imageSize.y;
+    //scale *= 0.9f;
 
     alpha->SetParentRT(*this);
     isFilled = false;
+
+    //총알
+    for (int i = 0;i < MAXBULLET;i++)
+    {
+        bullet[i] = new Bullet();
+    }
 
 }
 
 Player::~Player()
 {
     delete alpha;
-
+    for (int i = 0;i < MAXBULLET;i++)
+    {
+        delete bullet[i];
+    }
 
 }
 
@@ -35,13 +48,20 @@ void Player::Update()
     Look();
     Move();
     alpha->Update();
+    for (int i = 0;i < MAXBULLET;i++)
+    {
+        bullet[i]->Update();
+    }
 }
 
 void Player::Render()
 {
     ObCircle::Render();
     alpha->Render();
-
+    for (int i = 0;i < MAXBULLET;i++)
+    {
+        bullet[i]->Render();
+    }
 }
 
 void Player::Move()
@@ -70,7 +90,7 @@ void Player::Move()
     if (movedir == Vector2{ 0,0 }) isMove = false;
     else isMove = true;
 
-    MoveWorldPos(movedir * DELTA * MOVESPEED*TILESCALE);
+    MoveWorldPos(movedir * DELTA * MOVESPEED*16);
 }
 
 void Player::Look()
@@ -86,6 +106,14 @@ void Player::Look()
     {
         attdir = this->GetWorldPivot() - INPUT->GetWorldMousePos();
         this->rotation.z = atan2f(attdir.y, attdir.x) + HALFPI;
+
+        for (int i = 0;i < MAXBULLET;i++)
+        {
+            if (bullet[i].Getisfire() == false)
+            {
+                bullet[i].Fire(this);
+            }
+        }
     }
     //이동
     else if(isMove)
