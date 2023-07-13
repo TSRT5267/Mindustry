@@ -157,11 +157,14 @@ int ObTileMap::GetTileIdx(Int2 TileIdx)
     return  vertices[tileIdx * 6 ].tileMapIdx  ;
 }
 
-Int2 ObTileMap::GetTileFrame(Int2 TileIdx)
+Vector2 ObTileMap::GetTileFrame(Int2 TileIdx)
 {
     int tileIdx = tileSize.x * TileIdx.y + TileIdx.x;
-
-    return;
+    Vector2 frame;
+    frame.x= vertices[tileIdx * 6 + 2].uv.x;
+    frame.y= vertices[tileIdx * 6 + 2].uv.y;
+    
+    return frame;
 }
 
 Vector2 ObTileMap::GetTilePosition(Int2 TileIdx)

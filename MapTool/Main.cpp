@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Main.h"
-
+#include "Player.h"
 Main::Main()
 {
 	for (int i = 0;i < MAXLAYER;i++)
@@ -35,14 +35,20 @@ Main::Main()
 	brushColor = Color(0.5f, 0.5f, 0.5f, 0.5f);
 	brushState = 0;
 
+	player = new Player();
+
 }
 
 Main::~Main()
 {
+	delete player;
 }
 
 void Main::Init()
 {
+	player->Init();
+
+
 	layer = 0;
 	for (int i = 0;i < MAXLAYER;i++)
 	{
@@ -61,8 +67,10 @@ void Main::Release()
 void Main::Update()
 {
 	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
+	
 
-	if (INPUT->KeyPress('W'))
+	CAM->position = player->GetWorldPivot();
+	/*if (INPUT->KeyPress('W'))
 	{
 		CAM->position += UP * 300.0f * DELTA;
 	}
@@ -77,7 +85,7 @@ void Main::Update()
 	if (INPUT->KeyPress('D'))
 	{
 		CAM->position += RIGHT * 300.0f * DELTA;
-	}
+	}*/
 
 
 
@@ -175,9 +183,16 @@ void Main::Update()
 		brushImgIdx = 3;
 	}
 	ImGui::SameLine();
-	ImGui::Text("now layer : %d", layer);
-	
+	if (ImGui::Button("look all "))
+	{
+		if (lookall == true) lookall = false;
+		else lookall = true;
+		
+	}
 
+	ImGui::Text("now layer : %d", layer);
+	ImGui::SameLine();
+	ImGui::Text("now layer : %d", lookall);
 
 
 
@@ -378,7 +393,7 @@ void Main::Update()
 
 				if(confirmB==4) 
 					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);		
-				if(map[layer]->GetTileIdx(Idx) == 3 and )
+				if (map[layer]->GetTileIdx(Idx) == 3 and map[layer]->GetTileFrame(Idx) == Vector2{0.5,0.5})
 					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 			}
 			else
@@ -397,6 +412,7 @@ void Main::Update()
 	}
 	LineX->Update();
 	LineY->Update();
+	player->Update();
 }
 
 void Main::LateUpdate()
@@ -412,11 +428,15 @@ void Main::Render()
 			map[i]->Render();
 		}
 	}
-	
+	else
+	{
+		map[layer]->Render();
+	}
 	
 	
 	LineX->Render();
 	LineY->Render();
+	player->Render();
 }
 
 void Main::ResizeScreen()
