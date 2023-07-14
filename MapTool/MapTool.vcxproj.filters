@@ -8,6 +8,12 @@
     <ClCompile Include="Player.cpp">
       <Filter>User</Filter>
     </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene2.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -18,10 +24,19 @@
     <ClInclude Include="Player.h">
       <Filter>User</Filter>
     </ClInclude>
+    <ClInclude Include="Scene1.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene2.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">
       <UniqueIdentifier>{adc7e5e7-5c07-4ed9-b255-d064e8ed65ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{5f627af1-f323-4e70-a8f5-d2230bdeb738}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

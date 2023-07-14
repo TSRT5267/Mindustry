@@ -5,16 +5,23 @@
 Player::Player()
 {
     //본체
-    alpha = new ObImage(L"unit/alpha.gif");
+    alpha = new ObImage(L"unit/alpha.png");
     alpha->maxFrame = Int2{1,1};
     alpha->scale.x = alpha->imageSize.x;
     alpha->scale.y = alpha->imageSize.y;
+    //그림자
+    shadow = new ObImage(L"unit/alpha.png");
+    shadow->maxFrame = Int2{ 1,1 };
+    shadow->scale.x = shadow->imageSize.x * 0.8;
+    shadow->scale.y = shadow->imageSize.y * 0.8;
+    shadow->color = Color{ 0, 0, 0, 0.3 };
 
     scale.x = alpha->imageSize.x;
     scale.y = alpha->imageSize.y;
-    //scale *= 0.9f;
+    color = Color{ 1,1,1 ,0};
 
     alpha->SetParentRT(*this);
+    shadow->SetParentT(*this);
     isFilled = false;
 
     //총알
@@ -28,6 +35,7 @@ Player::Player()
 Player::~Player()
 {
     delete alpha;
+    delete shadow;
     for (int i = 0;i < MAXBULLET;i++)
     {
         delete bullet[i];
@@ -38,7 +46,7 @@ Player::~Player()
 void Player::Init()
 {
     this->SetWorldPos(Vector2(0, 0));
-
+    shadow->SetWorldPos(Vector2(-30, -30));
 
 }
 
@@ -46,8 +54,11 @@ void Player::Update()
 {
 	ObCircle::Update();
     Look();
+    shadow->rotation.z = this->rotation.z;
     Move();
+    Attack();
     alpha->Update();
+    shadow->Update();
     for (int i = 0;i < MAXBULLET;i++)
     {
         bullet[i]->Update();
@@ -58,6 +69,7 @@ void Player::Render()
 {
     ObCircle::Render();
     alpha->Render();
+    shadow->Render();
     for (int i = 0;i < MAXBULLET;i++)
     {
         bullet[i]->Render();
@@ -106,14 +118,9 @@ void Player::Look()
     {
         attdir = this->GetWorldPivot() - INPUT->GetWorldMousePos();
         this->rotation.z = atan2f(attdir.y, attdir.x) + HALFPI;
-
-        for (int i = 0;i < MAXBULLET;i++)
-        {
-            if (bullet[i].Getisfire() == false)
-            {
-                bullet[i].Fire(this);
-            }
-        }
+        
+        
+        
     }
     //이동
     else if(isMove)
@@ -123,4 +130,29 @@ void Player::Look()
     }
 
     
+}
+
+void Player::Attack()
+{
+    
+    if (TIMER->GetTick(firedelay, 0.2f) and INPUT->KeyPress(VK_LBUTTON))
+    {
+        for (int i = 0;i < MAXBULLET;i++)
+        {
+            if (bullet[i]->Getisfire() == false)
+            {
+                if (gunSwiching == 0)
+                {
+                    bullet[i]->Fire(this, gunSwiching);
+                    gunSwiching = 1;
+                }
+                else 
+                {
+                    bullet[i]->Fire(this, gunSwiching);
+                    gunSwiching = 0;
+                } 
+                break;
+            }
+        }
+    }
 }

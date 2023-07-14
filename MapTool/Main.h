@@ -1,26 +1,10 @@
 #pragma once
-#define MAXLAYER 3
-#define TILESIZE 20
-#define TILESCALE 32
+
 class Main : public Scene
 {
 private:
-
-	ObTileMap*	map[MAXLAYER];
-	//ObIso*	map;
-	Int2		tileSize;
-	ObRect*		LineX, *LineY;
-	int			layer;
-	bool		lookall = true;
-
-	int			brushImgIdx;
-	Int2		brushFrame;
-	int			brushState;
-	Color		brushColor;
-
-	Int2		MAXframe = Int2{1,1};
-
-	class Player* player;
+	
+	
 
 
 

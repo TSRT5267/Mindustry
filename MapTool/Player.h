@@ -8,13 +8,17 @@ class Player : public ObCircle
 private: //본체
 
 	ObImage*	alpha;
-	
+	ObImage*	shadow;
+
 	Vector2		movedir;
 	bool		isMove;
 	Vector2		attdir;
-	
+	float		firedelay;
+	int			gunSwiching;
+
+
 private: //공격
-	class Bullet bullet[MAXBULLET];
+	class Bullet* bullet[MAXBULLET];
 
 
 public:
@@ -27,7 +31,7 @@ public:
 
 	void Move();
 	void Look();
-
+	void Attack();
 
 };
 

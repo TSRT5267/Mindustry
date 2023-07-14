@@ -202,6 +202,8 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 		if (zDelta >= 0) zoomsize -= 0.1f;
 		if (zDelta < 0)zoomsize += 0.1f;	
+
+		zoomsize=Utility::Saturate(zoomsize, 0.5f, 2.0f);
 	}
 	
 
