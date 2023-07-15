@@ -2,7 +2,7 @@
 #include "Main.h"
 #include "Scene1.h"
 #include "Scene2.h"
-
+#include "resource.h"
 
 
 Main::Main()
@@ -20,6 +20,8 @@ Main::~Main()
 
 void Main::Init()
 {
+	
+
 	Scene1* sc1 = new Scene1();
 	SCENE->AddScene("SC1", sc1);
 
@@ -37,14 +39,13 @@ void Main::Release()
 
 void Main::Update()
 {
-	HCURSOR hHandCursor = ::LoadCursor(NULL, IDC_HAND);
-	SetCursor(hHandCursor);
 
 	SCENE->Update();
 }
 
 void Main::LateUpdate()
 {
+	
 	SCENE->LateUpdate();
 }
 
@@ -60,6 +61,8 @@ void Main::ResizeScreen()
 
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, int command)
 {
+
+
     app.SetAppName(L"MapTool");
     app.SetInstance(instance);
 	app.InitWidthHeight(900.0f,700.0f);

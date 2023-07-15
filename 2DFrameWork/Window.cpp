@@ -1,5 +1,5 @@
 #include "Framework.h"
-
+#include "../MapTool/resource.h"
 Application	 app;
 Scene* Window::main = nullptr;
 float zoomsize=1;
@@ -75,7 +75,7 @@ void Window::Create()
 	wndClass.cbClsExtra = 0;
 	wndClass.cbWndExtra = 0;
 	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
-	wndClass.hCursor = LoadCursor(NULL, IDC_ARROW);
+	wndClass.hCursor = LoadCursor(app.GetInstance(), MAKEINTRESOURCE(IDC_CURSOR1));
 	wndClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
 	wndClass.hIconSm = wndClass.hIcon;
 	wndClass.hInstance = app.instance;

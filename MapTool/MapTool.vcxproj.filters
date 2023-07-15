@@ -30,6 +30,7 @@
     <ClInclude Include="Scene2.h">
       <Filter>Scene</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">
@@ -38,5 +39,11 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{5f627af1-f323-4e70-a8f5-d2230bdeb738}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MapTool.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur" />
   </ItemGroup>
 </Project>

@@ -102,6 +102,7 @@ public:
 
 	float	GetWidth() { return width; }
 	float	GetHeight() { return height; }
+	HINSTANCE GetInstance() { return instance; }
 	float	GetHalfWidth() { return width / 2.0f; }
 	float	GetHalfHeight() { return height / 2.0f; }
 	void	InitWidthHeight(float width, float height) { this->width = width; this->height = height; }
