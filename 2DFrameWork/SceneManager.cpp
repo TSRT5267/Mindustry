@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "SceneManager.h"
+#include "../MapTool/resource.h"
 
 SceneManager::~SceneManager()
 {
@@ -102,7 +103,10 @@ void SceneManager::Update()
         currentScene = nextScene;
         isChanging = false;
     }
+
+    
     currentScene->Update();
+    
 }
 
 void SceneManager::LateUpdate()
@@ -115,6 +119,7 @@ void SceneManager::Render()
 {
     if (isChanging)return;
     currentScene->Render();
+    
 }
 
 void SceneManager::ResizeScreen()

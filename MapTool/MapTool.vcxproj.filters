@@ -30,7 +30,9 @@
     <ClInclude Include="Scene2.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h" />
+    <ClInclude Include="resource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">
@@ -39,11 +41,23 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{5f627af1-f323-4e70-a8f5-d2230bdeb738}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{e6105f2d-1c03-453a-b0c4-3572950f2f18}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="MapTool.rc" />
+    <ResourceCompile Include="MapTool.rc">
+      <Filter>Resource</Filter>
+    </ResourceCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="cursor1.cur" />
+    <Image Include="..\Contents\Images\icon.ico">
+      <Filter>Resource</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cursor1.cur">
+      <Filter>Resource</Filter>
+    </None>
   </ItemGroup>
 </Project>

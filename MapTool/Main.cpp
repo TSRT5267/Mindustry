@@ -7,15 +7,17 @@
 
 Main::Main()
 {
+	cursor = new ObImage(L"cursor.png");
+	cursor->scale.x = cursor->imageSize.x ;
+	cursor->scale.y = cursor->imageSize.y ;
 	
 	
-
 
 }
 
 Main::~Main()
 {
-	
+	delete cursor;
 }
 
 void Main::Init()
@@ -39,29 +41,40 @@ void Main::Release()
 
 void Main::Update()
 {
+	cursor->SetWorldPos(INPUT->GetWorldMousePos());
+	cursor->Update();
+	
+	
 
+	
 	SCENE->Update();
+	
 }
 
 void Main::LateUpdate()
 {
 	
 	SCENE->LateUpdate();
+	
 }
 
 void Main::Render()
 {
+	
 	SCENE->Render();
+	cursor->Render();
+	
 }
 
 void Main::ResizeScreen()
 {
+	
 	SCENE->ResizeScreen();
 }
 
 int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, int command)
 {
-
+	
 
     app.SetAppName(L"MapTool");
     app.SetInstance(instance);
@@ -73,6 +86,5 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, in
 	SafeDelete(main);
 	WIN->Destroy();
 	WIN->DeleteSingleton();
-	
 	return wParam;
 }

@@ -67,3 +67,6 @@ IDC_CURSOR1             CURSOR                  "cursor1.cur"
 /////////////////////////////////////////////////////////////////////////////
 #endif    // not APSTUDIO_INVOKED
 
+
+
+IDI_ICON1  ICON    "icon.ico"

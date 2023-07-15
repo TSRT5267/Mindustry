@@ -4,7 +4,7 @@ class Main : public Scene
 {
 private:
 	
-	HCURSOR mh_scope_cursor, mh_prev_cursor;
+	ObImage* cursor;
 
 
 

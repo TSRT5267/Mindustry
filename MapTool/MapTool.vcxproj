@@ -163,6 +163,9 @@
   <ItemGroup>
     <None Include="cursor1.cur" />
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Contents\Images\icon.ico" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

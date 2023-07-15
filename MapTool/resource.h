@@ -3,6 +3,7 @@
 // MapTool.rc에서 사용되고 있습니다.
 //
 #define IDC_CURSOR1                     101
+#define IDI_ICON1						102
 
 // Next default values for new objects
 // 

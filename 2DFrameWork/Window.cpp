@@ -64,7 +64,9 @@ WPARAM Window::Run(Scene* main)
 	TEXTURE->DeleteSingleton();
 	DWRITE->DeleteSingleton();
 	Light::GetInstance()->DeleteSingleton();
-	//SCENE->DeleteSingleton();
+	SCENE->DeleteSingleton();
+
+	
 
 	return msg.wParam;
 }
@@ -76,7 +78,7 @@ void Window::Create()
 	wndClass.cbWndExtra = 0;
 	wndClass.hbrBackground = (HBRUSH)GetStockObject(WHITE_BRUSH);
 	wndClass.hCursor = LoadCursor(app.GetInstance(), MAKEINTRESOURCE(IDC_CURSOR1));
-	wndClass.hIcon = LoadIcon(NULL, IDI_WINLOGO);
+	wndClass.hIcon = LoadIcon(app.GetInstance(), MAKEINTRESOURCE(IDI_ICON1));
 	wndClass.hIconSm = wndClass.hIcon;
 	wndClass.hInstance = app.instance;
 	wndClass.lpfnWndProc = (WNDPROC)WndProc;
@@ -122,7 +124,7 @@ void Window::Create()
 	SetForegroundWindow(app.handle);
 	SetFocus(app.handle);
 
-	ShowCursor(true);
+	ShowCursor(false);
 	Load(app.fullScreen);
 
 	D3D->Create();
@@ -183,6 +185,8 @@ void Window::Destroy()
 	DestroyWindow(app.handle);
 
 	UnregisterClass(app.appName.c_str(), app.instance);
+
+
 }
 
 
@@ -206,6 +210,8 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		zoomsize=Utility::Saturate(zoomsize, 0.5f, 2.0f);
 	}
 	
+	
+
 
 	if (message == WM_SIZE)
 	{

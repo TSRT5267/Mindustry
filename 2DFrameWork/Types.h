@@ -57,6 +57,7 @@ T* Singleton<T>::instance = nullptr;
 class Scene
 {
 public:
+
 	virtual ~Scene() {};
 	//√ ±‚»≠
 	virtual void Init() = 0;
