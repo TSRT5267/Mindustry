@@ -44,7 +44,8 @@ void Main::Update()
 	cursor->SetWorldPos(INPUT->GetWorldMousePos());
 	cursor->Update();
 	
-	
+	HCURSOR cursor = LoadCursor(app.GetInstance(), MAKEINTRESOURCE(IDC_CURSOR1));
+	SetCursor(cursor);
 
 	
 	SCENE->Update();
@@ -62,7 +63,7 @@ void Main::Render()
 {
 	
 	SCENE->Render();
-	cursor->Render();
+	//cursor->Render();
 	
 }
 

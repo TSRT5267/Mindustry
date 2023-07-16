@@ -46,6 +46,8 @@ WPARAM Window::Run(Scene* main)
 			D3D->Present();
 		}
 	}
+
+
 	Save();
 	GameObject::DeleteStaticMember();
 	ObRect::DeleteStaticMember();
@@ -124,7 +126,7 @@ void Window::Create()
 	SetForegroundWindow(app.handle);
 	SetFocus(app.handle);
 
-	ShowCursor(false);
+	ShowCursor(true);
 	Load(app.fullScreen);
 
 	D3D->Create();
@@ -210,8 +212,15 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		zoomsize=Utility::Saturate(zoomsize, 0.5f, 2.0f);
 	}
 	
-	
+	if (message == WM_GETMINMAXINFO)
+	{
+		((MINMAXINFO*)lParam)->ptMaxTrackSize.x = 900;
+		((MINMAXINFO*)lParam)->ptMaxTrackSize.y = 700;
+		((MINMAXINFO*)lParam)->ptMinTrackSize.x = 900;
+		((MINMAXINFO*)lParam)->ptMinTrackSize.y = 700;
+	}
 
+	
 
 	if (message == WM_SIZE)
 	{
@@ -226,6 +235,8 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 				main->ResizeScreen();
 		}
 	}
+
+	
 
 	if (message == WM_CLOSE || message == WM_DESTROY)
 	{

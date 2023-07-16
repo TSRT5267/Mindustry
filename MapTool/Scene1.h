@@ -2,8 +2,11 @@
 class Scene1 : public Scene
 {
 private:
-	ObImage* title;
+	ObImage*	logo;
+	ObImage*	background;
+	ObImage*	planet;
 
+	ObRect*		bar;
 
 public:
 	Scene1();
