@@ -185,7 +185,6 @@ void Window::Destroy()
 		ChangeDisplaySettings(NULL, 0);
 
 	DestroyWindow(app.handle);
-
 	UnregisterClass(app.appName.c_str(), app.instance);
 
 
@@ -196,6 +195,9 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	if (Gui::MsgProc(handle, message, wParam, lParam))
 		return true;
+
+	
+
 
 	if (message == WM_MOUSEMOVE)
 	{
@@ -239,9 +241,9 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 	
 
 	if (message == WM_CLOSE || message == WM_DESTROY)
-	{
+	{		
 		PostQuitMessage(0);
-
+		
 		return 0;
 	}
 

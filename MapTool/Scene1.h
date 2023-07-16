@@ -7,6 +7,10 @@ private:
 	ObImage*	planet;
 
 	ObRect*		bar;
+	ObImage*	play;
+	ObImage*	exit;
+	ObRect*		playbox;
+	ObRect*		exitbox;
 
 public:
 	Scene1();

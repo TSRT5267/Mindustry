@@ -48,6 +48,8 @@ void Main::Update()
 	SetCursor(cursor);
 
 	
+
+
 	SCENE->Update();
 	
 }
