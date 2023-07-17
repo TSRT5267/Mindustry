@@ -82,7 +82,7 @@ int WINAPI wWinMain(HINSTANCE instance, HINSTANCE prevInstance, LPWSTR param, in
     app.SetAppName(L"MapTool");
     app.SetInstance(instance);
 	app.InitWidthHeight(900.0f,700.0f);
-    app.background = Color(0.1, 0.1, 0.1);
+    app.background = Color(0.2, 0.2, 0.2);
 	WIN->Create();
 	Main* main = new Main();
 	int wParam = (int)WIN->Run(main);

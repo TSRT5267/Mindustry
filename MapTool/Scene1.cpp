@@ -48,6 +48,9 @@ Scene1::Scene1()
 	bar = new ObRect();
 	bar->scale = Vector2(250, 1000);
 	bar->color = Color(0.2, 0.2, 0.2, 0.1);
+
+	SOUND->AddSound("lobby.ogg", "lobby", true);
+	SOUND->Play("lobby");
 }
 
 
@@ -63,6 +66,8 @@ Scene1::~Scene1()
 	delete exit;
 	delete playtxt;
 	delete exittxt;
+
+	SOUND->DeleteSound("lobby");
 }
 
 void Scene1::Init()
@@ -72,11 +77,11 @@ void Scene1::Init()
 
 	bar->SetWorldPos(Vector2(-250,0 ));
 	play->SetWorldPos(Vector2(-340,150));
-	exit->SetWorldPos(Vector2(-340,50));
+	exit->SetWorldPos(Vector2(-340,70));
 	playbox->SetWorldPos(Vector2(-250,150));
-	exitbox->SetWorldPos(Vector2(-250,50));
+	exitbox->SetWorldPos(Vector2(-250,70));
 	playtxt->SetWorldPos(Vector2(-270,150));
-	exittxt->SetWorldPos(Vector2(-270,50));
+	exittxt->SetWorldPos(Vector2(-270,70));
 	
 
 
