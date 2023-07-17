@@ -11,6 +11,8 @@ private:
 	ObImage*	exit;
 	ObRect*		playbox;
 	ObRect*		exitbox;
+	ObImage*	playtxt;
+	ObImage*	exittxt;
 
 public:
 	Scene1();

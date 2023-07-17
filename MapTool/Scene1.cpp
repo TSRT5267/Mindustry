@@ -34,6 +34,17 @@ Scene1::Scene1()
 	exitbox->scale = Vector2(250, 50);
 	exitbox->color = Color(0.2, 0.2, 0.2, 0.0);
 
+	playtxt = new ObImage(L"lobby/playtxt.png");
+	playtxt->scale.x = playtxt->imageSize.x;
+	playtxt->scale.y = playtxt->imageSize.y;
+	playtxt->pivot = OFFSET_L;
+
+
+	exittxt = new ObImage(L"lobby/exittxt.png");
+	exittxt->scale.x = exittxt->imageSize.x;
+	exittxt->scale.y = exittxt->imageSize.y;
+	exittxt->pivot = OFFSET_L;
+
 	bar = new ObRect();
 	bar->scale = Vector2(250, 1000);
 	bar->color = Color(0.2, 0.2, 0.2, 0.1);
@@ -50,6 +61,8 @@ Scene1::~Scene1()
 	delete playbox;
 	delete play;
 	delete exit;
+	delete playtxt;
+	delete exittxt;
 }
 
 void Scene1::Init()
@@ -62,7 +75,9 @@ void Scene1::Init()
 	exit->SetWorldPos(Vector2(-340,50));
 	playbox->SetWorldPos(Vector2(-250,150));
 	exitbox->SetWorldPos(Vector2(-250,50));
-
+	playtxt->SetWorldPos(Vector2(-270,150));
+	exittxt->SetWorldPos(Vector2(-270,50));
+	
 
 
 }
@@ -79,7 +94,7 @@ void Scene1::Update()
 	if (playbox->Intersect(INPUT->GetWorldMousePos()))
 	{
 		playbox->color = Color(0.5, 0.5, 0.5, 0.1);
-		//if (INPUT->KeyPress(VK_LBUTTON));
+		if (INPUT->KeyPress(VK_LBUTTON)) SCENE->ChangeScene("SC2");
 	}
 	else playbox->color = Color(0.2, 0.2, 0.2, 0.0);
 
@@ -90,7 +105,7 @@ void Scene1::Update()
 	}
 	else exitbox->color = Color(0.2, 0.2, 0.2, 0.0);
 
-
+	
 
 
 	background->Update();
@@ -102,6 +117,8 @@ void Scene1::Update()
 	exitbox->Update();
 	play->Update();
 	exit->Update();
+	playtxt->Update();
+	exittxt->Update();
 
 }
 
@@ -119,6 +136,8 @@ void Scene1::Render()
 	exitbox->Render();
 	play->Render();
 	exit->Render();
+	playtxt->Render();
+	exittxt->Render();
 
 	logo->Render();
 }
