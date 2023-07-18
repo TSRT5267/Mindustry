@@ -2,7 +2,8 @@
 #include "../MapTool/resource.h"
 Application	 app;
 Scene* Window::main = nullptr;
-float zoomsize=1;
+float zoomsize = 1;
+
 
 WPARAM Window::Run(Scene* main)
 {
@@ -89,7 +90,7 @@ void Window::Create()
 	wndClass.style = CS_HREDRAW | CS_VREDRAW | CS_OWNDC;
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 
-	zoomsize = 1;
+	
 	
 
 	WORD wHr = RegisterClassExW(&wndClass);
@@ -206,14 +207,14 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		INPUT->mouseScreenPos.y = (float)HIWORD(lParam);
 	}
 
-	/*if (message == WM_MOUSEWHEEL)
+	if (message == WM_MOUSEWHEEL)
 	{
 		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 		if (zDelta >= 0) zoomsize -= 0.1f;
 		if (zDelta < 0)zoomsize += 0.1f;	
 
 		zoomsize=Utility::Saturate(zoomsize, 0.5f, 2.0f);
-	}*/
+	}
 	
 	if (message == WM_GETMINMAXINFO)
 	{

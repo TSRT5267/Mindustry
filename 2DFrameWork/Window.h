@@ -11,7 +11,6 @@ private:
 	
 
 public:
-	
 
 	void	Create();
 	void	Destroy();
