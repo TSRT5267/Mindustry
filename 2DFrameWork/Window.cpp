@@ -90,6 +90,7 @@ void Window::Create()
 	wndClass.cbSize = sizeof(WNDCLASSEX);
 
 	zoomsize = 1;
+	
 
 	WORD wHr = RegisterClassExW(&wndClass);
 	assert(wHr != 0);
@@ -109,7 +110,7 @@ void Window::Create()
 	(
 		WS_EX_APPWINDOW
 		, app.appName.c_str()
-		, app.appName.c_str()
+		, LPCWSTR(L"Mindustry")
 		, WS_CLIPSIBLINGS | WS_CLIPCHILDREN | WS_OVERLAPPEDWINDOW
 		, CW_USEDEFAULT
 		, CW_USEDEFAULT
@@ -205,14 +206,14 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		INPUT->mouseScreenPos.y = (float)HIWORD(lParam);
 	}
 
-	if (message == WM_MOUSEWHEEL)
+	/*if (message == WM_MOUSEWHEEL)
 	{
 		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
 		if (zDelta >= 0) zoomsize -= 0.1f;
 		if (zDelta < 0)zoomsize += 0.1f;	
 
 		zoomsize=Utility::Saturate(zoomsize, 0.5f, 2.0f);
-	}
+	}*/
 	
 	if (message == WM_GETMINMAXINFO)
 	{

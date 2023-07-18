@@ -75,6 +75,7 @@ public:
 
     int     GetTileState(Int2 TileIdx);
     int     GetTileState(Vector2 WorldPos);
+    
     Color   GetTileColor(Int2 TileIdx);
     int     GetTileIdx(Int2 TileIdx);
     Vector2    GetTileFrame(Int2 TileIdx);

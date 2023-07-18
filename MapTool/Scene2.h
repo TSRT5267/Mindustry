@@ -1,6 +1,6 @@
 #pragma once
 #define MAXLAYER 3
-#define TILESIZE 20
+#define TILESIZE 50
 #define TILESCALE 32
 class Scene2 : public Scene
 {
@@ -20,8 +20,10 @@ private:
 
 	Int2		MAXframe = Int2{ 1,1 };
 
-	class Player* player;
+private:
 
+	class Player* player;
+	bool isTimeStop;
 
 
 public:

@@ -69,7 +69,7 @@ void Scene2::Release()
 void Scene2::Update()
 {
 	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
-
+	ImGui::Text("pause : %d", (int)isTimeStop);
 
 	//CAM->position = player->GetWorldPivot();
 
@@ -77,26 +77,17 @@ void Scene2::Update()
 	CAM->position += minus * DELTA * 2;
 
 
-	/*if (INPUT->KeyPress('W'))
+	if (INPUT->KeyDown(VK_SPACE))
 	{
-		CAM->position += UP * 300.0f * DELTA;
+		if (isTimeStop) isTimeStop = false;
+		else isTimeStop = true;	
 	}
-	if (INPUT->KeyPress('S'))
-	{
-		CAM->position += DOWN * 300.0f * DELTA;
-	}
-	if (INPUT->KeyPress('A'))
-	{
-		CAM->position += LEFT * 300.0f * DELTA;
-	}
-	if (INPUT->KeyPress('D'))
-	{
-		CAM->position += RIGHT * 300.0f * DELTA;
-	}*/
+		
+	if (isTimeStop) app.deltaScale = 0.0f;
+	else app.deltaScale = 1.0f;
 
 
-
-
+	
 
 
 
@@ -173,7 +164,7 @@ void Scene2::Update()
 
 	ImGui::Text("now layer : %d", layer);
 	ImGui::SameLine();
-	ImGui::Text("now layer : %d", lookall);
+	ImGui::Text("lookall : %d", lookall);
 
 
 
@@ -186,8 +177,10 @@ void Scene2::Update()
 			brushImgIdx = 0;
 		}
 	}
+
 	//maxFrame
 	//ImGui::InputInt2("maxFrame", (int*)&map[layer]->tileImages[brushImgIdx]->maxFrame);
+
 	ImGui::InputInt2("maxFrame", (int*)&MAXframe);
 	if (brushImgIdx == 3)
 	{
@@ -198,14 +191,6 @@ void Scene2::Update()
 	{
 		map[layer]->tileImages[brushImgIdx]->maxFrame.x = MAXframe.x;
 		map[layer]->tileImages[brushImgIdx]->maxFrame.y = MAXframe.y;
-	}
-
-
-	//NULL image
-	if (INPUT->KeyDown(VK_ESCAPE))
-	{
-		brushColor = Color{ 0.5,0.5,0.5,0.0 };
-		brushImgIdx = 1;
 	}
 
 	//브러시
@@ -249,11 +234,6 @@ void Scene2::Update()
 			}
 		}
 
-
-
-
-
-
 	}
 	else
 	{
@@ -293,47 +273,7 @@ void Scene2::Update()
 		}
 	}
 
-	//브러시 테스트
-	{
-		//브러시(1x1) 제작
-		Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
-		ImVec2 size;
-		size.x = 150.0f / (float)MF.x;
-		size.y = 150.0f / (float)MF.y;
-		ImVec2 LT, RB;
-		int index = 0;
-		for (UINT i = 0; i < MF.y; i++)
-		{
-			for (UINT j = 0; j < MF.x; j++)
-			{
-				if (j != 0)
-				{
-					//같은줄에 배치
-					ImGui::SameLine();
-				}
-				//텍스쳐 좌표
-				LT.x = 1.0f / MF.x * j;
-				LT.y = 1.0f / MF.y * i;
-				RB.x = 1.0f / MF.x * (j + 1);
-				RB.y = 1.0f / MF.y * (i + 1);
-
-				ImGui::PushID(index);
-				if (ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV()
-					, size, LT, RB))
-				{
-					brushFrame.x = j;
-					brushFrame.y = i;
-					brushColor = Color{ 0.5,0.5,0.5,0.5 };
-				}
-				index++;
-				ImGui::PopID();
-			}
-		}
-	}
-
-
-
-
+	
 
 	//설치전 잔상 (보류)
 	/*if (layer >= 1)
@@ -371,7 +311,7 @@ void Scene2::Update()
 
 	}*/
 
-	//타일 수정
+	//블럭 설치
 	if (INPUT->KeyPress(VK_LBUTTON))
 	{
 		Color BUILDED = { 0.5,0.5,0.5,0.5 };
@@ -394,30 +334,33 @@ void Scene2::Update()
 						if (map[layer]->GetTileColor(range) != BUILDED) confirmB++;
 					}
 				}
-				//지우기
-				for (int i = 0;i < 2;i++)
-				{
-					for (int j = 0;j < 2;j++)
-					{
-						Int2 range;
-						range.x = Idx.x + i;
-						range.y = Idx.y - j;
-						if (map[layer]->GetTileIdx(range) == 3) confirmC++;
-					}
-				}
+				
 
 				if (confirmB == 4)
-					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-				if (map[layer]->GetTileIdx(Idx) == 3 and map[layer]->GetTileFrame(Idx) == Vector2{ 0.5,0.5 })
-					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);				
 			}
 			else
 			{
 				if (map[layer]->GetTileColor(Idx) != BUILDED)
 					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-				if (brushColor == Color{ 0.5,0.5,0.5,0.0 })
-					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+				
 			}
+		}
+	}
+
+	//블럭 삭제
+	//NULL image
+	if (INPUT->KeyPress(VK_RBUTTON))
+	{
+		Int2 Idx;
+		brushColor = Color{ 0.5,0.5,0.5,0.0 };
+		if (layer == 0) layer = 1;
+		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+		{
+			if (map[layer]->GetTileFrame(Idx) == Vector2(0.5f, 0.5f) and map[layer]->GetTileIdx(Idx)==3)
+				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+			else  if(map[layer]->GetTileIdx(Idx) != 3)
+				map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);			
 		}
 	}
 
@@ -428,6 +371,8 @@ void Scene2::Update()
 	LineX->Update();
 	LineY->Update();
 	player->Update();
+
+	//DWRITE->RenderText()
 }
 
 void Scene2::LateUpdate()

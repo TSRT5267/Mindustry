@@ -53,10 +53,15 @@ void Player::Init()
 void Player::Update()
 {
 	ObCircle::Update();
-    Look();
+    if(app.deltaScale)
+    { 
+        Look();
+        Move();
+        Attack();
+    } 
     shadow->rotation.z = this->rotation.z;
-    Move();
-    Attack();
+
+
     alpha->Update();
     shadow->Update();
     for (int i = 0;i < MAXBULLET;i++)
