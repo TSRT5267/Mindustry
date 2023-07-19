@@ -24,7 +24,7 @@ private:
 
 	class Player* player;
 	bool isTimeStop;
-
+	class UI* ui;
 
 public:
 	Scene2();

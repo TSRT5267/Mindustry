@@ -2,7 +2,7 @@
 #include "Scene2.h"
 #include "Player.h"
 #include "Bullet.h"
-
+#include "UI.h"
 Scene2::Scene2()
 {
 	for (int i = 0;i < MAXLAYER;i++)
@@ -36,20 +36,25 @@ Scene2::Scene2()
 	brushFrame.y = 0;
 	brushColor = Color(0.5f, 0.5f, 0.5f, 0.5f);
 	brushState = 0;
-
+	//////////////////////////////////////////
 	player = new Player();
+
+	SOUND->AddSound("game.ogg", "game", true);
+	ui = new UI();
+	
 
 }
 
 Scene2::~Scene2()
 {
 	delete player;
+	delete ui;
 }
 
 void Scene2::Init()
 {
-	player->Init();
-
+	player->	Init();
+	ui->		Init();
 
 	layer = 0;
 	for (int i = 0;i < MAXLAYER;i++)
@@ -58,6 +63,8 @@ void Scene2::Init()
 		map[i]->scale = Vector2(TILESCALE, TILESCALE);
 		map[i]->SetWorldPos(Vector2(-TILESIZE * TILESCALE / 2, -TILESIZE * TILESCALE / 2));
 	}
+
+	
 
 }
 
@@ -71,21 +78,24 @@ void Scene2::Update()
 	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
 	ImGui::Text("pause : %d", (int)isTimeStop);
 
-	//CAM->position = player->GetWorldPivot();
-
+	//카메라이동
 	Vector2 minus = player->GetWorldPivot() - CAM->position;
 	CAM->position += minus * DELTA * 2;
 
+	
 
+	//일시정지
+	{
 	if (INPUT->KeyDown(VK_SPACE))
 	{
 		if (isTimeStop) isTimeStop = false;
-		else isTimeStop = true;	
+		else isTimeStop = true;
 	}
-		
+
 	if (isTimeStop) app.deltaScale = 0.0f;
 	else app.deltaScale = 1.0f;
 
+	}
 
 	
 
@@ -370,8 +380,10 @@ void Scene2::Update()
 	}
 	LineX->Update();
 	LineY->Update();
-	player->Update();
 
+	/////////////////////////////////////////////////////
+	player->	Update();
+	ui->		Update();
 	//DWRITE->RenderText()
 }
 
@@ -396,7 +408,9 @@ void Scene2::Render()
 
 	LineX->Render();
 	LineY->Render();
-	player->Render();
+	//////////////////////////
+	player->	Render();
+	ui->		Render();
 }
 
 void Scene2::ResizeScreen()

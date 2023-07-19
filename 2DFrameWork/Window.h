@@ -17,5 +17,8 @@ public:
 	WPARAM	Run(Scene* main);
 	void	Load(bool fullScreen);
 	void	Save();
+
+
+	static float zoomsize ;
 };
 

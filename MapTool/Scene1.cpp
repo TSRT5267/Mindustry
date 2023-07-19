@@ -96,13 +96,19 @@ void Scene1::Update()
 	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
 	app.background = Color(0.0, 0.0, 0.0);
 
+	//플레이 버튼
 	if (playbox->Intersect(INPUT->GetWorldMousePos()))
 	{
-		playbox->color = Color(0.5, 0.5, 0.5, 0.1);
-		if (INPUT->KeyPress(VK_LBUTTON)) SCENE->ChangeScene("SC2");
+		playbox->color = Color(0.5, 0.5, 0.5, 0.1);		
+		if (INPUT->KeyPress(VK_LBUTTON))
+		{
+			SOUND->Stop("lobby");
+			SOUND->Play("game");
+			SCENE->ChangeScene("SC2");
+		}
 	}
 	else playbox->color = Color(0.2, 0.2, 0.2, 0.0);
-
+	//나가기 버튼
 	if (exitbox->Intersect(INPUT->GetWorldMousePos()))
 	{
 		exitbox->color = Color(0.5, 0.5, 0.5, 0.1);

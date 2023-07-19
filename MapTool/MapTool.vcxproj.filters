@@ -14,6 +14,9 @@
     <ClCompile Include="Scene2.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
+    <ClCompile Include="UI.cpp">
+      <Filter>UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -33,6 +36,9 @@
     <ClInclude Include="resource.h">
       <Filter>Resource</Filter>
     </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>UI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">
@@ -43,6 +49,9 @@
     </Filter>
     <Filter Include="Resource">
       <UniqueIdentifier>{e6105f2d-1c03-453a-b0c4-3572950f2f18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="UI">
+      <UniqueIdentifier>{55698809-08c2-4287-9345-78ca94704476}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

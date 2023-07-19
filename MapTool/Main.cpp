@@ -22,8 +22,6 @@ Main::~Main()
 
 void Main::Init()
 {
-	
-
 	Scene1* sc1 = new Scene1();
 	SCENE->AddScene("SC1", sc1);
 

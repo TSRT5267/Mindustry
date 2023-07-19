@@ -2,7 +2,7 @@
 #include "../MapTool/resource.h"
 Application	 app;
 Scene* Window::main = nullptr;
-float zoomsize = 1;
+float Window::zoomsize = 1;
 
 
 WPARAM Window::Run(Scene* main)
@@ -209,11 +209,14 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 
 	if (message == WM_MOUSEWHEEL)
 	{
-		int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
-		if (zDelta >= 0) zoomsize -= 0.1f;
-		if (zDelta < 0)zoomsize += 0.1f;	
-
-		zoomsize=Utility::Saturate(zoomsize, 0.5f, 2.0f);
+		if (SCENE->GetKey("SC2"))
+		{
+			int zDelta = GET_WHEEL_DELTA_WPARAM(wParam);
+			if (zDelta >= 0) zoomsize -= 0.05f;
+			if (zDelta < 0)zoomsize += 0.05f ;			
+			zoomsize = Utility::Saturate(zoomsize, 0.5f, 2.0f);
+		}
+		
 	}
 	
 	if (message == WM_GETMINMAXINFO)

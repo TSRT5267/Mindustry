@@ -28,4 +28,8 @@ public:
     void    LateUpdate();
     void    Render();
     void    ResizeScreen();
+
+public:
+    bool GetKey(string key) { return GetScene(key) == currentScene; }
+    
 };

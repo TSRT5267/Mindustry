@@ -103,7 +103,7 @@ void SceneManager::Update()
         currentScene = nextScene;
         isChanging = false;
     }
-
+    
     
     currentScene->Update();
     

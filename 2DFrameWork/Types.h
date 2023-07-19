@@ -99,7 +99,7 @@ public:
 public:
 	Application() : instance(nullptr), handle(nullptr), vSync(false), fullScreen(false)
 		, appName(L" "), width(1280.0f), height(720.0f), background(Color(0.7f, 0.7f, 0.7f, 1.0f))
-		, fixFrame(400), deltaScale(1.0f), soundScale(1.0f), x(0.0f), y(0.0f) {}
+		, fixFrame(2000), deltaScale(1.0f), soundScale(1.0f), x(0.0f), y(0.0f) {}
 
 	float	GetWidth() { return width; }
 	float	GetHeight() { return height; }
