@@ -9,7 +9,7 @@ private:
 	ObTileMap* map[MAXLAYER];
 	//ObIso*	map;
 	Int2		tileSize;
-	ObRect* LineX, * LineY;
+	
 	int			layer;
 	bool		lookall = true;
 

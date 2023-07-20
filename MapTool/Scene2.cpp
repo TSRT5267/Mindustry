@@ -18,19 +18,6 @@ Scene2::Scene2()
 	map[2]->file = "block.txt";
 	map[2]->Load();
 
-
-	LineX = new ObRect();
-	LineX->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
-	LineX->pivot = OFFSET_N;
-	LineX->scale.x = 20000.0f;
-	LineX->scale.y = 2.0f;
-
-	LineY = new ObRect();
-	LineY->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
-	LineY->pivot = OFFSET_N;
-	LineY->scale.x = 2.0f;
-	LineY->scale.y = 20000.0f;
-
 	brushImgIdx = 0;
 	brushFrame.x = 0;
 	brushFrame.y = 0;
@@ -378,8 +365,7 @@ void Scene2::Update()
 	{
 		map[i]->Update();
 	}
-	LineX->Update();
-	LineY->Update();
+	
 
 	/////////////////////////////////////////////////////
 	player->	Update();
@@ -406,8 +392,7 @@ void Scene2::Render()
 	}
 
 
-	LineX->Render();
-	LineY->Render();
+	
 	//////////////////////////
 	player->	Render();
 	ui->		Render();
