@@ -11,21 +11,73 @@ UI::UI()
 		UIoutline[i] = new ObRect();
 		UIoutline[i]->SetParentRT(*UIbackground);
 	}
-	for (int i = 0;i < MAXCATEGORY;i++)
+	//카테고리
 	{
-		categoryCol[i] = new ObRect();
-		categoryCol[i]->SetParentRT(*UIbackground);
-		categoryOutline[i] = new ObRect();
-		categoryOutline[i]->SetParentRT(*categoryCol[i]);
+		categoryIm[0] = new ObImage(L"ui/turret.png");
+		categoryIm[1] = new ObImage(L"ui/production.png");
+		categoryIm[2] = new ObImage(L"ui/distribution.png");
+		categoryIm[3] = new ObImage(L"ui/defense.png");
+		for (int i = 0;i < MAXCATEGORY;i++)
+		{
+			categoryCol[i] = new ObRect();
+			categoryCol[i]->SetParentRT(*UIbackground);
+			categoryBorder[i] = new ObRect();
+			categoryBorder[i]->SetParentRT(*categoryCol[i]);
+			categoryIm[i]->SetParentRT(*categoryCol[i]);
+		}	
 	}
-	categoryIm[0] = new ObImage(L"ui/turret.png");
-	categoryIm[1] = new ObImage(L"ui/production.png");
-	categoryIm[2] = new ObImage(L"ui/distribution.png");
-	categoryIm[3] = new ObImage(L"ui/defense.png");
-	for (int i = 0;i < MAXCATEGORY;i++)
+	//카테고리(터렛)
 	{
-		categoryIm[i]->SetParentRT(*categoryCol[i]);
+		turretIM[0] = new ObImage();
+		turretIM[1] = new ObImage();
+		for (int i = 0;i < MAXTURRET;i++)
+		{
+			turretCol[i] = new ObRect();
+			turretCol[i] -> SetParentRT(*UIbackground);
+			turretBorder[i] = new ObRect();
+			turretBorder[i] -> SetParentRT(*turretCol[i]);
+			turretIM[i]->SetParentRT(*turretCol[i]);
+		}
 	}
+	//카테고리(생산)
+	{
+		productionIM[0] = new ObImage();
+		for (int i = 0;i < MAXTURRET;i++)
+		{
+			productionCol[i] = new ObRect();
+			productionCol[i]->SetParentRT(*UIbackground);
+			productionBorder[i] = new ObRect();
+			productionBorder[i]->SetParentRT(*productionCol[i]);
+			productionIM[i]->SetParentRT(*productionCol[i]);
+		}
+	}
+	//카테고리(분배)
+	{
+		distributionIM[0] = new ObImage();
+		distributionIM[1] = new ObImage();
+		distributionIM[2] = new ObImage();
+		for (int i = 0;i < MAXTURRET;i++)
+		{
+			distributionCol[i] = new ObRect();
+			distributionCol[i]->SetParentRT(*UIbackground);
+			distributionBorder[i] = new ObRect();
+			distributionBorder[i]->SetParentRT(*distributionCol[i]);
+			distributionIM[i]->SetParentRT(*distributionCol[i]);
+		}
+	}
+	//카테고리(방어)
+	{
+		defenseIM[0] = new ObImage();
+		for (int i = 0;i < MAXTURRET;i++)
+		{
+			defenseCol[i] = new ObRect();
+			defenseCol[i]->SetParentRT(*UIbackground);
+			defenseBorder[i] = new ObRect();
+			defenseBorder[i]->SetParentRT(*defenseCol[i]);
+			defenseIM[i]->SetParentRT(*defenseCol[i]);
+		}
+	}
+
 
 	//크기
 	UIbackground->scale = Vector2(300, 250);
@@ -39,8 +91,8 @@ UI::UI()
 		categoryIm[i]->scale = Vector2(35, 35);
 		categoryCol[i]->scale = categoryIm[i]->scale;
 		categoryCol[i]->scale *= 1.3f;
-		categoryOutline[i]->scale = categoryCol[i]->scale;
-		categoryOutline[i]->scale *= 0.9;
+		categoryBorder[i]->scale = categoryCol[i]->scale;
+		categoryBorder[i]->scale *= 0.9;
 	}
 
 
@@ -51,10 +103,9 @@ UI::UI()
 		UIoutline[i]->color = Color(0.1f, 0.1f, 0.1f);
 	}
 	for (int i = 0;i < MAXCATEGORY;i++)
-	{
-		
+	{	
 		categoryCol[i]->	color = Color(0.1f, 0.1f, 0.1f, 0);
-		categoryOutline[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
+		categoryBorder[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
 	}
 
 
@@ -72,7 +123,7 @@ UI::~UI()
 	{
 
 		delete categoryCol[i];
-		delete categoryOutline[i];
+		delete categoryBorder[i];
 		delete categoryIm[i];
 	}
 }
@@ -106,11 +157,11 @@ void UI::Update()
 		if (selectCategory == i)
 		{
 			categoryCol[i]->color = Color(0.5f, 0.4f, 0.2f, 1);
-			categoryOutline[i]->color = Color(0.0f, 0.0f, 0.0f, 1);
+			categoryBorder[i]->color = Color(0.0f, 0.0f, 0.0f, 1);
 		}
 		else
 		{
-			categoryOutline[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
+			categoryBorder[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
 			if (categoryCol[i]->Intersect(UImousePos))
 			{
 				categoryCol[i]->color = Color(0.1f, 0.1f, 0.1f, 1);
@@ -143,7 +194,7 @@ void UI::Update()
 	{
 		categoryCol[i]->Update();
 		categoryIm[i]->Update();
-		categoryOutline[i]->Update();
+		categoryBorder[i]->Update();
 	}
 
 }
@@ -163,7 +214,7 @@ void UI::Render()
 	for (int i = 0;i < MAXCATEGORY;i++)
 	{
 		categoryCol[i]->Render(UIcamera);
-		categoryOutline[i]->Render(UIcamera);
+		categoryBorder[i]->Render(UIcamera);
 		categoryIm[i]->Render(UIcamera);
 		
 
