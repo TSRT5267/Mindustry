@@ -4,62 +4,133 @@
 UI::UI()
 {
 	//생성
+	UIcamera =		new Camera();
 	UIbackground =	new ObRect();
-	for (int i = 0;i < 5;i++)
+	for (int i = 0;i < MAXUIOUTLINE;i++)
 	{
 		UIoutline[i] = new ObRect();
 		UIoutline[i]->SetParentRT(*UIbackground);
 	}
-	//크기 (임시)
-	UIbackground->	scale = Vector2(300, 250);
-	for (int i = 0;i < 5;i++)
+	for (int i = 0;i < MAXCATEGORY;i++)
 	{
-		UIoutline[i]->scale = Vector2(300, 250);
+		categoryCol[i] = new ObRect();
+		categoryCol[i]->SetParentRT(*UIbackground);
+		categoryOutline[i] = new ObRect();
+		categoryOutline[i]->SetParentRT(*categoryCol[i]);
 	}
-	
+	categoryIm[0] = new ObImage(L"ui/turret.png");
+	categoryIm[1] = new ObImage(L"ui/production.png");
+	categoryIm[2] = new ObImage(L"ui/distribution.png");
+	categoryIm[3] = new ObImage(L"ui/defense.png");
+	for (int i = 0;i < MAXCATEGORY;i++)
+	{
+		categoryIm[i]->SetParentRT(*categoryCol[i]);
+	}
+
+	//크기
+	UIbackground->scale = Vector2(300, 250);
+	UIoutline[0]->scale = Vector2(305, 5);//위
+	UIoutline[1]->scale = Vector2(305, 5);//아래
+	UIoutline[2]->scale = Vector2(5, 255);//왼
+	UIoutline[3]->scale = Vector2(5, 255);//오른
+	UIoutline[4]->scale = Vector2(5, 250);//분리선
+	for (int i = 0;i < MAXCATEGORY;i++)
+	{
+		categoryIm[i]->scale = Vector2(35, 35);
+		categoryCol[i]->scale = categoryIm[i]->scale;
+		categoryCol[i]->scale *= 1.3f;
+		categoryOutline[i]->scale = categoryCol[i]->scale;
+		categoryOutline[i]->scale *= 0.9;
+	}
+
+
 	//색
-	UIbackground->color = Color(0.1, 0.1, 0.1,0.3);
-	for (int i = 0;i < 5;i++)
+	UIbackground->color = Color(0.1f, 0.1f, 0.1f,0.3f);
+	for (int i = 0;i < MAXUIOUTLINE;i++)
 	{
-		UIoutline[i]->color = Color(0.1, 0.1, 0.1);
+		UIoutline[i]->color = Color(0.1f, 0.1f, 0.1f);
 	}
-	
+	for (int i = 0;i < MAXCATEGORY;i++)
+	{
+		
+		categoryCol[i]->	color = Color(0.1f, 0.1f, 0.1f, 0);
+		categoryOutline[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
+	}
 
 
 }
 
 UI::~UI()
 {
+	delete UIcamera;
 	delete UIbackground;
-	for (int i = 0;i < 5;i++)
+	for (int i = 0;i < MAXUIOUTLINE;i++)
 	{
 		delete UIoutline[i];
+	}
+	for (int i = 0;i < MAXCATEGORY;i++)
+	{
+
+		delete categoryCol[i];
+		delete categoryOutline[i];
+		delete categoryIm[i];
 	}
 }
 
 void UI::Init()
 {
-	
+	//위치
+	UIbackground->SetWorldPos(Vector2(280, -180));
+	UIoutline[0]->SetLocalPos(Vector2(0, 125));//위
+	UIoutline[1]->SetLocalPos(Vector2(0, -125));//아래
+	UIoutline[2]->SetLocalPos(Vector2(-150, 0));//왼
+	UIoutline[3]->SetLocalPos(Vector2(150, 0));//오른
+	UIoutline[4]->SetLocalPos(Vector2(50, 0));//분리선
+
+	categoryCol[0]->SetLocalPos(Vector2(75, 100));
+	categoryCol[1]->SetLocalPos(Vector2(125, 100));
+	categoryCol[2]->SetLocalPos(Vector2(75, 50));
+	categoryCol[3]->SetLocalPos(Vector2(125, 50));
 }
 
 void UI::Update()
-{
-	//UI 크기 조정	
-	UIbackground->	scale = Vector2(300, 250) * CAM->scale;
-	UIoutline[0]->scale = Vector2(305, 5) * CAM->scale;//위
-	UIoutline[1]->scale = Vector2(305, 5) * CAM->scale;//아래
-	UIoutline[2]->scale = Vector2(5, 255) * CAM->scale;//왼
-	UIoutline[3]->scale = Vector2(5, 255) * CAM->scale;//오른
-	UIoutline[4]->scale = Vector2(5, 250) * CAM->scale;//분리선
+{	
 
-	//UI 위치 조정
-	UIbackground->SetWorldPos((CAM->position / CAM->scale + Vector2(280, -180)) * CAM->scale);
-	UIoutline[0]->SetLocalPos(Vector2(0,125) * CAM->scale);//위
-	UIoutline[1]->SetLocalPos(Vector2(0, -125) * CAM->scale);//아래
-	UIoutline[2]->SetLocalPos(Vector2(-150, 0) * CAM->scale);//왼
-	UIoutline[3]->SetLocalPos(Vector2(150, 0) * CAM->scale);//오른
-	UIoutline[4]->SetLocalPos(Vector2(50, 0) * CAM->scale);//분리선
-	//UIoutline[4]->SetLocalPos((CAM->position / CAM->scale + Vector2(0, 0)) * CAM->scale);//분리선
+	Vector2 UImousePos = INPUT->GetWorldMousePos() / CAM->scale;
+	UImousePos.x -=   (CAM->position.x / CAM->scale);
+	UImousePos.y -=  (CAM->position.y / CAM->scale);
+
+	//카테고리 선택
+	for (int i = 0;i < MAXCATEGORY;i++)
+	{
+		if (selectCategory == i)
+		{
+			categoryCol[i]->color = Color(0.5f, 0.4f, 0.2f, 1);
+			categoryOutline[i]->color = Color(0.0f, 0.0f, 0.0f, 1);
+		}
+		else
+		{
+			categoryOutline[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
+			if (categoryCol[i]->Intersect(UImousePos))
+			{
+				categoryCol[i]->color = Color(0.1f, 0.1f, 0.1f, 1);
+				if (INPUT->KeyDown(VK_LBUTTON))
+				{
+					selectCategory = i;
+				}
+			}
+			else categoryCol[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
+		}
+	}
+
+	//카테고리 내용물
+
+
+
+
+
+
+
 
 
 
@@ -68,6 +139,13 @@ void UI::Update()
 	{
 		UIoutline[i]->Update();
 	}
+	for (int i = 0;i < MAXCATEGORY;i++)
+	{
+		categoryCol[i]->Update();
+		categoryIm[i]->Update();
+		categoryOutline[i]->Update();
+	}
+
 }
 
 void UI::LateUpdate()
@@ -76,10 +154,19 @@ void UI::LateUpdate()
 
 void UI::Render()
 {
-	UIbackground->	Render();
+	UIcamera->Set();
+	UIbackground->	Render(UIcamera);
 	for (int i = 0;i < 5;i++)
 	{
-		UIoutline[i]->Render();
+		UIoutline[i]->Render(UIcamera);
+	}
+	for (int i = 0;i < MAXCATEGORY;i++)
+	{
+		categoryCol[i]->Render(UIcamera);
+		categoryOutline[i]->Render(UIcamera);
+		categoryIm[i]->Render(UIcamera);
+		
+
 	}
 }
 

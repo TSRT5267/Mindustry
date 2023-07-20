@@ -60,6 +60,7 @@ public:
 
 	virtual void Update();
 	virtual void Render();
+	virtual void Render(Camera* C);
 
 	bool Intersect(Vector2 coord);
 	bool Intersect(GameObject* ob);

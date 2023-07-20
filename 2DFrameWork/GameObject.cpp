@@ -163,6 +163,52 @@ void GameObject::Render()
 	}
 }
 
+void GameObject::Render(Camera* C)
+{
+	if (hasAxis)
+	{
+		//right
+		axisObject->SetWorldPos(GetWorldPos());
+		axisObject->rotation.z = Utility::DirToRadian(GetRight());
+		axisObject->scale.x = scale.x * 2.0f;
+		axisObject->color = Color(1.0f, 0.0f, 0.0f, 1.0f);
+		axisObject->Update();
+		axisObject->Render();
+		//up
+		axisObject->rotation.z = Utility::DirToRadian(GetUp());
+		axisObject->scale.x = scale.y * 2.0f;
+		axisObject->color = Color(0.0f, 1.0f, 0.0f, 1.0f);
+		axisObject->Update();
+		axisObject->Render();
+	}
+
+	switch (space)
+	{
+	case SPACE::WORLD:
+		WVP = W * C->GetVP();
+		break;
+	case SPACE::SCREEN:
+		WVP = W * C->GetP();
+		break;
+	}
+
+	WVP = WVP.Transpose();
+	//wvp 바인딩
+	{
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		D3D->GetDC()->Map(WVPBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		memcpy_s(mappedResource.pData, sizeof(Matrix), &WVP, sizeof(Matrix));
+		D3D->GetDC()->Unmap(WVPBuffer, 0);
+	}
+	//color 바인딩
+	{
+		D3D11_MAPPED_SUBRESOURCE mappedResource;
+		D3D->GetDC()->Map(colorBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		memcpy_s(mappedResource.pData, sizeof(Color), &color, sizeof(Color));
+		D3D->GetDC()->Unmap(colorBuffer, 0);
+	}
+}
+
 bool GameObject::Intersect(Vector2 coord)
 {
 	if (collider == COLLIDER::RECT)

@@ -48,6 +48,7 @@ public:
     ~ObImage();
 
     void Render()override;
+    void Render(Camera* C)override;
     void ChangeAnim(ANIMSTATE anim, float interval, bool xAxis = true); //set함수 기능
     void ChangeSampler(D3D11_FILTER filter = D3D11_FILTER_MIN_MAG_MIP_POINT,
         D3D11_TEXTURE_ADDRESS_MODE addressU = D3D11_TEXTURE_ADDRESS_WRAP,

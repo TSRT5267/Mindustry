@@ -12,5 +12,6 @@ public:
 public:
     ObRect();
     void Render()override;
+    void Render(Camera* C)override;
 };
 

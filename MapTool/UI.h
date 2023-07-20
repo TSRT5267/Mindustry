@@ -1,9 +1,20 @@
 #pragma once
+#define MAXUIOUTLINE 5
+#define MAXCATEGORY 4
+
+
 class UI : public GameObject
 {
 private:
+	Camera*			UIcamera;
+
 	ObRect*			UIbackground;
-	ObRect*			UIoutline[5];
+	ObRect*			UIoutline[MAXUIOUTLINE];
+
+	ObRect*			categoryCol[MAXCATEGORY];
+	ObRect*			categoryOutline[MAXCATEGORY];
+	ObImage*		categoryIm[MAXCATEGORY];
+	int				selectCategory;
 
 public:
 	UI();
