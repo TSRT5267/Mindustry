@@ -28,8 +28,7 @@ UI::UI()
 	}
 	//카테고리(터렛)
 	{
-		turretIM[0] = new ObImage();
-		turretIM[1] = new ObImage();
+		turretIM[0] = new ObImage(L"1x1block/duo.png");
 		for (int i = 0;i < MAXTURRET;i++)
 		{
 			turretCol[i] = new ObRect();
@@ -41,7 +40,7 @@ UI::UI()
 	}
 	//카테고리(생산)
 	{
-		productionIM[0] = new ObImage();
+		productionIM[0] = new ObImage(L"2x2block/mechanical_drill.jpg");
 		for (int i = 0;i < MAXTURRET;i++)
 		{
 			productionCol[i] = new ObRect();

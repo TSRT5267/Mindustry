@@ -2,7 +2,7 @@
 #define MAXUIOUTLINE 5
 #define MAXCATEGORY 4
 
-#define MAXTURRET 2
+#define MAXTURRET 1
 #define MAXPRODUCTION 1
 #define MAXDISTRIBUTION 3
 #define MAXDEFENSE 1
