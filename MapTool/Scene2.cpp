@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "UI.h"
+
 Scene2::Scene2()
 {
 	for (int i = 0;i < MAXLAYER;i++)
@@ -79,7 +80,7 @@ void Scene2::Update()
 		else isTimeStop = true;
 	}
 
-	if (isTimeStop) app.deltaScale = 0.0f;
+	if (isTimeStop or ui->GetMN_Activate()) app.deltaScale = 0.0f;
 	else app.deltaScale = 1.0f;
 
 	}

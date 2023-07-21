@@ -10,7 +10,21 @@
 class UI : public GameObject
 {
 private:
+	Vector2			UImousePos;
 	Camera*			UIcamera;
+
+// 매뉴
+	bool			menu_Activatetion;
+	ObRect*			menuBackground;
+	ObRect*			underline;
+	ObRect*			backButtonCol;
+	ObImage*		backButton;
+	ObImage*		backButtonIM;
+	ObRect*			exitButtonCol;
+	ObImage*		exitButton;
+	ObImage*		exitButtonIM;
+
+//건축물선택
 
 	ObRect*			UIbackground;
 	ObRect*			UIoutline[MAXUIOUTLINE];
@@ -39,6 +53,7 @@ private:
 	ObRect*			defenseBorder[MAXDEFENSE];
 	ObImage*		defenseIM[MAXDEFENSE];
 	int				selectDefense;
+	
 
 public:
 	UI();
@@ -48,5 +63,8 @@ public:
 	virtual void LateUpdate() ;
 	virtual void Render() ;
 	
+public:
+	void Select(int C, ObRect* Col[], ObRect* Border[],int& select);
+	bool GetMN_Activate() { return menu_Activatetion; };
 };
 
