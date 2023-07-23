@@ -35,4 +35,7 @@ public:
 	virtual void LateUpdate() override;//°»½Å
 	virtual void Render() override;
 	virtual void ResizeScreen() override;
+
+public:
+	void SAVE() { map[0]->Save(); map[1]->Save();map[2]->Save();};
 };

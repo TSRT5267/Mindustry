@@ -70,7 +70,14 @@ void Scene2::Update()
 	Vector2 minus = player->GetWorldPivot() - CAM->position;
 	CAM->position += minus * DELTA * 2;
 
-	
+	//메뉴(저장 후 나가기)
+	if (ui->Save() == true)
+	{
+		map[0]->Save();
+		map[1]->Save();
+		map[2]->Save();
+		if (INPUT->KeyPress(VK_LBUTTON)) PostQuitMessage(0);
+	}
 
 	//일시정지
 	{

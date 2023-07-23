@@ -112,7 +112,7 @@ void Scene1::Update()
 	if (exitbox->Intersect(INPUT->GetWorldMousePos()))
 	{
 		exitbox->color = Color(0.5, 0.5, 0.5, 0.1);
-		if (INPUT->KeyPress(VK_LBUTTON)) PostQuitMessage(0);;
+		if (INPUT->KeyPress(VK_LBUTTON)) PostQuitMessage(0);
 	}
 	else exitbox->color = Color(0.2, 0.2, 0.2, 0.0);
 

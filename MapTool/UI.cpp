@@ -1,5 +1,7 @@
 #include "stdafx.h"
+#include "Scene2.h"
 #include "UI.h"
+
 
 UI::UI()
 {
@@ -9,6 +11,11 @@ UI::UI()
 		menuBackground->scale = Vector2(900, 700);
 		menuBackground->color = Color(0.01f, 0.01f, 0.01f, 0.4f);
 
+		manutxt = new ObImage(L"ui/manu_txt.png");
+		manutxt->scale.x = manutxt->imageSize.x;
+		manutxt->scale.y = manutxt->imageSize.y;
+		
+
 		underline = new ObRect();
 		underline->scale = Vector2(900, 3);
 		underline->color = Color(0.5f, 0.4f, 0.2f, 1);
@@ -16,18 +23,43 @@ UI::UI()
 		backButtonCol = new ObRect();
 		backButton = new ObImage(L"ui/button.png");
 		backButton->SetParentRT(*backButtonCol);
-		backButtonIM = new ObImage(L"ui/button.png");
+		backButtonOver = new ObImage(L"ui/button_over.png");
+		backButtonOver->SetParentRT(*backButtonCol);
+		backButtonIM = new ObImage(L"ui/back.png");
 		backButtonIM->SetParentRT(*backButtonCol);
+		backButtontxt = new ObImage(L"ui/back_txt.png");
+		backButtontxt->SetParentRT(*backButtonCol);
 		exitButtonCol = new ObRect();
 		exitButton = new ObImage(L"ui/button.png");
 		exitButton->SetParentRT(*exitButtonCol);
-		exitButtonIM = new ObImage(L"ui/button.png");
+		exitButtonOver = new ObImage(L"ui/button_over.png");
+		exitButtonOver->SetParentRT(*exitButtonCol);
+		exitButtonIM = new ObImage(L"ui/exit.png");
 		exitButtonIM->SetParentRT(*exitButtonCol);
+		exitButtontxt = new ObImage(L"ui/exit_txt.png");
+		exitButtontxt->SetParentRT(*exitButtonCol);
 
 		backButton->scale.x = backButton->imageSize.x;
 		backButton->scale.y = backButton->imageSize.y;
+		backButtonOver->scale.x = backButtonOver->imageSize.x;
+		backButtonOver->scale.y = backButtonOver->imageSize.y;
+		backButtonIM->scale.x = backButtonIM->imageSize.x;
+		backButtonIM->scale.y = backButtonIM->imageSize.y;
+		backButtonIM->scale *= 2;
+		backButtontxt->scale.x = backButtontxt->imageSize.x;
+		backButtontxt->scale.y = backButtontxt->imageSize.y;
 		exitButton->scale.x = exitButton->imageSize.x;
 		exitButton->scale.y = exitButton->imageSize.y;
+		exitButtonOver->scale.x = exitButtonOver->imageSize.x;
+		exitButtonOver->scale.y = exitButtonOver->imageSize.y;
+		exitButtonIM->scale.x = exitButtonIM->imageSize.x;
+		exitButtonIM->scale.y = exitButtonIM->imageSize.y;
+		exitButtonIM->scale *= 2;
+		exitButtontxt->scale.x = exitButtontxt->imageSize.x;
+		exitButtontxt->scale.y = exitButtontxt->imageSize.y;
+
+		backButtonCol->scale = backButton->scale;
+		exitButtonCol->scale = exitButton->scale;
 	}
 	
 	
@@ -206,8 +238,20 @@ UI::UI()
 
 UI::~UI()
 {
-	delete UIcamera;
+	delete UIcamera;	
 	delete UIbackground;
+	//메뉴
+	delete menuBackground;
+	delete manutxt;
+	delete underline;
+	delete backButtonCol;
+	delete backButton;
+	delete backButtonIM;
+	delete backButtontxt;
+	delete exitButtonCol;
+	delete exitButton;
+	delete exitButtonIM;
+	delete exitButtontxt;
 	for (int i = 0;i < MAXUIOUTLINE;i++)
 	{
 		delete UIoutline[i];
@@ -252,9 +296,14 @@ UI::~UI()
 void UI::Init()
 {
 	menuBackground->SetWorldPos(Vector2(0, 0));
+	manutxt->SetWorldPos(Vector2(0, 320));
 	underline->SetWorldPos(Vector2(0, 300));
 	backButtonCol->SetWorldPos(Vector2(-130, 50));
+	backButtonIM->SetLocalPos(Vector2(-90, 0));
+	backButtontxt->SetLocalPos(Vector2(20, 0));
 	exitButtonCol->SetWorldPos(Vector2(130, 50));
+	exitButtonIM->SetLocalPos(Vector2(-90, 0));
+	exitButtontxt->SetLocalPos(Vector2(20, 0));
 	
 	UIbackground->SetWorldPos(Vector2(280, -180));
 	UIoutline[0]->SetLocalPos(Vector2(0, 125));//위
@@ -295,7 +344,20 @@ void UI::Update()
 
 	if (menu_Activatetion == true)
 	{
+		if (backButtonCol->Intersect(UImousePos) and INPUT->KeyDown(VK_LBUTTON))
+		{
+			SOUND->Stop("game");
+			SOUND->Play("lobby");
+			CAM->position = Vector2(0, 0);
+			CAM->scale = 0.0f;
+			menu_Activatetion = false;
+			SCENE->ChangeScene("SC1");
+		}
 
+		if (exitButtonCol->Intersect(UImousePos) and INPUT->KeyDown(VK_LBUTTON))
+		{
+			doSave = true;
+		}
 	}
 	else
 	{
@@ -379,13 +441,18 @@ void UI::Update()
 		//매뉴
 		{
 			menuBackground->Update();
+			manutxt->Update();
 			underline->Update();
 			backButtonCol->Update();
 			backButton->Update();
+			backButtonOver->Update();
 			backButtonIM->Update();
+			backButtontxt->Update();
 			exitButtonCol->Update();
 			exitButton->Update();
+			exitButtonOver->Update();
 			exitButtonIM->Update();
+			exitButtontxt->Update();
 		}
 	}
 	
@@ -455,13 +522,28 @@ void UI::Render()
 	if (menu_Activatetion == true)
 	{
 		menuBackground->Render(UIcamera);
+		manutxt->Render(UIcamera);
 		underline->Render(UIcamera);
-		backButtonCol->Render(UIcamera);
-		backButton->Render(UIcamera);
-		//backButtonIM->Render(UIcamera);
-		exitButtonCol->Render(UIcamera);
-		exitButton-> Render(UIcamera);
-		//exitButtonIM->Render(UIcamera);
+		//backButtonCol->Render(UIcamera);
+	
+		//exitButtonCol->Render(UIcamera);
+
+		if (backButtonCol->Intersect(UImousePos))
+		{
+			backButtonOver->Render(UIcamera);
+		}
+		else backButton->Render(UIcamera);
+
+		if (exitButtonCol->Intersect(UImousePos))
+		{
+			exitButtonOver->Render(UIcamera);
+		}
+		else exitButton->Render(UIcamera);
+
+		backButtonIM->Render(UIcamera);
+		backButtontxt->Render(UIcamera);
+		exitButtonIM->Render(UIcamera);
+		exitButtontxt->Render(UIcamera);
 	}
 	
 	

@@ -16,13 +16,20 @@ private:
 // 매뉴
 	bool			menu_Activatetion;
 	ObRect*			menuBackground;
+	ObImage*		manutxt;
 	ObRect*			underline;
 	ObRect*			backButtonCol;
 	ObImage*		backButton;
+	ObImage*		backButtonOver;
 	ObImage*		backButtonIM;
+	ObImage*		backButtontxt;
 	ObRect*			exitButtonCol;
 	ObImage*		exitButton;
+	ObImage*		exitButtonOver;
 	ObImage*		exitButtonIM;
+	ObImage*		exitButtontxt;
+
+	bool			doSave;
 
 //건축물선택
 
@@ -66,5 +73,6 @@ public:
 public:
 	void Select(int C, ObRect* Col[], ObRect* Border[],int& select);
 	bool GetMN_Activate() { return menu_Activatetion; };
+	bool Save() { return doSave; };
 };
 
