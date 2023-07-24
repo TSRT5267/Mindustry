@@ -46,7 +46,7 @@ Player::~Player()
 void Player::Init()
 {
     this->SetWorldPos(Vector2(0, 0));
-    shadow->SetWorldPos(Vector2(-30, -30));
+    shadow->SetLocalPos(Vector2(-30, -30));
 
 }
 

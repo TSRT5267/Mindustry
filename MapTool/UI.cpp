@@ -298,10 +298,10 @@ void UI::Init()
 	menuBackground->SetWorldPos(Vector2(0, 0));
 	manutxt->SetWorldPos(Vector2(0, 320));
 	underline->SetWorldPos(Vector2(0, 300));
-	backButtonCol->SetWorldPos(Vector2(-130, 50));
+	backButtonCol->SetWorldPos(Vector2(-130, 0));
 	backButtonIM->SetLocalPos(Vector2(-90, 0));
 	backButtontxt->SetLocalPos(Vector2(20, 0));
-	exitButtonCol->SetWorldPos(Vector2(130, 50));
+	exitButtonCol->SetWorldPos(Vector2(130, 0));
 	exitButtonIM->SetLocalPos(Vector2(-90, 0));
 	exitButtontxt->SetLocalPos(Vector2(20, 0));
 	
@@ -349,7 +349,7 @@ void UI::Update()
 			SOUND->Stop("game");
 			SOUND->Play("lobby");
 			CAM->position = Vector2(0, 0);
-			CAM->scale = 0.0f;
+			WIN->zoomsize = 1.0f;
 			menu_Activatetion = false;
 			SCENE->ChangeScene("SC1");
 		}
