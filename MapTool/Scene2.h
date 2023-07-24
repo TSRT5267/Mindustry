@@ -2,6 +2,29 @@
 #define MAXLAYER 3
 #define TILESIZE 50
 #define TILESCALE 32
+#define X1MAXFRAME_X 2
+#define X1MAXFRAME_Y 3
+#define X2MAXFRAME_X 2
+#define X2MAXFRAME_Y 2
+
+
+enum class LAYER
+{
+	GROUND,
+	ENVIRONMENT,
+	BLOCK,
+
+};
+
+enum class ImgIdx
+{
+	GROUND,
+	ENVIRONMENT,
+	BLOCK1x1,
+	BLOCK2x2,
+
+};
+
 class Scene2 : public Scene
 {
 private:
@@ -38,4 +61,5 @@ public:
 
 public:
 	void SAVE() { map[0]->Save(); map[1]->Save();map[2]->Save();};
+	void SetTile(int Idx, int MAX_X, int MAX_Y);
 };

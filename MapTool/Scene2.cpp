@@ -92,17 +92,7 @@ void Scene2::Update()
 
 	}
 
-	
 
-
-
-	//저장,불러오기
-	if (ImGui::Button("save"))
-	{
-		map[0]->Save();
-		map[1]->Save();
-		map[2]->Save();
-	}
 
 
 
@@ -172,8 +162,8 @@ void Scene2::Update()
 	ImGui::Text("lookall : %d", lookall);
 
 
-
-	if (ImGui::InputInt("ImgIdx", &brushImgIdx))
+	//팔렛트선택
+	/*if (ImGui::InputInt("ImgIdx", &brushImgIdx))
 	{
 		brushImgIdx = Utility::Saturate(brushImgIdx, 0, 3);
 
@@ -181,11 +171,9 @@ void Scene2::Update()
 		{
 			brushImgIdx = 0;
 		}
-	}
+	}*/
 
-	//maxFrame
-	//ImGui::InputInt2("maxFrame", (int*)&map[layer]->tileImages[brushImgIdx]->maxFrame);
-
+	//팔렛트 자르기
 	ImGui::InputInt2("maxFrame", (int*)&MAXframe);
 	if (brushImgIdx == 3)
 	{
@@ -279,6 +267,70 @@ void Scene2::Update()
 	}
 
 	
+	//UI사용
+	if (ui->GetSelectedCategory() != (int)CATEGORY::NONE) 
+		layer = (int)LAYER::BLOCK;
+
+	switch (ui->GetSelectedCategory())
+	{
+	case (int)CATEGORY::TURRET:
+		SetTile((int)ImgIdx::BLOCK1x1, X1MAXFRAME_X, X1MAXFRAME_Y);
+		if (ui->GetSelectedTurret()==0)
+		{
+			brushFrame.x = 1;
+			brushFrame.y = 1;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+		}						
+		break;
+	case (int)CATEGORY::PRODUCTION:
+		SetTile((int)ImgIdx::BLOCK2x2, X2MAXFRAME_X, X2MAXFRAME_Y);
+		if (ui->GetSelectedProduction()==0)
+		{
+			brushFrame.x = 0;
+			brushFrame.y = 0;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+		}		
+		break;
+	case (int)CATEGORY::DISTRIBUTION:
+		SetTile((int)ImgIdx::BLOCK1x1, X1MAXFRAME_X, X1MAXFRAME_Y);
+		if (ui->GetSelectedDistribution()==0)
+		{
+			brushFrame.x = 0;
+			brushFrame.y = 0;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+		}
+		else if (ui->GetSelectedDistribution() == 1)
+		{
+			brushFrame.x = 1;
+			brushFrame.y = 0;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+		}
+		else if (ui->GetSelectedDistribution() == 2)
+		{
+			brushFrame.x = 0;
+			brushFrame.y = 1;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+		}
+		
+		break;
+	case (int)CATEGORY::DEFENSE:
+		SetTile((int)ImgIdx::BLOCK1x1, X1MAXFRAME_X, X1MAXFRAME_Y);
+		if (ui->GetSelectedDefense() == 0)
+		{
+			brushFrame.x = 0;
+			brushFrame.y = 2;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+		}
+		break;
+	default:
+		break;
+	}
+		
+
+
+
+
+
 
 	//설치전 잔상 (보류)
 	/*if (layer >= 1)
@@ -317,7 +369,8 @@ void Scene2::Update()
 	}*/
 
 	//블럭 설치
-	if (INPUT->KeyPress(VK_LBUTTON))
+
+	if (INPUT->KeyPress(VK_LBUTTON) and not ui->UIIntersect())
 	{
 		Color BUILDED = { 0.5,0.5,0.5,0.5 };
 		Int2 Idx;
@@ -409,5 +462,12 @@ void Scene2::Render()
 void Scene2::ResizeScreen()
 {
 
+}
+
+void Scene2::SetTile(int Idx,int MAX_X,int MAX_Y)
+{
+	brushImgIdx = Idx;
+	map[layer]->tileImages[brushImgIdx]->maxFrame.x = MAX_X;
+	map[layer]->tileImages[brushImgIdx]->maxFrame.y = MAX_Y;
 }
 

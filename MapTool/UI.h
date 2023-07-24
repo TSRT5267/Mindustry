@@ -7,6 +7,15 @@
 #define MAXDISTRIBUTION 3
 #define MAXDEFENSE 1
 
+enum class CATEGORY
+{
+	NONE = -1,
+	TURRET,
+	PRODUCTION,
+	DISTRIBUTION,
+	DEFENSE,
+};
+
 class UI : public GameObject
 {
 private:
@@ -39,27 +48,27 @@ private:
 	ObRect*			categoryCol[MAXCATEGORY];
 	ObRect*			categoryBorder[MAXCATEGORY];
 	ObImage*		categoryIm[MAXCATEGORY];
-	int				selectCategory;
+	int				selectCategory =(int)CATEGORY::NONE;
 	//터렛
 	ObRect*			turretCol[MAXTURRET];
 	ObRect*			turretBorder[MAXTURRET];
 	ObImage*		turretIM[MAXTURRET];
-	int				selectTurret;
+	int				selectTurret = (int)CATEGORY::NONE;
 	//생산
 	ObRect*			productionCol[MAXPRODUCTION];
 	ObRect*			productionBorder[MAXPRODUCTION];
 	ObImage*		productionIM[MAXPRODUCTION];
-	int				selectProduction;
+	int				selectProduction = (int)CATEGORY::NONE;
 	//분배
 	ObRect*			distributionCol[MAXDISTRIBUTION];
 	ObRect*			distributionBorder[MAXDISTRIBUTION];
 	ObImage*		distributionIM[MAXDISTRIBUTION];
-	int				selectDistribution;
+	int				selectDistribution = (int)CATEGORY::NONE;
 	//방어
 	ObRect*			defenseCol[MAXDEFENSE];
 	ObRect*			defenseBorder[MAXDEFENSE];
 	ObImage*		defenseIM[MAXDEFENSE];
-	int				selectDefense;
+	int				selectDefense = (int)CATEGORY::NONE;
 	
 
 public:
@@ -72,7 +81,16 @@ public:
 	
 public:
 	void Select(int C, ObRect* Col[], ObRect* Border[],int& select);
-	bool GetMN_Activate() { return menu_Activatetion; };
 	bool Save() { return doSave; };
+	bool UIIntersect();
+	
+	bool GetMN_Activate() { return menu_Activatetion; };
+	int GetSelectedCategory() { return selectCategory; };
+	int GetSelectedTurret() { return selectTurret; };
+	int GetSelectedProduction() { return selectProduction; };
+	int GetSelectedDistribution() { return selectDistribution; };
+	int GetSelectedDefense() { return selectDefense; };
+	
+
 };
 

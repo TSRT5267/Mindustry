@@ -364,10 +364,11 @@ void UI::Update()
 		//선택 초기화
 		if (INPUT->KeyDown(VK_RBUTTON))
 		{
-			selectTurret = -1;
-			selectProduction = -1;
-			selectDistribution = -1;
-			selectDefense = -1;
+			selectCategory = (int)CATEGORY::NONE;
+			selectTurret = (int)CATEGORY::NONE;
+			selectProduction = (int)CATEGORY::NONE;
+			selectDistribution = (int)CATEGORY::NONE;
+			selectDefense = (int)CATEGORY::NONE;
 		}
 
 		//선택 
@@ -523,10 +524,7 @@ void UI::Render()
 	{
 		menuBackground->Render(UIcamera);
 		manutxt->Render(UIcamera);
-		underline->Render(UIcamera);
-		//backButtonCol->Render(UIcamera);
-	
-		//exitButtonCol->Render(UIcamera);
+		underline->Render(UIcamera);		
 
 		if (backButtonCol->Intersect(UImousePos))
 		{
@@ -573,6 +571,13 @@ void UI::Select(int C, ObRect* Col[],ObRect* Border[],int& select)
 			else Col[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
 		}
 	}
+	
+}
+
+bool UI::UIIntersect()
+{
+	if (UIbackground->Intersect(UImousePos)) return true;
+	else return false;
 	
 }
 

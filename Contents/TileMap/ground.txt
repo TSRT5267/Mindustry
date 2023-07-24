@@ -1,6 +1,6 @@
 0 ground/metal_floor.png 1 1
 1 environment/ore_copper.png 1 1
-2 1x1block/conveyor.png 1 1
+2 1x1block/1x1block.png 2 3
 3 2x2block/mechanical_drill.jpg 1 1
 TileSize 50 50
 TileScale 32 32
