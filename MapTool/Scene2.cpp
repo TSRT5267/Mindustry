@@ -93,9 +93,6 @@ void Scene2::Update()
 	}
 
 
-
-
-
 	//이미지 불러오기
 	for (int i = 0; i < 4; i++)
 	{
@@ -123,45 +120,44 @@ void Scene2::Update()
 		}
 	}
 
-
-
 	//레이어 선택
-	if (ImGui::Button("ground"))
 	{
-		layer = 0;
-		brushImgIdx = 0;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("environment"))
-	{
-		layer = 1;
-		brushImgIdx = 1;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("1x1 block"))
-	{
-		layer = 2;
-		brushImgIdx = 2;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("2x2 block"))
-	{
-		layer = 2;
-		brushImgIdx = 3;
-	}
-	ImGui::SameLine();
-	if (ImGui::Button("look all "))
-	{
-		if (lookall == true) lookall = false;
-		else lookall = true;
+		if (ImGui::Button("ground"))
+		{
+			layer = 0;
+			brushImgIdx = 0;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("environment"))
+		{
+			layer = 1;
+			brushImgIdx = 1;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("1x1 block"))
+		{
+			layer = 2;
+			brushImgIdx = 2;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("2x2 block"))
+		{
+			layer = 2;
+			brushImgIdx = 3;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("look all "))
+		{
+			if (lookall == true) lookall = false;
+			else lookall = true;
 
+		}
+
+		ImGui::Text("now layer : %d", layer);
+		ImGui::SameLine();
+		ImGui::Text("lookall : %d", lookall);
 	}
-
-	ImGui::Text("now layer : %d", layer);
-	ImGui::SameLine();
-	ImGui::Text("lookall : %d", lookall);
-
-
+	
 	//팔렛트선택
 	/*if (ImGui::InputInt("ImgIdx", &brushImgIdx))
 	{
@@ -174,7 +170,7 @@ void Scene2::Update()
 	}*/
 
 	//팔렛트 자르기
-	ImGui::InputInt2("maxFrame", (int*)&MAXframe);
+	/*ImGui::InputInt2("maxFrame", (int*)&MAXframe);
 	if (brushImgIdx == 3)
 	{
 		map[layer]->tileImages[brushImgIdx]->maxFrame.x = MAXframe.x * 2;
@@ -184,90 +180,86 @@ void Scene2::Update()
 	{
 		map[layer]->tileImages[brushImgIdx]->maxFrame.x = MAXframe.x;
 		map[layer]->tileImages[brushImgIdx]->maxFrame.y = MAXframe.y;
-	}
+	}*/
 
-	//브러시
-	if (brushImgIdx == 3)
-	{
-		//브러시(2x2) 제작
-		Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
-		MF.x /= 2;
-		MF.y /= 2;
-		ImVec2 size;
-		size.x = 150.0f / (float)MF.x;
-		size.y = 150.0f / (float)MF.y;
-		ImVec2 LT, RB;
-		int index = 0;
-		for (UINT i = 0; i < MF.y; i++)
-		{
-			for (UINT j = 0; j < MF.x; j++)
-			{
-				if (j != 0)
-				{
-					//같은줄에 배치
-					ImGui::SameLine();
-				}
-				//텍스쳐 좌표
-				LT.x = 1.0f / MF.x * j;
-				LT.y = 1.0f / MF.y * i;
-				RB.x = 1.0f / MF.x * (j + 1);
-				RB.y = 1.0f / MF.y * (i + 1);
-
-				ImGui::PushID(index);
-				if (ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV()
-					, size, LT, RB))
-				{
-					brushFrame.x = j;
-					brushFrame.y = i;
-					brushColor = Color{ 0.5,0.5,0.5,0.5 };
-				}
-
-				index++;
-				ImGui::PopID();
-			}
-		}
-
-	}
-	else
-	{
-		//브러시(1x1) 제작
-		Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
-		ImVec2 size;
-		size.x = 150.0f / (float)MF.x;
-		size.y = 150.0f / (float)MF.y;
-		ImVec2 LT, RB;
-		int index = 0;
-		for (UINT i = 0; i < MF.y; i++)
-		{
-			for (UINT j = 0; j < MF.x; j++)
-			{
-				if (j != 0)
-				{
-					//같은줄에 배치
-					ImGui::SameLine();
-				}
-				//텍스쳐 좌표
-				LT.x = 1.0f / MF.x * j;
-				LT.y = 1.0f / MF.y * i;
-				RB.x = 1.0f / MF.x * (j + 1);
-				RB.y = 1.0f / MF.y * (i + 1);
-
-				ImGui::PushID(index);
-				if (ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV()
-					, size, LT, RB))
-				{
-					brushFrame.x = j;
-					brushFrame.y = i;
-					brushColor = Color{ 0.5,0.5,0.5,0.5 };
-				}
-				index++;
-				ImGui::PopID();
-			}
-		}
-	}
+	//브러시		
+	/*if (brushImgIdx == 3)
+	//{
+	//	//브러시(2x2) 제작
+	//	Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
+	//	MF.x /= 2;
+	//	MF.y /= 2;
+	//	ImVec2 size;
+	//	size.x = 150.0f / (float)MF.x;
+	//	size.y = 150.0f / (float)MF.y;
+	//	ImVec2 LT, RB;
+	//	int index = 0;
+	//	for (UINT i = 0; i < MF.y; i++)
+	//	{
+	//		for (UINT j = 0; j < MF.x; j++)
+	//		{
+	//			if (j != 0)
+	//			{
+	//				//같은줄에 배치
+	//				ImGui::SameLine();
+	//			}
+	//			//텍스쳐 좌표
+	//			LT.x = 1.0f / MF.x * j;
+	//			LT.y = 1.0f / MF.y * i;
+	//			RB.x = 1.0f / MF.x * (j + 1);
+	//			RB.y = 1.0f / MF.y * (i + 1);
+	//			ImGui::PushID(index);
+	//			if (ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV()
+	//				, size, LT, RB))
+	//			{
+	//				brushFrame.x = j;
+	//				brushFrame.y = i;
+	//				brushColor = Color{ 0.5,0.5,0.5,0.5 };
+	//			}
+	//			index++;
+	//			ImGui::PopID();
+	//		}
+	//	}
+	//}
+	//else
+	//{
+	//	//브러시(1x1) 제작
+	//	Int2 MF = map[layer]->tileImages[brushImgIdx]->maxFrame;
+	//	ImVec2 size;
+	//	size.x = 150.0f / (float)MF.x;
+	//	size.y = 150.0f / (float)MF.y;
+	//	ImVec2 LT, RB;
+	//	int index = 0;
+	//	for (UINT i = 0; i < MF.y; i++)
+	//	{
+	//		for (UINT j = 0; j < MF.x; j++)
+	//		{
+	//			if (j != 0)
+	//			{
+	//				//같은줄에 배치
+	//				ImGui::SameLine();
+	//			}
+	//			//텍스쳐 좌표
+	//			LT.x = 1.0f / MF.x * j;
+	//			LT.y = 1.0f / MF.y * i;
+	//			RB.x = 1.0f / MF.x * (j + 1);
+	//			RB.y = 1.0f / MF.y * (i + 1);
+	//			ImGui::PushID(index);
+	//			if (ImGui::ImageButton((void*)map[layer]->tileImages[brushImgIdx]->GetSRV()
+	//				, size, LT, RB))
+	//			{
+	//				brushFrame.x = j;
+	//				brushFrame.y = i;
+	//				brushColor = Color{ 0.5,0.5,0.5,0.5 };
+	//			}
+	//			index++;
+	//			ImGui::PopID();
+	//		}
+	//	}
+	}*/
 
 	
-	//UI사용
+	//UI 블럭선택
 	if (ui->GetSelectedCategory() != (int)CATEGORY::NONE) 
 		layer = (int)LAYER::BLOCK;
 
@@ -289,7 +281,13 @@ void Scene2::Update()
 			brushFrame.x = 0;
 			brushFrame.y = 0;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
-		}		
+		}	
+		else if (ui->GetSelectedProduction() == 1)
+		{
+			brushFrame.x = 2;
+			brushFrame.y = 0;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+		}
 		break;
 	case (int)CATEGORY::DISTRIBUTION:
 		SetTile((int)ImgIdx::BLOCK1x1, X1MAXFRAME_X, X1MAXFRAME_Y);
@@ -377,10 +375,10 @@ void Scene2::Update()
 
 		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
+			//2x2블럭
 			if (brushImgIdx == 3)
 			{
 				int confirmB = 0;
-				int confirmC = 0;
 				//건설
 				for (int i = 0;i < 2;i++)
 				{
@@ -397,6 +395,7 @@ void Scene2::Update()
 				if (confirmB == 4)
 					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);				
 			}
+			//1x1블럭
 			else
 			{
 				if (map[layer]->GetTileColor(Idx) != BUILDED)
@@ -407,7 +406,6 @@ void Scene2::Update()
 	}
 
 	//블럭 삭제
-	//NULL image
 	if (INPUT->KeyPress(VK_RBUTTON))
 	{
 		Int2 Idx;
@@ -415,23 +413,26 @@ void Scene2::Update()
 		if (layer == 0) layer = 1;
 		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			if (map[layer]->GetTileFrame(Idx) == Vector2(0.5f, 0.5f) and map[layer]->GetTileIdx(Idx)==3)
+			if (map[layer]->GetTileFrame(Idx).x >0  and map[layer]->GetTileIdx(Idx)==3)
 				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 			else  if(map[layer]->GetTileIdx(Idx) != 3)
-				map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);			
+				map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);	
+
+			
 		}
 	}
 
+	
+	
+
+	/////////////////////////////////////////////////////
 	for (int i = 0;i < MAXLAYER;i++)
 	{
 		map[i]->Update();
 	}
-	
-
-	/////////////////////////////////////////////////////
 	player->	Update();
 	ui->		Update();
-	//DWRITE->RenderText()
+	
 }
 
 void Scene2::LateUpdate()

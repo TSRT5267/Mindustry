@@ -94,18 +94,17 @@ void ObTileMap::SetTile2(Int2 TileIdx, Int2 FrameIdx, int ImgIdx, int TileState,
         for (int j = 0;j < 2;j++)
         {
             int tileIdx = tileSize.x * (TileIdx.y-i) + (TileIdx.x+j);
-            vertices[tileIdx * 6 + 0].uv.x = FrameIdx.x+j / (float)tileImages[ImgIdx]->maxFrame.x;
-            vertices[tileIdx * 6 + 1].uv.x = FrameIdx.x+j / (float)tileImages[ImgIdx]->maxFrame.x;
-            vertices[tileIdx * 6 + 5].uv.x = FrameIdx.x+j / (float)tileImages[ImgIdx]->maxFrame.x;
-
+            vertices[tileIdx * 6 + 0].uv.x = (FrameIdx.x+j) / (float)tileImages[ImgIdx]->maxFrame.x;
+            vertices[tileIdx * 6 + 1].uv.x = (FrameIdx.x+j) / (float)tileImages[ImgIdx]->maxFrame.x;
+            vertices[tileIdx * 6 + 5].uv.x = (FrameIdx.x+j) / (float)tileImages[ImgIdx]->maxFrame.x;
 
             vertices[tileIdx * 6 + 2].uv.x = (FrameIdx.x + 1.0f+j) / (float)tileImages[ImgIdx]->maxFrame.x;
             vertices[tileIdx * 6 + 3].uv.x = (FrameIdx.x + 1.0f+j) / (float)tileImages[ImgIdx]->maxFrame.x;
             vertices[tileIdx * 6 + 4].uv.x = (FrameIdx.x + 1.0f+j) / (float)tileImages[ImgIdx]->maxFrame.x;
-
-            vertices[tileIdx * 6 + 3].uv.y = FrameIdx.y-i / (float)tileImages[ImgIdx]->maxFrame.y;
-            vertices[tileIdx * 6 + 1].uv.y = FrameIdx.y-i / (float)tileImages[ImgIdx]->maxFrame.y;
-            vertices[tileIdx * 6 + 5].uv.y = FrameIdx.y-i / (float)tileImages[ImgIdx]->maxFrame.y;
+             
+            vertices[tileIdx * 6 + 3].uv.y = (FrameIdx.y-i) / (float)tileImages[ImgIdx]->maxFrame.y;
+            vertices[tileIdx * 6 + 1].uv.y = (FrameIdx.y-i) / (float)tileImages[ImgIdx]->maxFrame.y;
+            vertices[tileIdx * 6 + 5].uv.y = (FrameIdx.y-i) / (float)tileImages[ImgIdx]->maxFrame.y;
 
             vertices[tileIdx * 6 + 2].uv.y = (FrameIdx.y + 1.0f-i) / (float)tileImages[ImgIdx]->maxFrame.y;
             vertices[tileIdx * 6 + 0].uv.y = (FrameIdx.y + 1.0f-i) / (float)tileImages[ImgIdx]->maxFrame.y;

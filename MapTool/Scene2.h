@@ -4,7 +4,7 @@
 #define TILESCALE 32
 #define X1MAXFRAME_X 2
 #define X1MAXFRAME_Y 3
-#define X2MAXFRAME_X 2
+#define X2MAXFRAME_X 4
 #define X2MAXFRAME_Y 2
 
 

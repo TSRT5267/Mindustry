@@ -19,6 +19,7 @@ public:
 	void	Save();
 
 
-	static float zoomsize ;
+	static float	zoomsize ;
+	
 };
 

@@ -5,6 +5,7 @@ Scene* Window::main = nullptr;
 float Window::zoomsize = 1;
 
 
+
 WPARAM Window::Run(Scene* main)
 {
 	Window::main = main;
@@ -199,7 +200,9 @@ LRESULT Window::WndProc(HWND handle, UINT message, WPARAM wParam, LPARAM lParam)
 		return true;
 
 	
-
+	
+	
+	
 
 	if (message == WM_MOUSEMOVE)
 	{

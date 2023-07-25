@@ -102,7 +102,8 @@ UI::UI()
 		}
 		//카테고리(생산)
 		{
-			productionIM[0] = new ObImage(L"2x2block/mechanical_drill.jpg");
+			productionIM[0] = new ObImage(L"2x2block/mechanical_drill.png");
+			productionIM[1] = new ObImage(L"2x2block/core.png");
 			for (int i = 0;i < MAXPRODUCTION;i++)
 			{
 				productionCol[i] = new ObRect();
@@ -320,6 +321,7 @@ void UI::Init()
 	turretCol[0]->SetLocalPos(Vector2(-125,100));
 
 	productionCol[0]->SetLocalPos(Vector2(-125, 100));
+	productionCol[1]->SetLocalPos(Vector2(-85, 100));
 
 	distributionCol[0]->SetLocalPos(Vector2(-125, 100));
 	distributionCol[1]->SetLocalPos(Vector2(-85, 100));;

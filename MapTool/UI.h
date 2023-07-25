@@ -3,7 +3,7 @@
 #define MAXCATEGORY 4
 
 #define MAXTURRET 1
-#define MAXPRODUCTION 1
+#define MAXPRODUCTION 2
 #define MAXDISTRIBUTION 3
 #define MAXDEFENSE 1
 
