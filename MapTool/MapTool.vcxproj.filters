@@ -17,6 +17,10 @@
     <ClCompile Include="UI.cpp">
       <Filter>UI</Filter>
     </ClCompile>
+    <ClCompile Include="Item_copper.cpp">
+      <Filter>Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Conveyer.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -39,6 +43,10 @@
     <ClInclude Include="UI.h">
       <Filter>UI</Filter>
     </ClInclude>
+    <ClInclude Include="Item_copper.h">
+      <Filter>Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Conveyer.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">
@@ -52,6 +60,9 @@
     </Filter>
     <Filter Include="UI">
       <UniqueIdentifier>{55698809-08c2-4287-9345-78ca94704476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Item">
+      <UniqueIdentifier>{b22d4d4c-9bf4-4d1c-a149-91dea8969199}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

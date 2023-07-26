@@ -4,6 +4,7 @@
 #include "Bullet.h"
 #include "UI.h"
 
+
 Scene2::Scene2()
 {
 	for (int i = 0;i < MAXLAYER;i++)
@@ -19,9 +20,9 @@ Scene2::Scene2()
 	map[2]->file = "block.txt";
 	map[2]->Load();
 
-	brushImgIdx = 0;
-	brushFrame.x = 0;
-	brushFrame.y = 0;
+	brushImgIdx = -1;
+	brushFrame.x = -1;
+	brushFrame.y = -1;
 	brushColor = Color(0.5f, 0.5f, 0.5f, 0.5f);
 	brushState = 0;
 	//////////////////////////////////////////
@@ -271,6 +272,7 @@ void Scene2::Update()
 		{
 			brushFrame.x = 1;
 			brushFrame.y = 1;
+			brushState = 0;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
 		}						
 		break;
@@ -280,12 +282,14 @@ void Scene2::Update()
 		{
 			brushFrame.x = 0;
 			brushFrame.y = 0;
+			brushState = (int)blockState::DRILL;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
 		}	
 		else if (ui->GetSelectedProduction() == 1)
 		{
 			brushFrame.x = 2;
 			brushFrame.y = 0;
+			brushState = (int)blockState::CORE;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
 		}
 		break;
@@ -295,6 +299,7 @@ void Scene2::Update()
 		{
 			brushFrame.x = 0;
 			brushFrame.y = 0;
+			brushState = (int)blockState::CONVEYORRIGHT;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
 		}
 		else if (ui->GetSelectedDistribution() == 1)
@@ -393,7 +398,16 @@ void Scene2::Update()
 				
 
 				if (confirmB == 4)
-					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);				
+				{
+					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+
+					if (brushState == (int)blockState::DRILL)
+					{
+						drillLocation.push_back(Idx);
+					}
+				}
+					
+
 			}
 			//1x1블럭
 			else
@@ -405,7 +419,7 @@ void Scene2::Update()
 		}
 	}
 
-	//블럭 삭제
+	// 인게임 블럭 삭제 
 	if (INPUT->KeyPress(VK_RBUTTON))
 	{
 		Int2 Idx = Int2(0,0);
@@ -413,27 +427,50 @@ void Scene2::Update()
 		if (layer == 0 or layer == 1) layer = 2;
 		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			
-			if (map[layer]->GetTileIdx(Idx) == 3 and map[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f))
+			if (map[layer]->GetTileColor(Idx).w != 0.0f)
 			{
-				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);				
-			}
-			else if (map[layer]->GetTileIdx(Idx) == 3 and map[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f))
-			{
-				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-			}
-			else if (map[layer]->GetTileIdx(Idx) != 3)
-			{
-				map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-			}
-				
-
-			
+				if (map[layer]->GetTileIdx(Idx) == 3 and
+					(map[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f) or map[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f)))
+				{
+					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					auto it = find(drillLocation.begin(), drillLocation.end(), Idx);
+					if (it != drillLocation.end())
+					{
+						remove(drillLocation.begin(), drillLocation.end(), Idx);
+						drillLocation.pop_back();
+					}
+				}
+				else if (map[layer]->GetTileIdx(Idx) != 3)
+				{
+					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+				}
+			}				
 		}
 	}
+	// 개발용 블럭 삭제
+	if (INPUT->KeyDown(VK_F1))
+	{
+		Int2 Idx = Int2(0, 0);
+		brushColor = Color{ 0.5,0.5,0.5,0.0 };
+		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+		{
+			map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+		}
+	}
+	
+	
+
+
 
 	
-	
+	cout << drillLocation.size() << endl;
+
+
+
+
+
+
+
 
 	/////////////////////////////////////////////////////
 	for (int i = 0;i < MAXLAYER;i++)

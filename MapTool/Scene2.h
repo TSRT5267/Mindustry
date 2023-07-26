@@ -25,6 +25,20 @@ enum class ImgIdx
 
 };
 
+enum class blockState
+{
+	TURRET,
+	CONVEYORUP,
+	CONVEYORDOWN,
+	CONVEYORLEFT,
+	CONVEYORRIGHT,
+	JUNCTION,
+	ROUTER,
+	WALL,
+	DRILL = 10,
+	CORE,
+};
+
 class Scene2 : public Scene
 {
 private:
@@ -42,6 +56,8 @@ private:
 	Color		brushColor;
 
 	Int2		MAXframe = Int2{ 1,1 };
+
+	vector<Int2> drillLocation;
 
 private:
 

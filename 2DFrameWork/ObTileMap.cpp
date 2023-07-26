@@ -139,7 +139,7 @@ int ObTileMap::GetTileState(Vector2 WorldPos)
         return GetTileState(plIdx);
     }
 
-    return TILE_SIZE;
+    return -1;
 }
 
 Color ObTileMap::GetTileColor(Int2 TileIdx)
@@ -170,6 +170,18 @@ Vector2 ObTileMap::GetTilePosition(Int2 TileIdx)
 {
     int tileIdx = tileSize.x * TileIdx.y + TileIdx.x;
     return Vector2(vertices[tileIdx * 6].position.x, vertices[tileIdx * 6].position.y);
+}
+
+void ObTileMap::Update()
+{
+    GameObject::Update();
+
+
+
+
+
+
+
 }
 
 
@@ -578,3 +590,5 @@ bool ObTileMap::PathFinding(Vector2 sour, Vector2 dest, OUT vector<Tile*>& way)
 
     return false;
 }
+
+

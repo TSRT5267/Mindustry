@@ -30,7 +30,9 @@ bool Input::KeyUp(int KeyCode)
 
 void Input::Update()
 {
-   
+    //mouseWorldPos.x = (mouseScreenPos.x - app.GetHalfWidth()) / CAM->scale + CAM->position.x;
+    //mouseWorldPos.y = (app.GetHalfHeight() - mouseScreenPos.y) / CAM->scale + CAM->position.y;
+
     //Screen To World
     mouseWorldPos.x = mouseScreenPos.x - app.GetHalfWidth() + CAM->position.x/ CAM->scale;
     //mouseWorldPos.y = app.GetHeight() - app.GetHalfHeight() - mouseScreenPos.y ;
