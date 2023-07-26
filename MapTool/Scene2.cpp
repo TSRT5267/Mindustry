@@ -408,15 +408,25 @@ void Scene2::Update()
 	//블럭 삭제
 	if (INPUT->KeyPress(VK_RBUTTON))
 	{
-		Int2 Idx;
+		Int2 Idx = Int2(0,0);
 		brushColor = Color{ 0.5,0.5,0.5,0.0 };
-		if (layer == 0) layer = 1;
+		if (layer == 0 or layer == 1) layer = 2;
 		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			if (map[layer]->GetTileFrame(Idx).x >0  and map[layer]->GetTileIdx(Idx)==3)
+			
+			if (map[layer]->GetTileIdx(Idx) == 3 and map[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f))
+			{
+				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);				
+			}
+			else if (map[layer]->GetTileIdx(Idx) == 3 and map[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f))
+			{
 				map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-			else  if(map[layer]->GetTileIdx(Idx) != 3)
-				map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);	
+			}
+			else if (map[layer]->GetTileIdx(Idx) != 3)
+			{
+				map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+			}
+				
 
 			
 		}
