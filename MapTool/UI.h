@@ -4,7 +4,7 @@
 
 #define MAXTURRET 1
 #define MAXPRODUCTION 2
-#define MAXDISTRIBUTION 3
+#define MAXDISTRIBUTION 6
 #define MAXDEFENSE 1
 
 enum class CATEGORY

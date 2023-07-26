@@ -26,14 +26,14 @@ enum class ImgIdx
 };
 
 enum class blockState
-{
-	TURRET,
+{	
 	CONVEYORUP,
 	CONVEYORDOWN,
 	CONVEYORLEFT,
 	CONVEYORRIGHT,
 	JUNCTION,
 	ROUTER,
+	TURRET,
 	WALL,
 	DRILL = 10,
 	CORE,

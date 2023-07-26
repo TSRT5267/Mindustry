@@ -115,9 +115,12 @@ UI::UI()
 		}
 		//카테고리(분배)
 		{
-			distributionIM[0] = new ObImage(L"1x1block/conveyor.png");
-			distributionIM[1] = new ObImage(L"1x1block/junction.png");
-			distributionIM[2] = new ObImage(L"1x1block/router.png");
+			distributionIM[0] = new ObImage(L"1x1block/conveyor_up.png");
+			distributionIM[1] = new ObImage(L"1x1block/conveyor_down.png");
+			distributionIM[2] = new ObImage(L"1x1block/conveyor_left.png");
+			distributionIM[3] = new ObImage(L"1x1block/conveyor_right.png");
+			distributionIM[4] = new ObImage(L"1x1block/junction.png");
+			distributionIM[5] = new ObImage(L"1x1block/router.png");
 			for (int i = 0;i < MAXDISTRIBUTION;i++)
 			{
 				distributionCol[i] = new ObRect();
@@ -326,6 +329,9 @@ void UI::Init()
 	distributionCol[0]->SetLocalPos(Vector2(-125, 100));
 	distributionCol[1]->SetLocalPos(Vector2(-85, 100));;
 	distributionCol[2]->SetLocalPos(Vector2(-45, 100));;
+	distributionCol[3]->SetLocalPos(Vector2(-15, 100));;
+	distributionCol[4]->SetLocalPos(Vector2(-125, 60));;
+	distributionCol[5]->SetLocalPos(Vector2(-85, 60));;
 
 	defenseCol[0]->SetLocalPos(Vector2(-125, 100));
 }

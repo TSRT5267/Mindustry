@@ -268,60 +268,93 @@ void Scene2::Update()
 	{
 	case (int)CATEGORY::TURRET:
 		SetTile((int)ImgIdx::BLOCK1x1, X1MAXFRAME_X, X1MAXFRAME_Y);
-		if (ui->GetSelectedTurret()==0)
+		switch (ui->GetSelectedTurret())
 		{
-			brushFrame.x = 1;
+		case 0:
+			brushFrame.x = 2;
 			brushFrame.y = 1;
 			brushState = 0;
+			brushState = (int)blockState::TURRET;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
-		}						
+			break;
+		default:
+			break;
+		}							
 		break;
+
 	case (int)CATEGORY::PRODUCTION:
 		SetTile((int)ImgIdx::BLOCK2x2, X2MAXFRAME_X, X2MAXFRAME_Y);
-		if (ui->GetSelectedProduction()==0)
+		switch (ui->GetSelectedProduction())
 		{
+		case 0:
 			brushFrame.x = 0;
 			brushFrame.y = 0;
 			brushState = (int)blockState::DRILL;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
-		}	
-		else if (ui->GetSelectedProduction() == 1)
-		{
+			break;
+		case 1:
 			brushFrame.x = 2;
 			brushFrame.y = 0;
 			brushState = (int)blockState::CORE;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			break;
+		default:
+			break;
 		}
 		break;
+
 	case (int)CATEGORY::DISTRIBUTION:
 		SetTile((int)ImgIdx::BLOCK1x1, X1MAXFRAME_X, X1MAXFRAME_Y);
-		if (ui->GetSelectedDistribution()==0)
+		switch (ui->GetSelectedDistribution())
 		{
+		case 0:
 			brushFrame.x = 0;
+			brushFrame.y = 0;
+			brushState = (int)blockState::CONVEYORUP;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			break;
+		case 1:
+			brushFrame.x = 1;
+			brushFrame.y = 0;
+			brushState = (int)blockState::CONVEYORDOWN;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			break;
+		case 2:
+			brushFrame.x = 2;
+			brushFrame.y = 0;
+			brushState = (int)blockState::CONVEYORLEFT;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			break;
+		case 3:
+			brushFrame.x = 3;
 			brushFrame.y = 0;
 			brushState = (int)blockState::CONVEYORRIGHT;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
-		}
-		else if (ui->GetSelectedDistribution() == 1)
-		{
-			brushFrame.x = 1;
-			brushFrame.y = 0;
-			brushColor = Color{ 0.5,0.5,0.5,0.5 };
-		}
-		else if (ui->GetSelectedDistribution() == 2)
-		{
+			break;
+		case 4:
 			brushFrame.x = 0;
 			brushFrame.y = 1;
+			brushState = (int)blockState::JUNCTION;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
-		}
-		
+			break;
+		case 5:
+			brushFrame.x = 1;
+			brushFrame.y = 1;
+			brushState = (int)blockState::ROUTER;
+			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			break;
+		default:
+			break;
+		}	
 		break;
+
 	case (int)CATEGORY::DEFENSE:
 		SetTile((int)ImgIdx::BLOCK1x1, X1MAXFRAME_X, X1MAXFRAME_Y);
 		if (ui->GetSelectedDefense() == 0)
 		{
-			brushFrame.x = 0;
-			brushFrame.y = 2;
+			brushFrame.x = 3;
+			brushFrame.y = 1;
+			brushState = (int)blockState::WALL;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
 		}
 		break;
