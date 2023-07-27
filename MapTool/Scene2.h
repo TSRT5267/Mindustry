@@ -2,8 +2,8 @@
 #define MAXLAYER 3
 #define TILESIZE 50
 #define TILESCALE 32
-#define X1MAXFRAME_X 2
-#define X1MAXFRAME_Y 3
+#define X1MAXFRAME_X 4
+#define X1MAXFRAME_Y 2
 #define X2MAXFRAME_X 4
 #define X2MAXFRAME_Y 2
 
@@ -57,7 +57,15 @@ private:
 
 	Int2		MAXframe = Int2{ 1,1 };
 
+	vector<Int2> turretLocation;
+	vector<Int2> CVUpLocation;
+	vector<Int2> CVDownLocation;
+	vector<Int2> CVLeftLocation;
+	vector<Int2> CVRightLocation;
+	vector<Int2> junctionLocation;
+	vector<Int2> routerLocation;
 	vector<Int2> drillLocation;
+	vector<Int2> coreLocation;
 
 private:
 
@@ -78,4 +86,8 @@ public:
 public:
 	void SAVE() { map[0]->Save(); map[1]->Save();map[2]->Save();};
 	void SetTile(int Idx, int MAX_X, int MAX_Y);
+	void RememberLocation(int state, vector<Int2> Location, Int2 Idx);
+	void ForgetLocation(vector<Int2> Location, Int2 Idx);
+	
+
 };

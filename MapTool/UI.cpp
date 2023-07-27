@@ -329,7 +329,7 @@ void UI::Init()
 	distributionCol[0]->SetLocalPos(Vector2(-125, 100));
 	distributionCol[1]->SetLocalPos(Vector2(-85, 100));;
 	distributionCol[2]->SetLocalPos(Vector2(-45, 100));;
-	distributionCol[3]->SetLocalPos(Vector2(-15, 100));;
+	distributionCol[3]->SetLocalPos(Vector2(-5, 100));;
 	distributionCol[4]->SetLocalPos(Vector2(-125, 60));;
 	distributionCol[5]->SetLocalPos(Vector2(-85, 60));;
 

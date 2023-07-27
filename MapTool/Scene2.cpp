@@ -273,7 +273,6 @@ void Scene2::Update()
 		case 0:
 			brushFrame.x = 2;
 			brushFrame.y = 1;
-			brushState = 0;
 			brushState = (int)blockState::TURRET;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
 			break;
@@ -434,10 +433,8 @@ void Scene2::Update()
 				{
 					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 
-					if (brushState == (int)blockState::DRILL)
-					{
-						drillLocation.push_back(Idx);
-					}
+					RememberLocation((int)blockState::DRILL, drillLocation, Idx);
+					RememberLocation((int)blockState::CORE, coreLocation, Idx);					
 				}
 					
 
@@ -447,7 +444,13 @@ void Scene2::Update()
 			{
 				if (map[layer]->GetTileColor(Idx) != BUILDED)
 					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-				
+				RememberLocation((int)blockState::CONVEYORUP, CVUpLocation, Idx);
+				RememberLocation((int)blockState::CONVEYORDOWN, CVDownLocation, Idx);
+				RememberLocation((int)blockState::CONVEYORLEFT, CVLeftLocation, Idx);
+				RememberLocation((int)blockState::CONVEYORRIGHT, CVRightLocation, Idx);
+				RememberLocation((int)blockState::JUNCTION, junctionLocation, Idx);
+				RememberLocation((int)blockState::ROUTER, routerLocation, Idx);
+				RememberLocation((int)blockState::TURRET, turretLocation, Idx);
 			}
 		}
 	}
@@ -466,12 +469,10 @@ void Scene2::Update()
 					(map[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f) or map[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f)))
 				{
 					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					auto it = find(drillLocation.begin(), drillLocation.end(), Idx);
-					if (it != drillLocation.end())
-					{
-						remove(drillLocation.begin(), drillLocation.end(), Idx);
-						drillLocation.pop_back();
-					}
+
+					ForgetLocation(drillLocation,Idx);
+					ForgetLocation(coreLocation,Idx);
+					
 				}
 				else if (map[layer]->GetTileIdx(Idx) != 3)
 				{
@@ -550,5 +551,47 @@ void Scene2::SetTile(int Idx,int MAX_X,int MAX_Y)
 	brushImgIdx = Idx;
 	map[layer]->tileImages[brushImgIdx]->maxFrame.x = MAX_X;
 	map[layer]->tileImages[brushImgIdx]->maxFrame.y = MAX_Y;
+}
+
+void Scene2::RememberLocation(int state,vector<Int2> Location,Int2 Idx)
+{
+	if (brushState == state)
+	{
+		if (brushImgIdx == 3)
+		{
+			Int2 it = Idx;
+			Location.push_back(it);
+			it.x += 1;
+			Location.push_back(it);
+			it.y += 1;
+			Location.push_back(it);
+			it.x -= 1;
+			Location.push_back(it);
+		}
+		else
+		{
+			Location.push_back(Idx);
+		}
+	}
+}
+
+void Scene2::ForgetLocation(vector<Int2> Location, Int2 Idx)
+{
+	if (map[layer]->GetTileIdx(Idx) == 3)
+	{
+
+
+
+	}
+	else
+	{
+		auto it = find(Location.begin(), Location.end(), Idx);
+		if (it != Location.end())
+		{
+			remove(Location.begin(), Location.end(), Idx);
+			Location.pop_back();
+		}
+	}
+	
 }
 

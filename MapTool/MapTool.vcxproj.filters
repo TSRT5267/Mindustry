@@ -20,7 +20,10 @@
     <ClCompile Include="Item_copper.cpp">
       <Filter>Item</Filter>
     </ClCompile>
-    <ClCompile Include="Conveyer.cpp" />
+    <ClCompile Include="Conveyer.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="BlockFunction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -46,7 +49,10 @@
     <ClInclude Include="Item_copper.h">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="Conveyer.h" />
+    <ClInclude Include="Conveyer.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="BlockFunction.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">
@@ -63,6 +69,9 @@
     </Filter>
     <Filter Include="Item">
       <UniqueIdentifier>{b22d4d4c-9bf4-4d1c-a149-91dea8969199}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BlockFunction">
+      <UniqueIdentifier>{79bba435-94b2-49c3-bf49-2b91c1ed47c4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
