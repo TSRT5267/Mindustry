@@ -23,7 +23,12 @@
     <ClCompile Include="Conveyer.cpp">
       <Filter>BlockFunction</Filter>
     </ClCompile>
-    <ClCompile Include="BlockFunction.cpp" />
+    <ClCompile Include="Drill.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="BFM.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -52,7 +57,12 @@
     <ClInclude Include="Conveyer.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
-    <ClInclude Include="BlockFunction.h" />
+    <ClInclude Include="Drill.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="BFM.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">

@@ -1,12 +1,15 @@
 #include "stdafx.h"
-#include "Scene2.h"
 #include "Player.h"
 #include "Bullet.h"
 #include "UI.h"
+#include "BFM.h"
+#include "Scene2.h"
 
 
 Scene2::Scene2()
 {
+	//bfm = new BFM();
+
 	for (int i = 0;i < MAXLAYER;i++)
 	{
 		map[i] = new ObTileMap();
@@ -64,6 +67,8 @@ void Scene2::Release()
 
 void Scene2::Update()
 {
+	//bfm->save(blockLocation);
+
 	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
 	ImGui::Text("pause : %d", (int)isTimeStop);
 
@@ -432,9 +437,7 @@ void Scene2::Update()
 				if (confirmB == 4)
 				{
 					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-
-					RememberLocation((int)blockState::DRILL, drillLocation, Idx);
-					RememberLocation((int)blockState::CORE, coreLocation, Idx);					
+					RememberLocation(blockLocation, Idx);
 				}
 					
 
@@ -443,14 +446,12 @@ void Scene2::Update()
 			else
 			{
 				if (map[layer]->GetTileColor(Idx) != BUILDED)
+				{
 					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-				RememberLocation((int)blockState::CONVEYORUP, CVUpLocation, Idx);
-				RememberLocation((int)blockState::CONVEYORDOWN, CVDownLocation, Idx);
-				RememberLocation((int)blockState::CONVEYORLEFT, CVLeftLocation, Idx);
-				RememberLocation((int)blockState::CONVEYORRIGHT, CVRightLocation, Idx);
-				RememberLocation((int)blockState::JUNCTION, junctionLocation, Idx);
-				RememberLocation((int)blockState::ROUTER, routerLocation, Idx);
-				RememberLocation((int)blockState::TURRET, turretLocation, Idx);
+					RememberLocation(blockLocation, Idx);
+				}
+					
+				
 			}
 		}
 	}
@@ -470,13 +471,12 @@ void Scene2::Update()
 				{
 					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 
-					ForgetLocation(drillLocation,Idx);
-					ForgetLocation(coreLocation,Idx);
-					
+					ForgetLocation(blockLocation,Idx);										
 				}
 				else if (map[layer]->GetTileIdx(Idx) != 3)
 				{
 					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					ForgetLocation(blockLocation, Idx);
 				}
 			}				
 		}
@@ -497,15 +497,14 @@ void Scene2::Update()
 
 
 	
-	cout << drillLocation.size() << endl;
+	
 
 
 
 
 
 
-
-
+	//bfm->build(blockLocation);
 	/////////////////////////////////////////////////////
 	for (int i = 0;i < MAXLAYER;i++)
 	{
@@ -553,44 +552,49 @@ void Scene2::SetTile(int Idx,int MAX_X,int MAX_Y)
 	map[layer]->tileImages[brushImgIdx]->maxFrame.y = MAX_Y;
 }
 
-void Scene2::RememberLocation(int state,vector<Int2> Location,Int2 Idx)
+void Scene2::RememberLocation(unordered_map<Int2, int> Location,Int2 Idx)
 {
-	if (brushState == state)
+	if (brushImgIdx == 3)
 	{
-		if (brushImgIdx == 3)
+		for (int i = 0;i < 2;i++)
 		{
-			Int2 it = Idx;
-			Location.push_back(it);
-			it.x += 1;
-			Location.push_back(it);
-			it.y += 1;
-			Location.push_back(it);
-			it.x -= 1;
-			Location.push_back(it);
+			for (int j = 0;j < 2;j++)
+			{
+				Int2 IDX = Idx;
+				IDX.x += j;
+				IDX.y -= i;
+
+				Location.insert(make_pair(IDX, brushState));
+			}
 		}
-		else
-		{
-			Location.push_back(Idx);
-		}
-	}
-}
-
-void Scene2::ForgetLocation(vector<Int2> Location, Int2 Idx)
-{
-	if (map[layer]->GetTileIdx(Idx) == 3)
-	{
-
-
-
 	}
 	else
 	{
-		auto it = find(Location.begin(), Location.end(), Idx);
-		if (it != Location.end())
+		Location.insert(make_pair(Idx, brushState));
+	}
+
+}
+
+void Scene2::ForgetLocation(unordered_map<Int2, int> Location, Int2 Idx)
+{
+	if (map[layer]->GetTileIdx(Idx) == 3)
+	{
+		
+		for (int i = 0;i < 2;i++) 
 		{
-			remove(Location.begin(), Location.end(), Idx);
-			Location.pop_back();
+			for (int j = 0;j < 2;j++)
+			{
+				Int2 IDX = Idx;
+				IDX.x += j;
+				IDX.y -= i;
+
+				Location.erase(IDX);				
+			}
 		}
+	}
+	else
+	{
+		Location.erase(Idx);
 	}
 	
 }
