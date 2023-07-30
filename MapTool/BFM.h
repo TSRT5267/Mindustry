@@ -1,18 +1,6 @@
 #pragma once
 
-enum class blockState
-{
-	CONVEYORUP,
-	CONVEYORDOWN,
-	CONVEYORLEFT,
-	CONVEYORRIGHT,
-	JUNCTION,
-	ROUTER,
-	TURRET,
-	WALL,
-	DRILL = 10,
-	CORE,
-};
+
 
 class BFM
 {
@@ -35,9 +23,9 @@ private:
 
 
 public:
-	void Update(unordered_map<Int2, int> location);
-	void save(unordered_map<Int2, int> location);
-	void build(unordered_map<Int2, int> location);
+	void Update(map<Int2, int> location);
+	void save(map<Int2, int> location);
+	void build(map<Int2, int> location);
 	
 
 

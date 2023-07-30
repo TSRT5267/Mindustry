@@ -25,11 +25,25 @@ enum class ImgIdx
 
 };
 
+enum class blockState
+{
+	CONVEYORUP,
+	CONVEYORDOWN,
+	CONVEYORLEFT,
+	CONVEYORRIGHT,
+	JUNCTION,
+	ROUTER,
+	TURRET,
+	WALL,
+	DRILL = 10,
+	CORE,
+};
+
 class Scene2 : public Scene
 {
 private:
 
-	ObTileMap* map[MAXLAYER];
+	ObTileMap* Tmap[MAXLAYER];
 	Int2		tileSize;
 	
 	int			layer;
@@ -42,7 +56,7 @@ private:
 
 	Int2		MAXframe = Int2{ 1,1 };
 
-	unordered_map<Int2, int> blockLocation;
+	map<Int2, int> blockLocation;
 	class BFM*	bfm;
 
 private:
@@ -62,10 +76,10 @@ public:
 	virtual void ResizeScreen() override;
 
 public:
-	void SAVE() { map[0]->Save(); map[1]->Save();map[2]->Save();};
+	void SAVE() { Tmap[0]->Save(); Tmap[1]->Save();Tmap[2]->Save();};
 	void SetTile(int Idx, int MAX_X, int MAX_Y);
-	void RememberLocation( unordered_map<Int2, int> Location, Int2 Idx);
-	void ForgetLocation(unordered_map<Int2, int> Location, Int2 Idx);
+	void RememberLocation(map< Int2, int > L, Int2 Idx);
+	void ForgetLocation(map< Int2, int > L, Int2 Idx);
 	
 
 };

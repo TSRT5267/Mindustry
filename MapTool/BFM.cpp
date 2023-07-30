@@ -3,7 +3,7 @@
 #include "BFM.h"
 
 
-void BFM::Update(unordered_map<Int2, int> location)
+void BFM::Update(map<Int2, int> location)
 {
 	
 
@@ -12,14 +12,14 @@ void BFM::Update(unordered_map<Int2, int> location)
 
 }
 
-void BFM::save(unordered_map<Int2, int> location)
+void BFM::save(map<Int2, int> location)
 {
 	/*prevMap.clear();
 	prevMap.insert(location.begin(), location.end());*/
 	
 }
 
-void BFM::build(unordered_map<Int2, int> location)
+void BFM::build(map<Int2, int> location)
 {
 	//for (const auto& entry : location)
 	//{
@@ -57,6 +57,6 @@ void BFM::build(unordered_map<Int2, int> location)
 	//}
 
 	//Å×½ºÆ®
-	ImGui::Text("FPS : %d", (int)CVUpLocation.size());
+	//ImGui::Text("FPS : %d", (int)CVUpLocation.size());
 }
 

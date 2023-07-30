@@ -8,20 +8,21 @@
 
 Scene2::Scene2()
 {
-	//bfm = new BFM();
+	bfm = new BFM();
+	
 
 	for (int i = 0;i < MAXLAYER;i++)
 	{
-		map[i] = new ObTileMap();
-		map[i]->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
+		Tmap[i] = new ObTileMap();
+		Tmap[i]->color = Color(0.5f, 0.5f, 0.5f, 0.5f);
 
 	}
-	map[0]->file = "ground.txt";
-	map[0]->Load();
-	map[1]->file = "environment.txt";
-	map[1]->Load();
-	map[2]->file = "block.txt";
-	map[2]->Load();
+	Tmap[0]->file = "ground.txt";
+	Tmap[0]->Load();
+	Tmap[1]->file = "environment.txt";
+	Tmap[1]->Load();
+	Tmap[2]->file = "block.txt";
+	Tmap[2]->Load();
 
 	brushImgIdx = -1;
 	brushFrame.x = -1;
@@ -41,6 +42,7 @@ Scene2::~Scene2()
 {
 	delete player;
 	delete ui;
+	delete bfm;
 }
 
 void Scene2::Init()
@@ -51,9 +53,9 @@ void Scene2::Init()
 	layer = 0;
 	for (int i = 0;i < MAXLAYER;i++)
 	{
-		map[i]->ResizeTile(Int2(TILESIZE, TILESIZE));
-		map[i]->scale = Vector2(TILESCALE, TILESCALE);
-		map[i]->SetWorldPos(Vector2(-TILESIZE * TILESCALE / 2, -TILESIZE * TILESCALE / 2));
+		Tmap[i]->ResizeTile(Int2(TILESIZE, TILESIZE));
+		Tmap[i]->scale = Vector2(TILESCALE, TILESCALE);
+		Tmap[i]->SetWorldPos(Vector2(-TILESIZE * TILESCALE / 2, -TILESIZE * TILESCALE / 2));
 	}
 
 	
@@ -79,9 +81,9 @@ void Scene2::Update()
 	//메뉴(저장 후 나가기)
 	if (ui->Save() == true)
 	{
-		map[0]->Save();
-		map[1]->Save();
-		map[2]->Save();
+		Tmap[0]->Save();
+		Tmap[1]->Save();
+		Tmap[2]->Save();
 		if (INPUT->KeyPress(VK_LBUTTON)) PostQuitMessage(0);
 	}
 
@@ -98,7 +100,7 @@ void Scene2::Update()
 
 	}
 
-
+	
 	//이미지 불러오기
 	for (int i = 0; i < 4; i++)
 	{
@@ -110,14 +112,14 @@ void Scene2::Update()
 			Utility::Replace(&path, "\\", "/");
 			size_t tok = path.find("/Images/") + 8;
 			path = path.substr(tok, path.length());
-			SafeDelete(map[0]->tileImages[i]);
-			SafeDelete(map[1]->tileImages[i]);
-			SafeDelete(map[2]->tileImages[i]);
+			SafeDelete(Tmap[0]->tileImages[i]);
+			SafeDelete(Tmap[1]->tileImages[i]);
+			SafeDelete(Tmap[2]->tileImages[i]);
 			wstring wImgFile = L"";
 			wImgFile.assign(path.begin(), path.end());
-			map[0]->tileImages[i] = new ObImage(wImgFile);
-			map[1]->tileImages[i] = new ObImage(wImgFile);
-			map[2]->tileImages[i] = new ObImage(wImgFile);
+			Tmap[0]->tileImages[i] = new ObImage(wImgFile);
+			Tmap[1]->tileImages[i] = new ObImage(wImgFile);
+			Tmap[2]->tileImages[i] = new ObImage(wImgFile);
 			break;
 		}
 		if (i < 3)
@@ -415,7 +417,7 @@ void Scene2::Update()
 		Color BUILDED = { 0.5,0.5,0.5,0.5 };
 		Int2 Idx;
 
-		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+		if (Tmap[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
 			//2x2블럭
 			if (brushImgIdx == 3)
@@ -429,14 +431,14 @@ void Scene2::Update()
 						Int2 range;
 						range.x = Idx.x + i;
 						range.y = Idx.y - j;
-						if (map[layer]->GetTileColor(range) != BUILDED) confirmB++;
+						if (Tmap[layer]->GetTileColor(range) != BUILDED) confirmB++;
 					}
 				}
 				
 
 				if (confirmB == 4)
 				{
-					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 					RememberLocation(blockLocation, Idx);
 				}
 					
@@ -445,9 +447,9 @@ void Scene2::Update()
 			//1x1블럭
 			else
 			{
-				if (map[layer]->GetTileColor(Idx) != BUILDED)
+				if (Tmap[layer]->GetTileColor(Idx) != BUILDED)
 				{
-					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 					RememberLocation(blockLocation, Idx);
 				}
 					
@@ -462,21 +464,21 @@ void Scene2::Update()
 		Int2 Idx = Int2(0,0);
 		brushColor = Color{ 0.5,0.5,0.5,0.0 };
 		if (layer == 0 or layer == 1) layer = 2;
-		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+		if (Tmap[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			if (map[layer]->GetTileColor(Idx).w != 0.0f)
+			if (Tmap[layer]->GetTileColor(Idx).w != 0.0f)
 			{
-				if (map[layer]->GetTileIdx(Idx) == 3 and
-					(map[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f) or map[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f)))
+				if (Tmap[layer]->GetTileIdx(Idx) == 3 and
+					(Tmap[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f) or Tmap[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f)))
 				{
-					map[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 
-					ForgetLocation(blockLocation,Idx);										
+					//ForgetLocation(blockLocation,Idx);										
 				}
-				else if (map[layer]->GetTileIdx(Idx) != 3)
+				else if (Tmap[layer]->GetTileIdx(Idx) != 3)
 				{
-					map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					ForgetLocation(blockLocation, Idx);
+					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					//ForgetLocation(blockLocation, Idx);
 				}
 			}				
 		}
@@ -486,9 +488,9 @@ void Scene2::Update()
 	{
 		Int2 Idx = Int2(0, 0);
 		brushColor = Color{ 0.5,0.5,0.5,0.0 };
-		if (map[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
+		if (Tmap[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
-			map[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+			Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 		}
 	}
 	
@@ -508,7 +510,7 @@ void Scene2::Update()
 	/////////////////////////////////////////////////////
 	for (int i = 0;i < MAXLAYER;i++)
 	{
-		map[i]->Update();
+		Tmap[i]->Update();
 	}
 	player->	Update();
 	ui->		Update();
@@ -525,12 +527,12 @@ void Scene2::Render()
 	{
 		for (int i = 0;i < MAXLAYER;i++)
 		{
-			map[i]->Render();
+			Tmap[i]->Render();
 		}
 	}
 	else
 	{
-		map[layer]->Render();
+		Tmap[layer]->Render();
 	}
 
 
@@ -548,11 +550,11 @@ void Scene2::ResizeScreen()
 void Scene2::SetTile(int Idx,int MAX_X,int MAX_Y)
 {
 	brushImgIdx = Idx;
-	map[layer]->tileImages[brushImgIdx]->maxFrame.x = MAX_X;
-	map[layer]->tileImages[brushImgIdx]->maxFrame.y = MAX_Y;
+	Tmap[layer]->tileImages[brushImgIdx]->maxFrame.x = MAX_X;
+	Tmap[layer]->tileImages[brushImgIdx]->maxFrame.y = MAX_Y;
 }
 
-void Scene2::RememberLocation(unordered_map<Int2, int> Location,Int2 Idx)
+void Scene2::RememberLocation(map<Int2, int> L,Int2 Idx)
 {
 	if (brushImgIdx == 3)
 	{
@@ -564,37 +566,37 @@ void Scene2::RememberLocation(unordered_map<Int2, int> Location,Int2 Idx)
 				IDX.x += j;
 				IDX.y -= i;
 
-				Location.insert(make_pair(IDX, brushState));
+				L.insert(make_pair(IDX, brushState));
 			}
 		}
 	}
 	else
 	{
-		Location.insert(make_pair(Idx, brushState));
+		L.insert(make_pair(Idx, brushState));
 	}
 
 }
 
-void Scene2::ForgetLocation(unordered_map<Int2, int> Location, Int2 Idx)
+void Scene2::ForgetLocation(map<Int2, int> L, Int2 Idx)
 {
-	if (map[layer]->GetTileIdx(Idx) == 3)
+	if (Tmap[layer]->GetTileIdx(Idx) == 3)
 	{
 		
 		for (int i = 0;i < 2;i++) 
 		{
 			for (int j = 0;j < 2;j++)
 			{
-				Int2 IDX = Idx;
-				IDX.x += j;
-				IDX.y -= i;
+				Int2 it = Idx;
+				it.x += j;
+				it.y -= i;
 
-				Location.erase(IDX);				
+				L.erase(it);
 			}
 		}
 	}
 	else
 	{
-		Location.erase(Idx);
+		L.erase(Idx);
 	}
 	
 }
