@@ -56,7 +56,7 @@ private:
 
 	Int2		MAXframe = Int2{ 1,1 };
 
-	map<Int2, int> blockLocation;
+	//map<Int2, int> blockLocation;
 	class BFM*	bfm;
 
 private:
@@ -78,8 +78,8 @@ public:
 public:
 	void SAVE() { Tmap[0]->Save(); Tmap[1]->Save();Tmap[2]->Save();};
 	void SetTile(int Idx, int MAX_X, int MAX_Y);
-	void RememberLocation(map< Int2, int > L, Int2 Idx);
-	void ForgetLocation(map< Int2, int > L, Int2 Idx);
+	
+	
 	
 
 };

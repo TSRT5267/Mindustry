@@ -69,7 +69,7 @@ void Scene2::Release()
 
 void Scene2::Update()
 {
-	//bfm->save(blockLocation);
+	
 
 	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
 	ImGui::Text("pause : %d", (int)isTimeStop);
@@ -438,8 +438,8 @@ void Scene2::Update()
 
 				if (confirmB == 4)
 				{
-					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					RememberLocation(blockLocation, Idx);
+					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);					
+					bfm->SaveLocation(brushImgIdx, brushState, Idx);
 				}
 					
 
@@ -450,7 +450,7 @@ void Scene2::Update()
 				if (Tmap[layer]->GetTileColor(Idx) != BUILDED)
 				{
 					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					RememberLocation(blockLocation, Idx);
+					bfm->SaveLocation(brushImgIdx, brushState, Idx);
 				}
 					
 				
@@ -472,13 +472,12 @@ void Scene2::Update()
 					(Tmap[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f) or Tmap[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f)))
 				{
 					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-
-					//ForgetLocation(blockLocation,Idx);										
+					bfm->RemoveLocation(brushImgIdx, brushState, Idx);
 				}
 				else if (Tmap[layer]->GetTileIdx(Idx) != 3)
 				{
 					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					//ForgetLocation(blockLocation, Idx);
+					bfm->RemoveLocation(brushImgIdx, brushState, Idx);
 				}
 			}				
 		}
@@ -554,50 +553,5 @@ void Scene2::SetTile(int Idx,int MAX_X,int MAX_Y)
 	Tmap[layer]->tileImages[brushImgIdx]->maxFrame.y = MAX_Y;
 }
 
-void Scene2::RememberLocation(map<Int2, int> L,Int2 Idx)
-{
-	if (brushImgIdx == 3)
-	{
-		for (int i = 0;i < 2;i++)
-		{
-			for (int j = 0;j < 2;j++)
-			{
-				Int2 IDX = Idx;
-				IDX.x += j;
-				IDX.y -= i;
 
-				L.insert(make_pair(IDX, brushState));
-			}
-		}
-	}
-	else
-	{
-		L.insert(make_pair(Idx, brushState));
-	}
-
-}
-
-void Scene2::ForgetLocation(map<Int2, int> L, Int2 Idx)
-{
-	if (Tmap[layer]->GetTileIdx(Idx) == 3)
-	{
-		
-		for (int i = 0;i < 2;i++) 
-		{
-			for (int j = 0;j < 2;j++)
-			{
-				Int2 it = Idx;
-				it.x += j;
-				it.y -= i;
-
-				L.erase(it);
-			}
-		}
-	}
-	else
-	{
-		L.erase(Idx);
-	}
-	
-}
 
