@@ -5,7 +5,7 @@ class Main : public Scene
 private:
 	
 	ObImage* cursor;
-
+	
 
 
 public:
@@ -17,4 +17,6 @@ public:
 	virtual void LateUpdate() override;//°»½Å
 	virtual void Render() override;
 	virtual void ResizeScreen() override;
+
+
 };

@@ -29,6 +29,9 @@
     <ClCompile Include="BFM.cpp">
       <Filter>BlockFunction</Filter>
     </ClCompile>
+    <ClCompile Include="FunctionVector.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -61,6 +64,9 @@
       <Filter>BlockFunction</Filter>
     </ClInclude>
     <ClInclude Include="BFM.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctionVector.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
   </ItemGroup>

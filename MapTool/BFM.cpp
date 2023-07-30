@@ -1,12 +1,19 @@
 #include "stdafx.h"
+#include "FunctionVector.h"
 #include "Drill.h"
 #include "Scene2.h"
+
 #include "BFM.h"
 
 
 void BFM::Update()
 {
+	for (auto& drill : drillLocation) 
+	{
+		drill.Update();
+	}
 	
+
 
 
 
@@ -53,6 +60,7 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 				drillLocation.push_back(IDX);
 			}
 		}
+
 		break;
 	case (int)blockState::CORE:
 		for (int i = 0;i < 2;i++)

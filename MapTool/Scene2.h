@@ -78,7 +78,7 @@ public:
 public:
 	void SAVE() { Tmap[0]->Save(); Tmap[1]->Save();Tmap[2]->Save();};
 	void SetTile(int Idx, int MAX_X, int MAX_Y);
-	
+	int GetTileState(Int2 IDX) { return Tmap[(int)LAYER::BLOCK]->GetTileState(IDX); };
 	
 	
 

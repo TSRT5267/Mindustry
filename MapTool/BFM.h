@@ -6,7 +6,7 @@ class BFM
 {
 private:
 
-	map<Int2,int> prevMap;
+	
 
 
 	
@@ -17,7 +17,7 @@ private:
 	vector<Int2> junctionLocation;
 	vector<Int2> routerLocation;
 	vector<Int2> turretLocation;
-	vector<Int2> drillLocation;
+	vector<Drill> drillLocation;
 	vector<Int2> coreLocation;
 
 

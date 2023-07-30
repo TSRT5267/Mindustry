@@ -1,20 +1,24 @@
 #pragma once
-
+#define MAXIC 12
 
 
 
 class Drill
 {
 private:
-
+	Int2 location;
+	int scaneLocation;
+	int itemCapacity;
 
 
 
 public:
-	Drill();
+	Drill(Int2 Location) : location(Location) {};
 	~Drill();
-	void MineItem(vector<Int2> Location);
-	void DeliverItem();
+	void  Update();
 
+public:
+	void Mining();
+	void Scane();
 };
 
