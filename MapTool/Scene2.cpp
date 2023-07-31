@@ -513,7 +513,7 @@ void Scene2::Update()
 	}
 	player->	Update();
 	ui->		Update();
-	
+	bfm->		Update(Tmap[(int)LAYER::BLOCK]);
 }
 
 void Scene2::LateUpdate()

@@ -20,16 +20,13 @@
     <ClCompile Include="Item_copper.cpp">
       <Filter>Item</Filter>
     </ClCompile>
-    <ClCompile Include="Conveyer.cpp">
-      <Filter>BlockFunction</Filter>
-    </ClCompile>
     <ClCompile Include="Drill.cpp">
       <Filter>BlockFunction</Filter>
     </ClCompile>
     <ClCompile Include="BFM.cpp">
       <Filter>BlockFunction</Filter>
     </ClCompile>
-    <ClCompile Include="FunctionVector.cpp">
+    <ClCompile Include="CV_UP.cpp">
       <Filter>BlockFunction</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,16 +54,13 @@
     <ClInclude Include="Item_copper.h">
       <Filter>Item</Filter>
     </ClInclude>
-    <ClInclude Include="Conveyer.h">
-      <Filter>BlockFunction</Filter>
-    </ClInclude>
     <ClInclude Include="Drill.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
     <ClInclude Include="BFM.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
-    <ClInclude Include="FunctionVector.h">
+    <ClInclude Include="CV_UP.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
   </ItemGroup>

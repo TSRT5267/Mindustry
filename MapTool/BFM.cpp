@@ -1,16 +1,14 @@
 #include "stdafx.h"
-#include "FunctionVector.h"
-#include "Drill.h"
 #include "Scene2.h"
-
 #include "BFM.h"
+#include "Drill.h"
+#include "CV_UP.h"
 
-
-void BFM::Update()
+void BFM::Update(ObTileMap* M)
 {
 	for (auto& drill : drillLocation) 
 	{
-		drill.Update();
+		drill->Update(M);
 	}
 	
 
@@ -28,7 +26,7 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 	switch (state)
 	{
 	case (int)blockState::CONVEYORUP:
-		CVUpLocation.push_back(inx);
+		CVUpLocation.push_back(new CV_UP(inx));
 		break;
 	case (int)blockState::CONVEYORDOWN:
 		CVDownLocation.push_back(inx);
@@ -57,7 +55,8 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 				IDX.x += j;
 				IDX.y -= i;
 
-				drillLocation.push_back(IDX);
+				drillLocation.push_back(new Drill(IDX));
+				
 			}
 		}
 
@@ -82,10 +81,15 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 
 void BFM::RemoveLocation(int imidx, int state, Int2 inx)
 {
+	
+
 	switch (state)
 	{
 	case (int)blockState::CONVEYORUP:
-		CVUpLocation.erase(remove(CVUpLocation.begin(), CVUpLocation.end(), inx), CVUpLocation.end());
+		auto it = remove_if(CVUpLocation.begin(), CVUpLocation.end(),
+			[inx](const unique_ptr<CV_UP>& cv) { return *cv == CV_UP(inx); });
+		if (it != CVUpLocation.end())
+			CVUpLocation.erase(it);		
 		break;
 	case (int)blockState::CONVEYORDOWN:
 		CVDownLocation.erase(remove(CVDownLocation.begin(), CVDownLocation.end(), inx), CVDownLocation.end());
@@ -114,7 +118,10 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx)
 				IDX.x += j;
 				IDX.y -= i;
 
-				drillLocation.erase(remove(drillLocation.begin(), drillLocation.end(), IDX), drillLocation.end());
+				auto it = remove_if(drillLocation.begin(), drillLocation.end(),
+					[IDX](const unique_ptr<Drill>& drill) { return *drill == Drill(IDX); });
+				if (it != drillLocation.end())
+					drillLocation.erase(it);
 			}
 		}
 		break;

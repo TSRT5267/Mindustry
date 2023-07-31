@@ -1,24 +1,29 @@
 #pragma once
 #define MAXIC 12
 
-
-
 class Drill
 {
 private:
-	Int2 location;
-	int scaneLocation;
-	int itemCapacity;
+	Int2	location;	
+	int		itemCapacity;
 
+	bool	findCV;
+	Int2	scaneLocation;
 
 
 public:
-	Drill(Int2 Location) : location(Location) {};
+	Drill(Int2 Location);
 	~Drill();
-	void  Update();
+	void  Update(ObTileMap* M);
+	bool operator==(const Drill& other) const
+	{
+		return this->location.x == other.location.x and this->location.y == other.location.y;
+	};
 
 public:
-	void Mining();
-	void Scane();
+	
+	void  Mining();
+	void  SendItem();
+	void  Scane(ObTileMap* M);
 };
 
