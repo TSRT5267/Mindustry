@@ -7,15 +7,16 @@ private:
 
 
 public:
-	CV_UP(Int2 Location);
+	CV_UP(Int2 location) : location(location) {}
 	~CV_UP();
 	void Update(ObTileMap* M);
-	bool operator==(const CV_UP& other) const
-	{
-		return this->location.x == other.location.x and this->location.y == other.location.y;
-	};
-
+	
+	
 public:
 
+	bool operator==(const CV_UP& other) const
+	{
+		return (this->location.x == other.location.x and this->location.y == other.location.y);
+	};
 };
 

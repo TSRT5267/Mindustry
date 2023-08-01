@@ -3,6 +3,7 @@
 #include "BFM.h"
 #include "Drill.h"
 #include "CV_UP.h"
+#include "CV_DOWN.h"
 
 void BFM::Update(ObTileMap* M)
 {
@@ -29,7 +30,7 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 		CVUpLocation.push_back(new CV_UP(inx));
 		break;
 	case (int)blockState::CONVEYORDOWN:
-		CVDownLocation.push_back(inx);
+		CVDownLocation.push_back(new CV_DOWN(inx));
 		break;
 	case (int)blockState::CONVEYORLEFT:
 		CVLeftLocation.push_back(inx);
@@ -86,13 +87,12 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx)
 	switch (state)
 	{
 	case (int)blockState::CONVEYORUP:
-		auto it = remove_if(CVUpLocation.begin(), CVUpLocation.end(),
-			[inx](const unique_ptr<CV_UP>& cv) { return *cv == CV_UP(inx); });
-		if (it != CVUpLocation.end())
-			CVUpLocation.erase(it);		
+		CVUpLocation.erase(std::remove_if(CVUpLocation.begin(), CVUpLocation.end(),
+			[inx](const CV_UP* cv) { return *cv == CV_UP(inx); }), CVUpLocation.end());
 		break;
 	case (int)blockState::CONVEYORDOWN:
-		CVDownLocation.erase(remove(CVDownLocation.begin(), CVDownLocation.end(), inx), CVDownLocation.end());
+		CVDownLocation.erase(std::remove_if(CVDownLocation.begin(), CVDownLocation.end(),
+			[inx](const CV_DOWN* cv) { return *cv == CV_DOWN(inx); }), CVDownLocation.end());
 		break;
 	case (int)blockState::CONVEYORLEFT:
 		CVLeftLocation.erase(remove(CVLeftLocation.begin(), CVLeftLocation.end(), inx), CVLeftLocation.end());
@@ -118,10 +118,8 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx)
 				IDX.x += j;
 				IDX.y -= i;
 
-				auto it = remove_if(drillLocation.begin(), drillLocation.end(),
-					[IDX](const unique_ptr<Drill>& drill) { return *drill == Drill(IDX); });
-				if (it != drillLocation.end())
-					drillLocation.erase(it);
+				drillLocation.erase(std::remove_if(drillLocation.begin(), drillLocation.end(),
+					[IDX](const Drill* drill) { return *drill == Drill(IDX); }), drillLocation.end());
 			}
 		}
 		break;

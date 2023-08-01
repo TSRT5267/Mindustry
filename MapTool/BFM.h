@@ -11,7 +11,7 @@ private:
 
 	
 	vector<class CV_UP*> CVUpLocation;
-	vector<Int2> CVDownLocation;
+	vector<class CV_DOWN*> CVDownLocation;
 	vector<Int2> CVLeftLocation;
 	vector<Int2> CVRightLocation;
 	vector<Int2> junctionLocation;

@@ -12,16 +12,19 @@ private:
 
 
 public:
-	Drill(Int2 Location);
+	Drill(Int2 location) : location(location) {}
 	~Drill();
 	void  Update(ObTileMap* M);
-	bool operator==(const Drill& other) const
-	{
-		return this->location.x == other.location.x and this->location.y == other.location.y;
-	};
+	
 
 public:
-	
+
+	bool operator==(const Drill& other) const
+	{
+		return (this->location.x == other.location.x and this->location.y == other.location.y);
+	};
+
+
 	void  Mining();
 	void  SendItem();
 	void  Scane(ObTileMap* M);

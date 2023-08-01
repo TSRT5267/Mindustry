@@ -29,6 +29,21 @@
     <ClCompile Include="CV_UP.cpp">
       <Filter>BlockFunction</Filter>
     </ClCompile>
+    <ClCompile Include="CV_DOWN.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="CV_LEFT.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="CV_RIGHT.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Junction.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Router.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -61,6 +76,21 @@
       <Filter>BlockFunction</Filter>
     </ClInclude>
     <ClInclude Include="CV_UP.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="CV_DOWN.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="CV_LEFT.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="CV_RIGHT.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Junction.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Router.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
   </ItemGroup>

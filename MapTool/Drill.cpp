@@ -2,10 +2,7 @@
 #include "Scene2.h"
 #include "Drill.h"
 
-Drill::Drill(Int2 Location)
-{
-	location = Location;
-}
+
 
 Drill::~Drill()
 {

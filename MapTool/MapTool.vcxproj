@@ -144,11 +144,16 @@
   <ItemGroup>
     <ClCompile Include="BFM.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="CV_DOWN.cpp" />
+    <ClCompile Include="CV_LEFT.cpp" />
+    <ClCompile Include="CV_RIGHT.cpp" />
     <ClCompile Include="CV_UP.cpp" />
     <ClCompile Include="Drill.cpp" />
     <ClCompile Include="Item_copper.cpp" />
+    <ClCompile Include="Junction.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Router.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -156,12 +161,17 @@
   <ItemGroup>
     <ClInclude Include="BFM.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="CV_DOWN.h" />
+    <ClInclude Include="CV_LEFT.h" />
+    <ClInclude Include="CV_RIGHT.h" />
     <ClInclude Include="CV_UP.h" />
     <ClInclude Include="Drill.h" />
     <ClInclude Include="Item_copper.h" />
+    <ClInclude Include="Junction.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="Router.h" />
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="stdafx.h" />
