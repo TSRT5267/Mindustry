@@ -12,3 +12,8 @@ CV_UP::~CV_UP()
 void CV_UP::Update(ObTileMap* M)
 {
 }
+
+void CV_UP::GetItem()
+{
+	if (itemCapacity < MaxCapacity) itemCapacity++;
+}

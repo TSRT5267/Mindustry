@@ -1,18 +1,19 @@
 #pragma once
-#define MAXIC 12
 
 class Drill
 {
 private:
-	Int2	location;	
-	int		itemCapacity;
+	Int2		location;	
+	int const	MaxCapacity=12;
+	int			itemCapacity;
 
 	bool	findCV;
 	Int2	directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
 	Int2	scaneLocation;
 	int		scaneState;
 
-	float	senddelay;
+	float	mineDelay;
+	float	sendDelay;
 public:
 	Drill(Int2 location) : location(location) {}
 	~Drill();

@@ -2,8 +2,9 @@
 class CV_UP
 {
 private:
-	Int2	location;
-	int		itemCapacity;
+	Int2		location;
+	int	const	MaxCapacity = 3;
+	int			itemCapacity;
 
 
 public:
@@ -19,7 +20,7 @@ public:
 		return (this->location.x == other.location.x and this->location.y == other.location.y);
 	};
 
-	void GetItem() { itemCapacity++; };
+	void GetItem();
 	int GetitemCapacity() { return itemCapacity; };
 };
 
