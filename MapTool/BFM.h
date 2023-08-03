@@ -28,7 +28,7 @@ public:
 	void SaveLocation(int imidx,int state , Int2 inx);
 	void RemoveLocation(int imidx, int state, Int2 inx);
 	
-	
+	const vector<class CV_UP*>& GetCVUpLocation() const { return CVUpLocation; }
 
 
 

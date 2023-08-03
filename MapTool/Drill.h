@@ -8,13 +8,15 @@ private:
 	int		itemCapacity;
 
 	bool	findCV;
+	Int2	directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
 	Int2	scaneLocation;
+	int		scaneState;
 
-
+	float	senddelay;
 public:
 	Drill(Int2 location) : location(location) {}
 	~Drill();
-	void  Update(ObTileMap* M);
+	void  Update(ObTileMap* M, BFM* bfm);
 	
 
 public:
@@ -26,7 +28,7 @@ public:
 
 
 	void  Mining();
-	void  SendItem();
+	void  SendItem(BFM* bfm);
 	void  Scane(ObTileMap* M);
 };
 

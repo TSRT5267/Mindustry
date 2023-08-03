@@ -18,5 +18,8 @@ public:
 	{
 		return (this->location.x == other.location.x and this->location.y == other.location.y);
 	};
+
+	void GetItem() { itemCapacity++; };
+	int GetitemCapacity() { return itemCapacity; };
 };
 

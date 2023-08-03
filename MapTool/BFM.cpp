@@ -1,9 +1,6 @@
 #include "stdafx.h"
-#include "Scene2.h"
-#include "BFM.h"
-#include "Drill.h"
-#include "CV_UP.h"
-#include "CV_DOWN.h"
+#include "BF_framework.h"
+
 
 void BFM::Update(ObTileMap* M)
 {
@@ -12,7 +9,6 @@ void BFM::Update(ObTileMap* M)
 		drill->Update(M);
 	}
 	
-
 
 
 
@@ -56,6 +52,7 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 				IDX.x += j;
 				IDX.y -= i;
 
+				Drill* newDrill = new Drill(IDX);
 				drillLocation.push_back(new Drill(IDX));
 				
 			}
@@ -119,7 +116,7 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx)
 				IDX.y -= i;
 
 				drillLocation.erase(std::remove_if(drillLocation.begin(), drillLocation.end(),
-					[IDX](const Drill* drill) { return *drill == Drill(IDX); }), drillLocation.end());
+					[IDX](const Drill* drill) { return *drill == Drill(IDX); }), drillLocation.end());			
 			}
 		}
 		break;

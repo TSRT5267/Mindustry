@@ -93,6 +93,9 @@
     <ClInclude Include="Router.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
+    <ClInclude Include="BF_framework.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="User">

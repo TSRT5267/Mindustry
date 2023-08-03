@@ -23,6 +23,15 @@ struct Int2
 		return (x != dest.x || y != dest.y);
 		//return !(*this == dest);
 	}
+	Int2 operator +(Int2 dest)
+	{
+		Int2 it;
+
+		it.x = x + dest.x;
+		it.y = y + dest.y;
+
+		return it;
+	}
 };
 
 template <typename T>
