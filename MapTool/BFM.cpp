@@ -6,53 +6,65 @@ void BFM::Update(ObTileMap* M)
 {
 	for (auto& drill : drillLocation) 
 	{
-		drill->Update(M);
+		drill->Update(M,this);
 	}
 	
+	for (auto& cv_up : CVUpLocation)
+	{
+		cv_up->Update(M);
+	}
 
-
-
-
+	if(drillLocation.size()>0)
+		ImGui::Text("test drill : %d", drillLocation[0]->GetitemCapacity());
+	if (drillLocation.size() > 0)
+		ImGui::Text("test drill : %d", drillLocation[0]->GetfindCV());
+	if (CVUpLocation.size() > 0)
+		ImGui::Text("test cv-up : %d", CVUpLocation[0]->GetitemCapacity());
 }
 
-void BFM::SaveLocation(int imidx, int state, Int2 inx)
+void BFM::Render()
 {
-	/*prevMap.clear();
-	prevMap.insert(location.begin(), location.end());*/
+	for (auto& cv_up : CVUpLocation)
+	{
+		cv_up->Render();
+	}
+}
+
+void BFM::SaveLocation(int imidx, int state, Int2 idx, ObTileMap* M)
+{
 	
 	switch (state)
 	{
 	case (int)blockState::CONVEYORUP:
-		CVUpLocation.push_back(new CV_UP(inx));
+		CVUpLocation.push_back(new CV_UP(idx,M));
 		break;
 	case (int)blockState::CONVEYORDOWN:
-		CVDownLocation.push_back(new CV_DOWN(inx));
+		CVDownLocation.push_back(new CV_DOWN(idx));
 		break;
 	case (int)blockState::CONVEYORLEFT:
-		CVLeftLocation.push_back(inx);
+		CVLeftLocation.push_back(new CV_LEFT(idx));
 		break;
 	case (int)blockState::CONVEYORRIGHT:
-		CVRightLocation.push_back(inx);
+		CVRightLocation.push_back(new CV_RIGHT(idx));
 		break;
 	case (int)blockState::JUNCTION:
-		junctionLocation.push_back(inx);
+		junctionLocation.push_back(new Junction(idx));
 		break;
 	case (int)blockState::ROUTER:
-		routerLocation.push_back(inx);
+		routerLocation.push_back(new Router(idx));
 		break;
 	case (int)blockState::TURRET:
-		turretLocation.push_back(inx);
+		turretLocation.push_back(new Turret(idx));
 		break;
 	case (int)blockState::DRILL:
 		for (int i = 0;i < 2;i++)
 		{
 			for (int j = 0;j < 2;j++)
 			{
-				Int2 IDX = inx;
+				Int2 IDX = idx;
 				IDX.x += j;
 				IDX.y -= i;
 
-				Drill* newDrill = new Drill(IDX);
 				drillLocation.push_back(new Drill(IDX));
 				
 			}
@@ -64,11 +76,11 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 		{
 			for (int j = 0;j < 2;j++)
 			{
-				Int2 IDX = inx;
+				Int2 IDX = idx;
 				IDX.x += j;
 				IDX.y -= i;
 
-				coreLocation.push_back(IDX);
+				coreLocation.push_back(new Core(IDX));
 			}
 		}
 		break;
@@ -77,7 +89,7 @@ void BFM::SaveLocation(int imidx, int state, Int2 inx)
 	}
 }
 
-void BFM::RemoveLocation(int imidx, int state, Int2 inx)
+void BFM::RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M)
 {
 	
 
@@ -85,26 +97,31 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx)
 	{
 	case (int)blockState::CONVEYORUP:
 		CVUpLocation.erase(std::remove_if(CVUpLocation.begin(), CVUpLocation.end(),
-			[inx](const CV_UP* cv) { return *cv == CV_UP(inx); }), CVUpLocation.end());
+			[inx,M](const CV_UP* cv) { return *cv == CV_UP(inx,M); }), CVUpLocation.end());
 		break;
 	case (int)blockState::CONVEYORDOWN:
 		CVDownLocation.erase(std::remove_if(CVDownLocation.begin(), CVDownLocation.end(),
 			[inx](const CV_DOWN* cv) { return *cv == CV_DOWN(inx); }), CVDownLocation.end());
 		break;
 	case (int)blockState::CONVEYORLEFT:
-		CVLeftLocation.erase(remove(CVLeftLocation.begin(), CVLeftLocation.end(), inx), CVLeftLocation.end());
+		CVLeftLocation.erase(std::remove_if(CVLeftLocation.begin(), CVLeftLocation.end(),
+			[inx](const CV_LEFT* cv) { return *cv == CV_LEFT(inx); }), CVLeftLocation.end());
 		break;
 	case (int)blockState::CONVEYORRIGHT:
-		CVRightLocation.erase(remove(CVRightLocation.begin(), CVRightLocation.end(), inx), CVRightLocation.end());
+		CVRightLocation.erase(std::remove_if(CVRightLocation.begin(), CVRightLocation.end(),
+			[inx](const CV_RIGHT* cv) { return *cv == CV_RIGHT(inx); }), CVRightLocation.end());
 		break;
 	case (int)blockState::JUNCTION:
-		junctionLocation.erase(remove(junctionLocation.begin(), junctionLocation.end(), inx), junctionLocation.end());
+		junctionLocation.erase(std::remove_if(junctionLocation.begin(), junctionLocation.end(),
+			[inx](const Junction* cv) { return *cv == Junction(inx); }), junctionLocation.end());
 		break;
 	case (int)blockState::ROUTER:
-		routerLocation.erase(remove(routerLocation.begin(), routerLocation.end(), inx), routerLocation.end());
+		routerLocation.erase(std::remove_if(routerLocation.begin(), routerLocation.end(),
+			[inx](const Router* cv) { return *cv == Router(inx); }), routerLocation.end());
 		break;
 	case (int)blockState::TURRET:
-		turretLocation.erase(remove(turretLocation.begin(), turretLocation.end(), inx), turretLocation.end());
+		turretLocation.erase(std::remove_if(turretLocation.begin(), turretLocation.end(),
+			[inx](const Turret* cv) { return *cv == Turret(inx); }), turretLocation.end());
 		break;
 	case (int)blockState::DRILL:
 		for (int i = 0;i < 2;i++)
@@ -129,7 +146,8 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx)
 				IDX.x += j;
 				IDX.y -= i;
 
-				coreLocation.erase(remove(coreLocation.begin(), coreLocation.end(), IDX), coreLocation.end());
+				coreLocation.erase(std::remove_if(coreLocation.begin(), coreLocation.end(),
+					[inx](const Core* cv) { return *cv == Core(inx); }), coreLocation.end());
 			}
 		}
 		break;

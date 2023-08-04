@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="BFM.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="Core.cpp" />
     <ClCompile Include="CV_DOWN.cpp" />
     <ClCompile Include="CV_LEFT.cpp" />
     <ClCompile Include="CV_RIGHT.cpp" />
@@ -156,12 +157,14 @@
     <ClCompile Include="Router.cpp" />
     <ClCompile Include="Scene1.cpp" />
     <ClCompile Include="Scene2.cpp" />
+    <ClCompile Include="Turret.cpp" />
     <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BFM.h" />
     <ClInclude Include="BF_framework.h" />
     <ClInclude Include="Bullet.h" />
+    <ClInclude Include="Core.h" />
     <ClInclude Include="CV_DOWN.h" />
     <ClInclude Include="CV_LEFT.h" />
     <ClInclude Include="CV_RIGHT.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="Scene1.h" />
     <ClInclude Include="Scene2.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="Turret.h" />
     <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>

@@ -439,7 +439,7 @@ void Scene2::Update()
 				if (confirmB == 4)
 				{
 					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);					
-					bfm->SaveLocation(brushImgIdx, brushState, Idx);
+					bfm->SaveLocation(brushImgIdx, brushState, Idx,Tmap[(int)LAYER::BLOCK]);
 				}
 					
 
@@ -450,7 +450,7 @@ void Scene2::Update()
 				if (Tmap[layer]->GetTileColor(Idx) != BUILDED)
 				{
 					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					bfm->SaveLocation(brushImgIdx, brushState, Idx);
+					bfm->SaveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
 				}
 					
 				
@@ -472,12 +472,12 @@ void Scene2::Update()
 					(Tmap[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f) or Tmap[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f)))
 				{
 					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					bfm->RemoveLocation(brushImgIdx, brushState, Idx);
+					bfm->RemoveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
 				}
 				else if (Tmap[layer]->GetTileIdx(Idx) != 3)
 				{
 					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					bfm->RemoveLocation(brushImgIdx, brushState, Idx);
+					bfm->RemoveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
 				}
 			}				
 		}
@@ -539,6 +539,7 @@ void Scene2::Render()
 	//////////////////////////
 	player->	Render();
 	ui->		Render();
+	bfm->		Render();
 }
 
 void Scene2::ResizeScreen()

@@ -12,21 +12,22 @@ private:
 	
 	vector<class CV_UP*> CVUpLocation;
 	vector<class CV_DOWN*> CVDownLocation;
-	vector<Int2> CVLeftLocation;
-	vector<Int2> CVRightLocation;
-	vector<Int2> junctionLocation;
-	vector<Int2> routerLocation;
-	vector<Int2> turretLocation;
+	vector<class CV_LEFT*> CVLeftLocation;
+	vector<class CV_RIGHT*> CVRightLocation;
+	vector<class Junction*> junctionLocation;
+	vector<class Router*> routerLocation;
+	vector<class Turret*> turretLocation;
 	vector<class Drill*> drillLocation;
-	vector<Int2> coreLocation;
+	vector<class Core*> coreLocation;
 
 
 
 
 public:
 	void Update(ObTileMap *M);
-	void SaveLocation(int imidx,int state , Int2 inx);
-	void RemoveLocation(int imidx, int state, Int2 inx);
+	void Render();
+	void SaveLocation(int imidx,int state , Int2 inx, ObTileMap* M);
+	void RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M);
 	
 	const vector<class CV_UP*>& GetCVUpLocation() const { return CVUpLocation; }
 

@@ -1,4 +1,10 @@
 #include "stdafx.h"
-#include "Scene2.h"
-#include "BFM.h"
-#include "CV_RIGHT.h"
+#include "BF_framework.h"
+
+CV_RIGHT::~CV_RIGHT()
+{
+}
+
+void CV_RIGHT::Update(ObTileMap* M)
+{
+}

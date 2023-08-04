@@ -1,6 +1,5 @@
 #include "stdafx.h"
-#include "Scene2.h"
-#include "Core.h"
+#include "BF_framework.h"
 
 Core::~Core()
 {

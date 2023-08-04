@@ -4,16 +4,16 @@ class Drill
 {
 private:
 	Int2		location;	
-	int const	MaxCapacity=12;
-	int			itemCapacity;
+	int 		MaxCapacity=12;
+	int			itemCapacity=0;
 
-	bool	findCV;
+	bool	findCV = false;
 	Int2	directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
 	Int2	scaneLocation;
 	int		scaneState;
 
-	float	mineDelay;
-	float	sendDelay;
+	float	mineDelay=0;
+	float	sendDelay=0;
 public:
 	Drill(Int2 location) : location(location) {}
 	~Drill();
@@ -29,7 +29,10 @@ public:
 
 
 	void  Mining();
-	void  SendItem(BFM* bfm);
+	void  SendItem(BFM* bfm, ObTileMap* M);
 	void  Scane(ObTileMap* M);
+
+	int GetitemCapacity() {return itemCapacity;};
+	bool GetfindCV() {return findCV;};
 };
 

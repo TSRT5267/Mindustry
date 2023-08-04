@@ -44,6 +44,12 @@
     <ClCompile Include="Router.cpp">
       <Filter>BlockFunction</Filter>
     </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
+    <ClCompile Include="Turret.cpp">
+      <Filter>BlockFunction</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h" />
@@ -94,6 +100,12 @@
       <Filter>BlockFunction</Filter>
     </ClInclude>
     <ClInclude Include="BF_framework.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>BlockFunction</Filter>
+    </ClInclude>
+    <ClInclude Include="Turret.h">
       <Filter>BlockFunction</Filter>
     </ClInclude>
   </ItemGroup>

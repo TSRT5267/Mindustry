@@ -22,9 +22,6 @@ public:
 		return (this->location.x == other.location.x and this->location.y == other.location.y);
 	};
 
-
-	void  Mining();
-	void  SendItem(ObTileMap* M);
-	void  Scane(ObTileMap* M);
 };
+
 
