@@ -10,7 +10,7 @@ private:
 	bool	findCV = false;
 	Int2	directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
 	Int2	scaneLocation;
-	int		scaneState;
+	int		scaneState = -1;
 
 	float	mineDelay=0;
 	float	sendDelay=0;
@@ -34,5 +34,7 @@ public:
 
 	int GetitemCapacity() {return itemCapacity;};
 	bool GetfindCV() {return findCV;};
+	Int2 GetScaneL() {return scaneLocation;};
+	int GetScaneS() {return scaneState;};
 };
 

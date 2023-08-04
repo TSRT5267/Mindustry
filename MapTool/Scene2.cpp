@@ -463,6 +463,7 @@ void Scene2::Update()
 	{
 		Int2 Idx = Int2(0,0);
 		brushColor = Color{ 0.5,0.5,0.5,0.0 };
+		brushState = -1;
 		if (layer == 0 or layer == 1) layer = 2;
 		if (Tmap[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{

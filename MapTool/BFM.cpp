@@ -18,6 +18,11 @@ void BFM::Update(ObTileMap* M)
 		ImGui::Text("test drill : %d", drillLocation[0]->GetitemCapacity());
 	if (drillLocation.size() > 0)
 		ImGui::Text("test drill : %d", drillLocation[0]->GetfindCV());
+	if (drillLocation.size() > 0)
+		ImGui::Text("test drill : %d %d", drillLocation[0]->GetScaneL().x, drillLocation[0]->GetScaneL().y);
+	if (drillLocation.size() > 0)
+		ImGui::Text("test drill : %d", drillLocation[0]->GetScaneS());
+
 	if (CVUpLocation.size() > 0)
 		ImGui::Text("test cv-up : %d", CVUpLocation[0]->GetitemCapacity());
 }
@@ -131,7 +136,7 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M)
 				Int2 IDX = inx;
 				IDX.x += j;
 				IDX.y -= i;
-
+				
 				drillLocation.erase(std::remove_if(drillLocation.begin(), drillLocation.end(),
 					[IDX](const Drill* drill) { return *drill == Drill(IDX); }), drillLocation.end());			
 			}
