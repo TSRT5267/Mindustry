@@ -21,8 +21,9 @@ public:
 		return (this->location.x == other.location.x && this->location.y == other.location.y);
 	}
 	
-	void GetItem();
-	
+	void SandItem(BFM* bfm, ObTileMap* M);
+	void GetItem();	
+
 	int GetitemCapacity() { return itemCapacity; };
 };
 

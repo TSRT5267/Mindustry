@@ -14,13 +14,6 @@ void BFM::Update(ObTileMap* M)
 		cv_up->Update(M);
 	}
 
-	if (drillLocation.size() > 0)
-		ImGui::Text("CV test  : %d", drillLocation[0]->GetitemCapacity());
-	if (CVUpLocation.size() > 0)
-		ImGui::Text("CV test  : %d", CVUpLocation[0]->GetitemCapacity());
-	
-	
-
 	
 }
 

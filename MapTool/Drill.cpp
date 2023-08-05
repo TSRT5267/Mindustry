@@ -64,6 +64,42 @@ void  Drill::SendItem(BFM* bfm, ObTileMap* M)
                 (*it)->GetItem();
             }
         }
+        case (int)blockState::CONVEYORDOWN:
+        {
+            const vector<CV_DOWN*>& CVDownLocation = bfm->GetCVDownLocation();
+            const auto it = find_if(CVDownLocation.begin(), CVDownLocation.end(),
+                [this, &M](const CV_DOWN* cv) { return *cv == CV_DOWN(scaneLocation, M); });
+
+            if (it != CVDownLocation.end() && (*it)->GetitemCapacity() < 3)
+            {
+                itemCapacity--;
+                (*it)->GetItem();
+            }
+        }
+        case (int)blockState::CONVEYORLEFT:
+        {
+            const vector<CV_UP*>& CVUpLocation = bfm->GetCVUpLocation();
+            const auto it = find_if(CVUpLocation.begin(), CVUpLocation.end(),
+                [this, &M](const CV_UP* cv) { return *cv == CV_UP(scaneLocation, M); });
+
+            if (it != CVUpLocation.end() && (*it)->GetitemCapacity() < 3)
+            {
+                itemCapacity--;
+                (*it)->GetItem();
+            }
+        }
+        case (int)blockState::CONVEYORRIGHT:
+        {
+            const vector<CV_UP*>& CVUpLocation = bfm->GetCVUpLocation();
+            const auto it = find_if(CVUpLocation.begin(), CVUpLocation.end(),
+                [this, &M](const CV_UP* cv) { return *cv == CV_UP(scaneLocation, M); });
+
+            if (it != CVUpLocation.end() && (*it)->GetitemCapacity() < 3)
+            {
+                itemCapacity--;
+                (*it)->GetItem();
+            }
+        }
         default:
             break;
         }

@@ -1,7 +1,5 @@
 #include "stdafx.h"
-#include "Scene2.h"
-#include "BFM.h"
-#include "CV_UP.h"
+#include "BF_framework.h"
 
 
 
@@ -32,6 +30,12 @@ void CV_UP::Update(ObTileMap* M)
 void CV_UP::Render()
 {
 	if(hasItem) item->Render();
+}
+
+void CV_UP::SandItem(BFM* bfm, ObTileMap* M)
+{
+	//if (itemCapacity > 0 and findCV == true and TIMER->GetTick(sendDelay, 2.5f))
+
 }
 
 void CV_UP::GetItem()

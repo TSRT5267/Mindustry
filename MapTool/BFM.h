@@ -30,6 +30,9 @@ public:
 	void RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M);
 	
 	const vector<class CV_UP*>& GetCVUpLocation() const { return CVUpLocation; }
+	const vector<class CV_DOWN*>& GetCVDownLocation() const { return CVDownLocation; }
+	const vector<class CV_LEFT*>& GetCVLeftLocation() const { return CVLeftLocation; }
+	const vector<class CV_RIGHT*>& GetCVRightLocation() const { return CVRightLocation; }
 
 
 
