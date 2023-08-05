@@ -20,7 +20,7 @@ private:
 	vector<class Drill*> drillLocation;
 	vector<class Core*> coreLocation;
 
-
+	
 
 
 public:

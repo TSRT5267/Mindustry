@@ -419,6 +419,7 @@ void Scene2::Update()
 
 		if (Tmap[layer]->WorldPosToTileIdx(INPUT->GetWorldMousePos(), Idx))
 		{
+			
 			//2x2블럭
 			if (brushImgIdx == 3)
 			{
@@ -435,14 +436,12 @@ void Scene2::Update()
 					}
 				}
 				
-
 				if (confirmB == 4)
 				{
-					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);					
-					bfm->SaveLocation(brushImgIdx, brushState, Idx,Tmap[(int)LAYER::BLOCK]);
+					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+					bfm->SaveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
 				}
 					
-
 			}
 			//1x1블럭
 			else
@@ -453,7 +452,6 @@ void Scene2::Update()
 					bfm->SaveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
 				}
 					
-				
 			}
 		}
 	}
@@ -469,16 +467,15 @@ void Scene2::Update()
 		{
 			if (Tmap[layer]->GetTileColor(Idx).w != 0.0f)
 			{
+				bfm->RemoveLocation(brushImgIdx, Tmap[(int)LAYER::BLOCK]->GetTileState(Idx), Idx, Tmap[(int)LAYER::BLOCK]);
 				if (Tmap[layer]->GetTileIdx(Idx) == 3 and
 					(Tmap[layer]->GetTileFrame(Idx) == Vector2(0.25f, 0.5f) or Tmap[layer]->GetTileFrame(Idx) == Vector2(0.75f, 0.5f)))
 				{
-					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					bfm->RemoveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
+					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);					
 				}
 				else if (Tmap[layer]->GetTileIdx(Idx) != 3)
 				{
-					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					bfm->RemoveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
+					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);					
 				}
 			}				
 		}

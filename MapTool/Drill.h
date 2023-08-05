@@ -32,6 +32,7 @@ public:
 	void  SendItem(BFM* bfm, ObTileMap* M);
 	void  Scane(ObTileMap* M);
 
+	Int2 GetLocation() const { return location; };
 	int GetitemCapacity() {return itemCapacity;};
 	bool GetfindCV() {return findCV;};
 	Int2 GetScaneL() {return scaneLocation;};

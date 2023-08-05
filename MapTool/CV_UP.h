@@ -7,6 +7,7 @@ private:
 	int			itemCapacity=0;
 
 	ObImage*	item;
+	bool        hasItem;
 public:
 	CV_UP(Int2 location, ObTileMap* M);
 	~CV_UP();

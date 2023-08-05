@@ -14,17 +14,14 @@ void BFM::Update(ObTileMap* M)
 		cv_up->Update(M);
 	}
 
-	if(drillLocation.size()>0)
-		ImGui::Text("test drill : %d", drillLocation[0]->GetitemCapacity());
 	if (drillLocation.size() > 0)
-		ImGui::Text("test drill : %d", drillLocation[0]->GetfindCV());
-	if (drillLocation.size() > 0)
-		ImGui::Text("test drill : %d %d", drillLocation[0]->GetScaneL().x, drillLocation[0]->GetScaneL().y);
-	if (drillLocation.size() > 0)
-		ImGui::Text("test drill : %d", drillLocation[0]->GetScaneS());
-
+		ImGui::Text("CV test  : %d", drillLocation[0]->GetitemCapacity());
 	if (CVUpLocation.size() > 0)
-		ImGui::Text("test cv-up : %d", CVUpLocation[0]->GetitemCapacity());
+		ImGui::Text("CV test  : %d", CVUpLocation[0]->GetitemCapacity());
+	
+	
+
+	
 }
 
 void BFM::Render()
@@ -33,6 +30,8 @@ void BFM::Render()
 	{
 		cv_up->Render();
 	}
+
+	
 }
 
 void BFM::SaveLocation(int imidx, int state, Int2 idx, ObTileMap* M)
@@ -96,7 +95,6 @@ void BFM::SaveLocation(int imidx, int state, Int2 idx, ObTileMap* M)
 
 void BFM::RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M)
 {
-	
 
 	switch (state)
 	{
@@ -129,6 +127,8 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M)
 			[inx](const Turret* cv) { return *cv == Turret(inx); }), turretLocation.end());
 		break;
 	case (int)blockState::DRILL:
+	{
+		
 		for (int i = 0;i < 2;i++)
 		{
 			for (int j = 0;j < 2;j++)
@@ -136,12 +136,13 @@ void BFM::RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M)
 				Int2 IDX = inx;
 				IDX.x += j;
 				IDX.y -= i;
-				
-				drillLocation.erase(std::remove_if(drillLocation.begin(), drillLocation.end(),
-					[IDX](const Drill* drill) { return *drill == Drill(IDX); }), drillLocation.end());			
+
+				drillLocation.erase(remove_if(drillLocation.begin(), drillLocation.end(),
+					[IDX](const Drill* drill) { return *drill == Drill(IDX); }), drillLocation.end());
 			}
 		}
 		break;
+	}		
 	case (int)blockState::CORE:
 		for (int i = 0;i < 2;i++)
 		{
