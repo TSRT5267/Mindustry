@@ -9,8 +9,8 @@ private:
 
 	bool	findCV = false;
 	Int2	directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
-	Int2	scaneLocation;
-	int		scaneState = -1;
+	Int2	scanLocation;
+	int		scanState = -1;
 
 	float	mineDelay=0;
 	float	sendDelay=0;
@@ -30,12 +30,12 @@ public:
 
 	void  Mining();
 	void  SendItem(BFM* bfm, ObTileMap* M);
-	void  Scane(ObTileMap* M);
+	void  Scan(ObTileMap* M);
 
 	Int2 GetLocation() const { return location; };
 	int GetitemCapacity() {return itemCapacity;};
 	bool GetfindCV() {return findCV;};
-	Int2 GetScaneL() {return scaneLocation;};
-	int GetScaneS() {return scaneState;};
+	Int2 GetScaneL() {return scanLocation;};
+	int GetScaneS() {return scanState;};
 };
 

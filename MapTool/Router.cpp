@@ -1,12 +1,26 @@
 #include "stdafx.h"
-#include "Scene2.h"
-#include "BFM.h"
-#include "Router.h"
+#include "BF_framework.h"
+
+Router::Router(Int2 location, ObTileMap* M)
+{
+}
 
 Router::~Router()
 {
 }
 
-void Router::Update(ObTileMap* M)
+void Router::Update(ObTileMap* M, BFM* bfm)
+{
+}
+
+void Router::Render()
+{
+}
+
+void Router::Scan(ObTileMap* M)
+{
+}
+
+void Router::SendItem(BFM* bfm, ObTileMap* M)
 {
 }
