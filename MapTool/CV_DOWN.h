@@ -6,12 +6,19 @@ private:
 	int	const	MaxCapacity = 3;
 	int			itemCapacity=0;
 
+	bool		findCV = false;
+	Int2		directions[1] = { {0, -1} };
+	Int2		scanLocation;
+	int			scanState = -1;
+
 	ObImage*	item;
 	bool        hasItem;
+
+	float		sendDelay = 0;
 public:
 	CV_DOWN(Int2 location, ObTileMap* M);
 	~CV_DOWN();
-	void Update(ObTileMap* M);
+	void Update(ObTileMap* M, BFM* bfm);
 	void Render();
 
 public:
@@ -20,7 +27,10 @@ public:
 		return (this->location.x == other.location.x and this->location.y == other.location.y);
 	};
 
-	void GetItem();
+	void Scan(ObTileMap* M);
+	void SendItem(BFM* bfm, ObTileMap* M);
+	void GetItem() { if (itemCapacity < MaxCapacity) itemCapacity++; };
+
 	int GetitemCapacity() { return itemCapacity; };
 };
 

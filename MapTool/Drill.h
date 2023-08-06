@@ -15,7 +15,7 @@ private:
 	float	mineDelay=0;
 	float	sendDelay=0;
 public:
-	Drill(Int2 location) : location(location) {}
+	Drill(Int2 location, ObTileMap* M);
 	~Drill();
 	void  Update(ObTileMap* M, BFM* bfm);
 	

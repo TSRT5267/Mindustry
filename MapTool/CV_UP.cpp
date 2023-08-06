@@ -1,8 +1,6 @@
 #include "stdafx.h"
 #include "BF_framework.h"
 
-
-
 CV_UP::CV_UP(Int2 location, ObTileMap* M)
 {
 	this->location = location;
@@ -58,7 +56,7 @@ void CV_UP::Scan(ObTileMap* M)
 
 void CV_UP::SendItem(BFM* bfm, ObTileMap* M)
 {
-    if (itemCapacity > 0 and findCV == true and TIMER->GetTick(sendDelay, 2.5f))
+    if (itemCapacity > 0 and findCV == true and TIMER->GetTick(sendDelay, 0.25f))
     {
         switch (scanState)
         {
@@ -124,11 +122,11 @@ void CV_UP::SendItem(BFM* bfm, ObTileMap* M)
         }
         case (int)blockState::ROUTER:
         {
-            const vector<CV_UP*>& CVUpLocation = bfm->GetCVUpLocation();
-            const auto it = find_if(CVUpLocation.begin(), CVUpLocation.end(),
-                [this, &M](const CV_UP* cv) { return *cv == CV_UP(scanLocation, M); });
+            const vector<Router*>& RouterLocation = bfm->GetRouterLocation();
+            const auto it = find_if(RouterLocation.begin(), RouterLocation.end(),
+                [this, &M](const Router* cv) { return *cv == Router(scanLocation, M); });
 
-            if (it != CVUpLocation.end() && (*it)->GetitemCapacity() < 3)
+            if (it != RouterLocation.end() && (*it)->GetitemCapacity() < 3)
             {
                 itemCapacity--;
                 (*it)->GetItem();
@@ -136,11 +134,11 @@ void CV_UP::SendItem(BFM* bfm, ObTileMap* M)
         }
         case (int)blockState::TURRET:
         {
-            const vector<CV_UP*>& CVUpLocation = bfm->GetCVUpLocation();
-            const auto it = find_if(CVUpLocation.begin(), CVUpLocation.end(),
-                [this, &M](const CV_UP* cv) { return *cv == CV_UP(scanLocation, M); });
+            const vector<Turret*>& TurretLocation = bfm->GetTurretLocation();
+            const auto it = find_if(TurretLocation.begin(), TurretLocation.end(),
+                [this, &M](const Turret* cv) { return *cv == Turret(scanLocation, M); });
 
-            if (it != CVUpLocation.end() && (*it)->GetitemCapacity() < 3)
+            if (it != TurretLocation.end() && (*it)->GetitemCapacity() < 3)
             {
                 itemCapacity--;
                 (*it)->GetItem();

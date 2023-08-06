@@ -3,6 +3,11 @@
 
 
 
+Drill::Drill(Int2 location, ObTileMap* M)
+{
+    this->location = location;
+}
+
 Drill::~Drill()
 {
 }
