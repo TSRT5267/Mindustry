@@ -40,6 +40,9 @@ void BFM::Update(ObTileMap* M)
 	{
 		core->Update(M, this);
 	}
+
+	if(junctionLocation.size()>0)
+	ImGui::Text("test : %d", junctionLocation[0]->GetitemCapacity());
 }
 
 void BFM::Render()

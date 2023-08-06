@@ -1,4 +1,9 @@
-#pragma once
+#pragma once\
+
+
+
+
+
 class Junction //±³Â÷±â
 {
 private:
@@ -7,9 +12,10 @@ private:
 	int			itemCapacity = 0;
 
 	bool		findCV = false;
-	Int2	directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
-	Int2		scanLocation;
-	int			scanState = -1;
+	Int2		directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
+	int			CVState[4] = { 1,0,3,2};
+	Int2		scanLocation[4];
+	int			scanState[4] ;
 
 	bool        hasItem;
 
@@ -30,7 +36,7 @@ public:
 
 	void Scan(ObTileMap* M);
 	void SendItem(BFM* bfm, ObTileMap* M);
-	void GetItem() { if (itemCapacity < MaxCapacity) itemCapacity++; };
+	void GetItem();
 
 	int GetitemCapacity() { return itemCapacity; };
 };

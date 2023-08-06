@@ -53,6 +53,7 @@ void CV_DOWN::Scan(ObTileMap* M)
             return;
         }
     }
+    findCV = false;
 }
 
 void CV_DOWN::SendItem(BFM* bfm, ObTileMap* M)
@@ -115,7 +116,7 @@ void CV_DOWN::SendItem(BFM* bfm, ObTileMap* M)
             const auto it = find_if(JunctionLocation.begin(), JunctionLocation.end(),
                 [this, &M](const Junction* J) { return *J == Junction(scanLocation, M); });
 
-            if (it != JunctionLocation.end() && (*it)->GetitemCapacity() < 3)
+            if (it != JunctionLocation.end() && (*it)->GetitemCapacity() < 1)
             {
                 itemCapacity--;
                 (*it)->GetItem();
@@ -127,7 +128,7 @@ void CV_DOWN::SendItem(BFM* bfm, ObTileMap* M)
             const auto it = find_if(RouterLocation.begin(), RouterLocation.end(),
                 [this, &M](const Router* cv) { return *cv == Router(scanLocation, M); });
 
-            if (it != RouterLocation.end() && (*it)->GetitemCapacity() < 3)
+            if (it != RouterLocation.end() && (*it)->GetitemCapacity() < 1)
             {
                 itemCapacity--;
                 (*it)->GetItem();
