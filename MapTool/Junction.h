@@ -1,5 +1,5 @@
 #pragma once
-class Junction
+class Junction //±³Â÷±â
 {
 private:
 	Int2		location;
@@ -7,7 +7,7 @@ private:
 	int			itemCapacity = 0;
 
 	bool		findCV = false;
-	Int2		directions[1] = { {0, 1} };
+	Int2	directions[4] = { {0, 1}, {0, -1}, {-1, 0}, {1, 0} };
 	Int2		scanLocation;
 	int			scanState = -1;
 
@@ -20,7 +20,6 @@ public:
 	Junction(Int2 location, ObTileMap* M);
 	~Junction();
 	void Update(ObTileMap* M, BFM* bfm);
-	void Render();
 
 
 public:

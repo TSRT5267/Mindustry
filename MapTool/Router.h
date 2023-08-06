@@ -1,5 +1,5 @@
 #pragma once
-class Router
+class Router //ºÐ¹è±â
 {
 private:
 	Int2		location;
