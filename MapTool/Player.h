@@ -26,7 +26,7 @@ public:
 	Player();
 	virtual ~Player();
 	void Init();
-	void Update() override;
+	void Update(Color C) ;
 	void Render() override;
 
 	void Move();

@@ -138,7 +138,7 @@ void CV_UP::SendItem(BFM* bfm, ObTileMap* M)
             const auto it = find_if(RouterLocation.begin(), RouterLocation.end(),
                 [this, &M](const Router* cv) { return *cv == Router(scanLocation, M); });
 
-            if (it != RouterLocation.end() && (*it)->GetitemCapacity() < 1)
+            if (it != RouterLocation.end() && (*it)->GetitemCapacity() < 3)
             {
                 itemCapacity--;
                 (*it)->GetItem(bfm, M);

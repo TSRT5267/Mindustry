@@ -50,14 +50,14 @@ void Player::Init()
 
 }
 
-void Player::Update()
+void Player::Update(Color C)
 {
 	ObCircle::Update();
     if(app.deltaScale)
     { 
         Look();
         Move();
-        Attack();
+        if(C==Color(0.5,0.5,0.5,0))Attack();
     } 
     shadow->rotation.z = this->rotation.z;
 

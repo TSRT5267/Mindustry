@@ -237,6 +237,11 @@ UI::UI()
 			defenseBorder[i]->color = Color(0.1f, 0.1f, 0.1f, 0);
 		}
 	}
+
+	//인벤토리
+	invenbackground = new ObRect();
+	invenbackground->scale = Vector2(500, 200);
+	invenbackground->color = Color(0.01f, 0.01f, 0.01f, 0.4f);
 	
 }
 

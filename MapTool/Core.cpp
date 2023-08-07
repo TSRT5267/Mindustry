@@ -13,6 +13,9 @@ void Core::Update(ObTileMap* M, BFM* bfm)
 {
 }
 
-void Core::Render()
+void Core::GetItem()
 {
+    if (itemCapacity < MaxCapacity) itemCapacity++;
+
+
 }

@@ -27,7 +27,7 @@ Scene2::Scene2()
 	brushImgIdx = -1;
 	brushFrame.x = -1;
 	brushFrame.y = -1;
-	brushColor = Color(0.5f, 0.5f, 0.5f, 0.5f);
+	brushColor = Color(0.5f, 0.5f, 0.5f, 0.0f);
 	brushState = 0;
 	//////////////////////////////////////////
 	player = new Player();
@@ -411,7 +411,6 @@ void Scene2::Update()
 	}*/
 
 	//블럭 설치
-
 	if (INPUT->KeyPress(VK_LBUTTON) and not ui->UIIntersect())
 	{
 		Color BUILDED = { 0.5,0.5,0.5,0.5 };
@@ -480,7 +479,7 @@ void Scene2::Update()
 			}				
 		}
 	}
-	// 개발용 블럭 삭제
+	// 개발용 블럭 삭제 F1
 	if (INPUT->KeyDown(VK_F1))
 	{
 		Int2 Idx = Int2(0, 0);
@@ -509,7 +508,7 @@ void Scene2::Update()
 	{
 		Tmap[i]->Update();
 	}
-	player->	Update();
+	player->	Update(brushColor);
 	ui->		Update();
 	bfm->		Update(Tmap[(int)LAYER::BLOCK]);
 }

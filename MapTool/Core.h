@@ -19,7 +19,7 @@ public:
 	Core(Int2 location, ObTileMap* M);
 	~Core();
 	void Update(ObTileMap* M, BFM* bfm);
-	void Render();
+	
 
 
 public:
@@ -28,7 +28,7 @@ public:
 		return (this->location.x == other.location.x && this->location.y == other.location.y);
 	}
 	
-	void GetItem() { if (itemCapacity < MaxCapacity) itemCapacity++; };
+	void GetItem();
 
 	int GetitemCapacity() { return itemCapacity; };
 };

@@ -69,8 +69,15 @@ private:
 	ObRect*			defenseBorder[MAXDEFENSE];
 	ObImage*		defenseIM[MAXDEFENSE];
 	int				selectDefense = (int)CATEGORY::NONE;
-	
 
+//인벤토리
+	ObRect*			invenbackground;
+	ObImage*		copperIcon;
+	int				copperCapacity = 0;
+	ObImage*		numberFont;
+
+//일시정지
+	ObRect*		pausebackground;
 public:
 	UI();
 	~UI();
