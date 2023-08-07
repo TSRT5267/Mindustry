@@ -53,7 +53,7 @@ void  Drill::Scan(ObTileMap* M)
 
 void  Drill::SendItem(BFM* bfm, ObTileMap* M)
 {
-    if (itemCapacity > 0 and findCV == true and TIMER->GetTick(sendDelay, 2.5f))
+    if (itemCapacity > 0 and findCV == true and TIMER->GetTick(sendDelay, 0.25f))
     {
         switch (scanState)
         {

@@ -1,9 +1,4 @@
-#pragma once\
-
-
-
-
-
+#pragma once
 class Junction //±³Â÷±â
 {
 private:
@@ -36,7 +31,7 @@ public:
 
 	void Scan(ObTileMap* M);
 	void SendItem(BFM* bfm, ObTileMap* M);
-	void GetItem();
+	void GetItem(BFM* bfm, ObTileMap* M, int SendState);
 
 	int GetitemCapacity() { return itemCapacity; };
 };

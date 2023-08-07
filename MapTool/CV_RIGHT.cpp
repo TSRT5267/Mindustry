@@ -71,6 +71,7 @@ void CV_RIGHT::SendItem(BFM* bfm, ObTileMap* M)
                 itemCapacity--;
                 (*it)->GetItem();
             }
+            break;
         }
         case (int)blockState::CONVEYORDOWN:
         {
@@ -83,6 +84,7 @@ void CV_RIGHT::SendItem(BFM* bfm, ObTileMap* M)
                 itemCapacity--;
                 (*it)->GetItem();
             }
+            break;
         }
         case (int)blockState::CONVEYORLEFT:
         {
@@ -95,6 +97,7 @@ void CV_RIGHT::SendItem(BFM* bfm, ObTileMap* M)
                 itemCapacity--;
                 (*it)->GetItem();
             }
+            break;
         }
         case (int)blockState::CONVEYORRIGHT:
         {
@@ -107,6 +110,7 @@ void CV_RIGHT::SendItem(BFM* bfm, ObTileMap* M)
                 itemCapacity--;
                 (*it)->GetItem();
             }
+            break;
         }
         case (int)blockState::JUNCTION:
         {
@@ -114,11 +118,20 @@ void CV_RIGHT::SendItem(BFM* bfm, ObTileMap* M)
             const auto it = find_if(JunctionLocation.begin(), JunctionLocation.end(),
                 [this, &M](const Junction* J) { return *J == Junction(scanLocation, M); });
 
-            if (it != JunctionLocation.end() && (*it)->GetitemCapacity() < 1)
-            {
-                itemCapacity--;
-                (*it)->GetItem();
-            }
+            
+                const vector<CV_RIGHT*>& CVRightLocation = bfm->GetCVRightLocation();
+                const auto CV = find_if(CVRightLocation.begin(), CVRightLocation.end(),
+                    [this, &M](const CV_RIGHT* cv) { return *cv == CV_RIGHT(scanLocation + Int2(1, 0), M); });
+
+                if (CV != CVRightLocation.end() && it != JunctionLocation.end() and 
+                    (*CV)->GetitemCapacity() < 3 )
+                {
+                    itemCapacity--;
+                    (*it)->GetItem(bfm, M, (int)blockState::CONVEYORRIGHT);
+                }
+            
+                break;
+            
         }
         case (int)blockState::ROUTER:
         {
@@ -129,8 +142,9 @@ void CV_RIGHT::SendItem(BFM* bfm, ObTileMap* M)
             if (it != RouterLocation.end() && (*it)->GetitemCapacity() < 1)
             {
                 itemCapacity--;
-                (*it)->GetItem();
+                (*it)->GetItem(bfm, M);
             }
+            break;
         }
         case (int)blockState::TURRET:
         {
@@ -143,6 +157,7 @@ void CV_RIGHT::SendItem(BFM* bfm, ObTileMap* M)
                 itemCapacity--;
                 (*it)->GetItem();
             }
+            break;
         }
         default:
             break;

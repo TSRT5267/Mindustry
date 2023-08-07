@@ -15,6 +15,7 @@ private:
 	bool        hasItem;
 
 	float		sendDelay = 0;
+	float		junctionDelay = 0;
 public:
 	CV_RIGHT(Int2 location, ObTileMap* M);
 	~CV_RIGHT();

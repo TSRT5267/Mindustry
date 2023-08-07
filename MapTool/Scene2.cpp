@@ -536,8 +536,9 @@ void Scene2::Render()
 	
 	//////////////////////////
 	player->	Render();
-	ui->		Render();
 	bfm->		Render();
+	ui->		Render();
+	
 }
 
 void Scene2::ResizeScreen()

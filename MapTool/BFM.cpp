@@ -24,10 +24,10 @@ void BFM::Update(ObTileMap* M)
 	{
 		cv_right->Update(M, this);
 	}
-	for (auto& junction : junctionLocation)
+	/*for (auto& junction : junctionLocation)
 	{
 		junction->Update(M, this);
-	}
+	}*/
 	for (auto& router : routerLocation)
 	{
 		router->Update(M, this);
@@ -41,8 +41,8 @@ void BFM::Update(ObTileMap* M)
 		core->Update(M, this);
 	}
 
-	if(junctionLocation.size()>0)
-	ImGui::Text("test : %d", junctionLocation[0]->GetitemCapacity());
+	//if(junctionLocation.size()>0)
+	//ImGui::Text("test : %d", junctionLocation[0]->GetitemCapacity());
 }
 
 void BFM::Render()
