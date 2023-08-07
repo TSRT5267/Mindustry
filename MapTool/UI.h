@@ -77,7 +77,8 @@ private:
 	ObImage*		numberFont;
 
 //일시정지
-	ObRect*		pausebackground;
+	ObRect*			pausebackground;
+	ObImage*		pauseImage;
 public:
 	UI();
 	~UI();

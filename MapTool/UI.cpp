@@ -242,6 +242,16 @@ UI::UI()
 	invenbackground = new ObRect();
 	invenbackground->scale = Vector2(500, 200);
 	invenbackground->color = Color(0.01f, 0.01f, 0.01f, 0.4f);
+	copperIcon = new ObImage(L"");
+	copperIcon->scale.x = copperIcon->imageSize.x;
+	copperIcon->scale.y = copperIcon->imageSize.y;
+	numberFont = new ObImage(L"");
+
+	//일시정지
+	pausebackground = new ObRect();
+	pausebackground->scale = Vector2(500, 200);
+	pausebackground->color = Color(0.01f, 0.01f, 0.01f, 0.4f);
+	pauseImage = new ObImage(L"");
 	
 }
 
@@ -300,6 +310,14 @@ UI::~UI()
 		delete defenseBorder[i];
 		delete defenseIM[i];
 	}
+
+	//인벤토리
+	delete invenbackground;
+	delete copperIcon;
+	//일시정지
+	delete pausebackground;
+	delete pauseImage;
+
 }
 
 void UI::Init()
