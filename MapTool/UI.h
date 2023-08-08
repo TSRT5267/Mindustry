@@ -71,14 +71,15 @@ private:
 	int				selectDefense = (int)CATEGORY::NONE;
 
 //인벤토리
+	int				itemCapacity = 0;
 	ObRect*			invenbackground;
 	ObImage*		copperIcon;
 	int				copperCapacity = 0;
-	ObImage*		numberFont;
 
 //일시정지
 	ObRect*			pausebackground;
 	ObImage*		pauseImage;
+	bool			ispause = false;
 public:
 	UI();
 	~UI();

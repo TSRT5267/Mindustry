@@ -240,19 +240,22 @@ UI::UI()
 
 	//인벤토리
 	invenbackground = new ObRect();
-	invenbackground->scale = Vector2(500, 200);
+	invenbackground->scale = Vector2(250, 32);
 	invenbackground->color = Color(0.01f, 0.01f, 0.01f, 0.4f);
-	copperIcon = new ObImage(L"");
+	copperIcon = new ObImage(L"item_copper.png");
 	copperIcon->scale.x = copperIcon->imageSize.x;
 	copperIcon->scale.y = copperIcon->imageSize.y;
-	numberFont = new ObImage(L"");
+	copperIcon->SetParentRT(*invenbackground);
 
 	//일시정지
 	pausebackground = new ObRect();
-	pausebackground->scale = Vector2(500, 200);
+	pausebackground->scale = Vector2(250, 32);
 	pausebackground->color = Color(0.01f, 0.01f, 0.01f, 0.4f);
-	pauseImage = new ObImage(L"");
-	
+	pauseImage = new ObImage(L"ui/pause.png");
+	pauseImage->scale.x = pauseImage->imageSize.x;
+	pauseImage->scale.y = pauseImage->imageSize.y;
+	pauseImage->scale *= 0.5;
+	pauseImage->SetParentRT(*pausebackground);
 }
 
 UI::~UI()
@@ -357,6 +360,11 @@ void UI::Init()
 	distributionCol[5]->SetLocalPos(Vector2(-85, 60));;
 
 	defenseCol[0]->SetLocalPos(Vector2(-125, 100));
+
+	//인벤토리
+	invenbackground->SetLocalPos(Vector2(0, 330));
+	//일시정지
+	pausebackground->SetLocalPos(Vector2(0, 300));;
 }
 
 void UI::Update()
@@ -401,7 +409,7 @@ void UI::Update()
 			selectDistribution = (int)CATEGORY::NONE;
 			selectDefense = (int)CATEGORY::NONE;
 		}
-
+		
 		//선택 
 		Select(MAXCATEGORY, categoryCol, categoryBorder, selectCategory);
 		Select(MAXTURRET, turretCol, turretBorder, selectTurret);
@@ -410,7 +418,12 @@ void UI::Update()
 		Select(MAXDEFENSE, defenseCol, defenseBorder, selectDefense);
 	}
 
-	
+	//일시정지
+	if (INPUT->KeyDown(VK_SPACE))
+	{
+		if (ispause == true) ispause = false;
+		else ispause = true;
+	}
 
 	
 
@@ -486,6 +499,11 @@ void UI::Update()
 			exitButtonIM->Update();
 			exitButtontxt->Update();
 		}
+		//인벤토리
+		invenbackground->Update();
+		//일시정지
+		pausebackground->Update();
+		pauseImage->Update();
 	}
 	
 }
@@ -551,6 +569,15 @@ void UI::Render()
 		break;
 	}
 	
+	//인벤토리
+	invenbackground->Render(UIcamera);
+	//일시정지
+	if (ispause == true)
+	{
+		pausebackground->Render(UIcamera);
+		pauseImage->Render(UIcamera);
+	}
+	//메뉴
 	if (menu_Activatetion == true)
 	{
 		menuBackground->Render(UIcamera);
@@ -576,6 +603,8 @@ void UI::Render()
 	}
 	
 	
+	
+
 }
 
 void UI::Select(int C, ObRect* Col[],ObRect* Border[],int& select)
