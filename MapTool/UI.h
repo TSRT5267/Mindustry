@@ -73,6 +73,7 @@ private:
 //인벤토리
 	int				itemCapacity = 0;
 	ObRect*			invenbackground;
+	ObImage*		numberFont[4] ;
 	ObImage*		copperIcon;
 	int				copperCapacity = 0;
 

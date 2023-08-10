@@ -242,9 +242,20 @@ UI::UI()
 	invenbackground = new ObRect();
 	invenbackground->scale = Vector2(250, 32);
 	invenbackground->color = Color(0.01f, 0.01f, 0.01f, 0.4f);
+	for (int i = 0;i < 4;i++)
+	{
+		numberFont[i] = new ObImage(L"ui/numberFont.png");
+		numberFont[i]->scale.x = numberFont[i]->imageSize.x /10.0f;
+		numberFont[i]->scale.y = numberFont[i]->imageSize.y;
+		numberFont[i]->maxFrame.x = 10;
+		numberFont[i]->SetParentRT(*invenbackground);
+	}
+	
+	
 	copperIcon = new ObImage(L"item_copper.png");
 	copperIcon->scale.x = copperIcon->imageSize.x;
 	copperIcon->scale.y = copperIcon->imageSize.y;
+	copperIcon->scale *= 0.5f;
 	copperIcon->SetParentRT(*invenbackground);
 
 	//일시정지
@@ -317,6 +328,10 @@ UI::~UI()
 	//인벤토리
 	delete invenbackground;
 	delete copperIcon;
+	for (int i = 0;i < 4;i++)
+	{
+		delete numberFont[i];
+	}
 	//일시정지
 	delete pausebackground;
 	delete pauseImage;
@@ -363,6 +378,11 @@ void UI::Init()
 
 	//인벤토리
 	invenbackground->SetLocalPos(Vector2(0, 330));
+	copperIcon->SetWorldPos(Vector2(20, 0));
+	for (int i = 0;i < 4;i++)
+	{
+		numberFont[i]->SetLocalPos(Vector2(-60+20*i, 0));
+	}
 	//일시정지
 	pausebackground->SetLocalPos(Vector2(0, 300));;
 }
@@ -416,6 +436,13 @@ void UI::Update()
 		Select(MAXPRODUCTION, productionCol, productionBorder, selectProduction);
 		Select(MAXDISTRIBUTION, distributionCol, distributionBorder, selectDistribution);
 		Select(MAXDEFENSE, defenseCol, defenseBorder, selectDefense);
+	}
+
+	//인벤토리
+	for (int i = 0;i < 4;i++)
+	{
+		numberFont[i]->frame.x = copperCapacity % 10;
+		copperCapacity /= 10;
 	}
 
 	//일시정지
@@ -501,6 +528,11 @@ void UI::Update()
 		}
 		//인벤토리
 		invenbackground->Update();
+		copperIcon->Update();
+		for (int i = 0;i < 4;i++)
+		{
+			numberFont[i]->Update();	
+		}
 		//일시정지
 		pausebackground->Update();
 		pauseImage->Update();
@@ -571,6 +603,12 @@ void UI::Render()
 	
 	//인벤토리
 	invenbackground->Render(UIcamera);
+	copperIcon->Render(UIcamera);
+	for (int i = 0;i < 4;i++)
+	{
+		numberFont[i]->Render(UIcamera);
+	}
+	
 	//일시정지
 	if (ispause == true)
 	{
