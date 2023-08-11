@@ -381,7 +381,7 @@ void UI::Init()
 	copperIcon->SetWorldPos(Vector2(20, 0));
 	for (int i = 0;i < 4;i++)
 	{
-		numberFont[i]->SetLocalPos(Vector2(-60+20*i, 0));
+		numberFont[i]->SetLocalPos(Vector2(-20*i, 0));
 	}
 	//일시정지
 	pausebackground->SetLocalPos(Vector2(0, 300));;
@@ -439,11 +439,14 @@ void UI::Update()
 	}
 
 	//인벤토리
+	int CC = copperCapacity;
 	for (int i = 0;i < 4;i++)
 	{
-		numberFont[i]->frame.x = copperCapacity % 10;
-		copperCapacity /= 10;
+		numberFont[i]->frame.x = CC % 10;
+		CC /= 10;
 	}
+
+	
 
 	//일시정지
 	if (INPUT->KeyDown(VK_SPACE))
@@ -604,11 +607,12 @@ void UI::Render()
 	//인벤토리
 	invenbackground->Render(UIcamera);
 	copperIcon->Render(UIcamera);
-	for (int i = 0;i < 4;i++)
-	{
-		numberFont[i]->Render(UIcamera);
-	}
-	
+	int CC = copperCapacity;
+	if (numberFont[3]->frame.x != 0)numberFont[3]->Render(UIcamera);
+	if (numberFont[3]->frame.x != 0 or numberFont[2]->frame.x != 0)numberFont[2]->Render(UIcamera);
+	if (numberFont[3]->frame.x != 0 or numberFont[2]->frame.x != 0 
+		or numberFont[1]->frame.x != 0)numberFont[1]->Render(UIcamera);
+	numberFont[0]->Render(UIcamera);
 	//일시정지
 	if (ispause == true)
 	{
