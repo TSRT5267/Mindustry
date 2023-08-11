@@ -510,7 +510,7 @@ void Scene2::Update()
 	}
 	player->	Update(brushColor);
 	ui->		Update();
-	bfm->		Update(Tmap[(int)LAYER::BLOCK]);
+	bfm->		Update(Tmap[(int)LAYER::BLOCK],ui);
 }
 
 void Scene2::LateUpdate()

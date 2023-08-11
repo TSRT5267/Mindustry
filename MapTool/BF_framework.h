@@ -1,6 +1,7 @@
 #pragma once
 
 #include"BFM.h"
+#include"UI.h"
 #include "Scene2.h"
 #include "CV_UP.h"
 #include "CV_DOWN.h"

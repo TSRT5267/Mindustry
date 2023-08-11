@@ -100,7 +100,7 @@ public:
 	int GetSelectedProduction() { return selectProduction; };
 	int GetSelectedDistribution() { return selectDistribution; };
 	int GetSelectedDefense() { return selectDefense; };
-	
+	void SetcopperCapacity(int C) { copperCapacity = C; };
 
 };
 

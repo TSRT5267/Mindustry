@@ -11,14 +11,10 @@ private:
 	Int2		scanLocation;
 	int			scanState = -1;
 
-	ObImage* item;
-	bool        hasItem;
-
-	float		sendDelay = 0;
 public:
 	Core(Int2 location, ObTileMap* M);
 	~Core();
-	void Update(ObTileMap* M, BFM* bfm);
+	void Update(ObTileMap* M, BFM* bfm,UI* ui);
 	
 
 

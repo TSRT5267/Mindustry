@@ -24,7 +24,7 @@ private:
 
 
 public:
-	void Update(ObTileMap *M);
+	void Update(ObTileMap *M, UI *ui);
 	void Render();
 	void SaveLocation(int imidx,int state , Int2 inx, ObTileMap* M);
 	void RemoveLocation(int imidx, int state, Int2 inx, ObTileMap* M);

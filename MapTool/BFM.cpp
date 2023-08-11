@@ -2,7 +2,8 @@
 #include "BF_framework.h"
 
 
-void BFM::Update(ObTileMap* M)
+
+void BFM::Update(ObTileMap *M, UI *ui)
 {
 	for (auto& drill : drillLocation) 
 	{
@@ -38,7 +39,7 @@ void BFM::Update(ObTileMap* M)
 	}
 	for (auto& core : coreLocation)
 	{
-		core->Update(M, this);
+		core->Update(M, this,ui);
 	}
 
 	//if(junctionLocation.size()>0)
