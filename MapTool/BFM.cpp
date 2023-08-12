@@ -11,19 +11,19 @@ void BFM::Update(ObTileMap *M, UI *ui)
 	}
 	for (auto& cv_up : CVUpLocation)
 	{
-		cv_up->Update(M, this);
+		cv_up->Update(M, this,ui);
 	}
 	for (auto& cv_down : CVDownLocation)
 	{
-		cv_down->Update(M, this);
+		cv_down->Update(M, this,ui);
 	}
 	for (auto& cv_left : CVLeftLocation)
 	{
-		cv_left->Update(M, this);
+		cv_left->Update(M, this,ui);
 	}
 	for (auto& cv_right : CVRightLocation)
 	{
-		cv_right->Update(M, this);
+		cv_right->Update(M, this,ui);
 	}
 	/*for (auto& junction : junctionLocation)
 	{

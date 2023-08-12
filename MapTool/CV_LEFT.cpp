@@ -16,7 +16,7 @@ CV_LEFT::~CV_LEFT()
 	delete item;
 }
 
-void CV_LEFT::Update(ObTileMap* M, BFM* bfm)
+void CV_LEFT::Update(ObTileMap* M, BFM* bfm, UI* ui)
 {
 	if (itemCapacity > 0) hasItem = true;
 	else hasItem = false;
@@ -25,7 +25,7 @@ void CV_LEFT::Update(ObTileMap* M, BFM* bfm)
 
 	Scan(M); //주변 컨배이어를 스캔
 
-	SendItem(bfm, M); //조건에 부합하면 아이템 전송
+	SendItem(bfm, M,ui); //조건에 부합하면 아이템 전송
 }
 
 void CV_LEFT::Render()
@@ -54,7 +54,7 @@ void CV_LEFT::Scan(ObTileMap* M)
     findCV = false;
 }
 
-void CV_LEFT::SendItem(BFM* bfm, ObTileMap* M)
+void CV_LEFT::SendItem(BFM* bfm, ObTileMap* M, UI* ui)
 {
     if (itemCapacity > 0 and findCV == true and TIMER->GetTick(sendDelay, 0.25f))
     {
@@ -155,6 +155,19 @@ void CV_LEFT::SendItem(BFM* bfm, ObTileMap* M)
             {
                 itemCapacity--;
                 (*it)->GetItem();
+            }
+            break;
+        }
+        case (int)blockState::CORE:
+        {
+            const vector<Core*>& CoreLocation = bfm->GetCoreLocation();
+            const auto it = find_if(CoreLocation.begin(), CoreLocation.end(),
+                [this, &M](const Core* cv) { return *cv == Core(scanLocation, M); });
+
+            if (it != CoreLocation.end() && (*it)->GetitemCapacity() < 3)
+            {
+                itemCapacity--;
+                (*it)->GetItem(ui);
             }
             break;
         }

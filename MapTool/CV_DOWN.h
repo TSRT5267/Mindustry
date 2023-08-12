@@ -19,7 +19,7 @@ private:
 public:
 	CV_DOWN(Int2 location, ObTileMap* M);
 	~CV_DOWN();
-	void Update(ObTileMap* M, BFM* bfm);
+	void Update(ObTileMap* M, BFM* bfm, UI* ui);
 	void Render();
 
 public:
@@ -29,7 +29,7 @@ public:
 	};
 
 	void Scan(ObTileMap* M);
-	void SendItem(BFM* bfm, ObTileMap* M);
+	void SendItem(BFM* bfm, ObTileMap* M, UI* ui);
 	void GetItem() { if (itemCapacity < MaxCapacity) itemCapacity++; };
 
 	int GetitemCapacity() { return itemCapacity; };

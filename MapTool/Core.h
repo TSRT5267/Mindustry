@@ -3,7 +3,7 @@ class Core
 {
 private:
 	Int2		location;
-	int	const	MaxCapacity = 3;
+	int	const	MaxCapacity = 1000;
 	int			itemCapacity = 0;
 
 	bool		findCV = false;
@@ -24,7 +24,7 @@ public:
 		return (this->location.x == other.location.x && this->location.y == other.location.y);
 	}
 	
-	void GetItem();
+	void GetItem(UI* ui);
 
 	int GetitemCapacity() { return itemCapacity; };
 };

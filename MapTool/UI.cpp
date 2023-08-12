@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Scene2.h"
-
+#include "UI.h"
 
 
 UI::UI()

@@ -17,7 +17,8 @@ void Core::Update(ObTileMap* M, BFM* bfm,UI* ui)
     ui->SetcopperCapacity(itemCapacity);
 }
 
-void Core::GetItem()
+void Core::GetItem(UI* ui)
 {
-    if (itemCapacity < MaxCapacity) itemCapacity++;
+    ui->SetcopperCapacity(1);
+    //if (itemCapacity < MaxCapacity) itemCapacity++;
 }
