@@ -80,6 +80,6 @@ public:
 	void SetTile(int Idx, int MAX_X, int MAX_Y);
 	int GetTileState(Int2 IDX) { return Tmap[(int)LAYER::BLOCK]->GetTileState(IDX); };
 	
-	
+	void generateRandomMap(int width, int height, int seed);
 
 };

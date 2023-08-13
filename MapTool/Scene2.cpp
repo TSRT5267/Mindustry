@@ -1,4 +1,5 @@
 #include "stdafx.h"
+
 #include "Player.h"
 #include "Bullet.h"
 #include "UI.h"
@@ -35,7 +36,8 @@ Scene2::Scene2()
 	SOUND->AddSound("game.ogg", "game", true);
 	ui = new UI();
 	
-
+	int seed = static_cast<int>(time(nullptr));
+	generateRandomMap(TILESIZE, TILESIZE,seed);
 }
 
 Scene2::~Scene2()
@@ -495,6 +497,8 @@ void Scene2::Update()
 
 
 	
+
+	
 	
 
 
@@ -550,6 +554,34 @@ void Scene2::SetTile(int Idx,int MAX_X,int MAX_Y)
 	brushImgIdx = Idx;
 	Tmap[layer]->tileImages[brushImgIdx]->maxFrame.x = MAX_X;
 	Tmap[layer]->tileImages[brushImgIdx]->maxFrame.y = MAX_Y;
+}
+
+void Scene2::generateRandomMap(int width, int height,int seed)
+{
+	noise::module::Perlin perlinModule;
+
+	perlinModule.SetSeed(seed);
+	perlinModule.SetOctaveCount(1);
+	perlinModule.SetFrequency(10);
+
+
+	Int2 Idx;
+
+
+	for (int y = 0; y < height; ++y) {
+		for (int x = 0; x < width; ++x) {
+			double value = perlinModule.GetValue(static_cast<double>(x) / width, static_cast<double>(y) / height, 0.0);
+			int intValue = (value + 1.0) > 1.2 ? 1 : 0;
+
+			Idx.x = x;
+			Idx.y = y;
+			if (intValue == 1) Tmap[(int)LAYER::ENVIRONMENT]->SetTile(Idx, Int2(0, 0), (int)LAYER::ENVIRONMENT, 0, Color(0.5, 0.5, 0.5, 0.5));
+			if (intValue == 0) Tmap[(int)LAYER::ENVIRONMENT]->SetTile(Idx, Int2(0, 0), (int)LAYER::ENVIRONMENT, 0, Color(0.5, 0.5, 0.5, 0));
+			
+		}
+		
+	}
+
 }
 
 

@@ -446,7 +446,7 @@ void UI::Update()
 		CC /= 10;
 	}
 
-	
+	copperCapacity=min(copperCapacity, 1000);
 
 	//일시정지
 	if (INPUT->KeyDown(VK_SPACE))

@@ -16,6 +16,7 @@
 #include <iostream>
 #include <queue>
 #include <algorithm>
+#include <noise/noise.h>
 using namespace std;
 
 //DirectX d3d 11
