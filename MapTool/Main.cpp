@@ -10,7 +10,7 @@ Main::Main()
 	cursor = new ObImage(L"cursor.png");
 	cursor->scale.x = cursor->imageSize.x ;
 	cursor->scale.y = cursor->imageSize.y ;
-	
+	app.soundScale = 0.3f;
 	
 
 }
