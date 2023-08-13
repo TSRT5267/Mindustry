@@ -482,10 +482,12 @@ void Scene2::Update()
 			//1x1ºí·°
 			else
 			{
-				if (Tmap[layer]->GetTileColor(Idx) != BUILDED)
+				if (Tmap[layer]->GetTileColor(Idx) != BUILDED and
+					ui->GetcopperCapacity() >= buildCost)
 				{
 					Tmap[layer]->SetTile(Idx, brushFrame, brushImgIdx, brushState, brushColor);
 					bfm->SaveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
+					ui->SetcopperCapacity(-buildCost);
 				}
 					
 			}
