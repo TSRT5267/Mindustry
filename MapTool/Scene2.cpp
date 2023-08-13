@@ -74,8 +74,8 @@ void Scene2::Update()
 {
 	
 
-	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
-	ImGui::Text("pause : %d", (int)isTimeStop);
+	//ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
+	//ImGui::Text("pause : %d", (int)isTimeStop);
 
 	//카메라이동
 	Vector2 minus = player->GetWorldPivot() - CAM->position;
@@ -105,7 +105,7 @@ void Scene2::Update()
 
 	
 	//이미지 불러오기
-	for (int i = 0; i < 4; i++)
+	/*for (int i = 0; i < 4; i++)
 	{
 		string str = "Texture" + to_string(i);
 		if (GUI->FileImGui(str.c_str(), str.c_str(),
@@ -129,10 +129,10 @@ void Scene2::Update()
 		{
 			ImGui::SameLine();
 		}
-	}
+	}*/
 
 	//레이어 선택
-	{
+	/*{
 		if (ImGui::Button("ground"))
 		{
 			layer = 0;
@@ -167,7 +167,7 @@ void Scene2::Update()
 		ImGui::Text("now layer : %d", layer);
 		ImGui::SameLine();
 		ImGui::Text("lookall : %d", lookall);
-	}
+	}*/
 	
 	//팔렛트선택
 	/*if (ImGui::InputInt("ImgIdx", &brushImgIdx))

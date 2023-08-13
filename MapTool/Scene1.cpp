@@ -93,7 +93,7 @@ void Scene1::Release()
 
 void Scene1::Update()
 {
-	ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
+	//ImGui::Text("FPS : %d", (int)TIMER->GetFramePerSecond());
 	app.background = Color(0.0, 0.0, 0.0);
 
 	//플레이 버튼
