@@ -53,6 +53,7 @@ private:
 	Int2		brushFrame;
 	int			brushState;
 	Color		brushColor;
+	int			buildCost;
 
 	Int2		MAXframe = Int2{ 1,1 };
 

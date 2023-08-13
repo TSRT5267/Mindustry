@@ -74,7 +74,7 @@ private:
 	ObRect*			invenbackground;
 	ObImage*		numberFont[4] ;
 	ObImage*		copperIcon;
-	int				copperCapacity = 100;
+	int				copperCapacity = 500;
 
 //일시정지
 	ObRect*			pausebackground;
@@ -99,6 +99,8 @@ public:
 	int GetSelectedProduction() { return selectProduction; };
 	int GetSelectedDistribution() { return selectDistribution; };
 	int GetSelectedDefense() { return selectDefense; };
+
+	int  GetcopperCapacity() { return copperCapacity; };
 	void SetcopperCapacity(int C) { copperCapacity += C; };
 
 };

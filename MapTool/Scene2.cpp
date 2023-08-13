@@ -30,6 +30,7 @@ Scene2::Scene2()
 	brushFrame.y = -1;
 	brushColor = Color(0.5f, 0.5f, 0.5f, 0.0f);
 	brushState = 0;
+	buildCost = 0;
 	//////////////////////////////////////////
 	player = new Player();
 
@@ -284,6 +285,7 @@ void Scene2::Update()
 			brushFrame.y = 1;
 			brushState = (int)blockState::TURRET;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 35;
 			break;
 		default:
 			break;
@@ -299,12 +301,14 @@ void Scene2::Update()
 			brushFrame.y = 0;
 			brushState = (int)blockState::DRILL;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 12;
 			break;
 		case 1:
 			brushFrame.x = 2;
 			brushFrame.y = 0;
 			brushState = (int)blockState::CORE;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 100;
 			break;
 		default:
 			break;
@@ -320,36 +324,42 @@ void Scene2::Update()
 			brushFrame.y = 0;
 			brushState = (int)blockState::CONVEYORUP;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 1;
 			break;
 		case 1:
 			brushFrame.x = 1;
 			brushFrame.y = 0;
 			brushState = (int)blockState::CONVEYORDOWN;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 1;
 			break;
 		case 2:
 			brushFrame.x = 2;
 			brushFrame.y = 0;
 			brushState = (int)blockState::CONVEYORLEFT;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 1;
 			break;
 		case 3:
 			brushFrame.x = 3;
 			brushFrame.y = 0;
 			brushState = (int)blockState::CONVEYORRIGHT;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 1;
 			break;
 		case 4:
 			brushFrame.x = 0;
 			brushFrame.y = 1;
 			brushState = (int)blockState::JUNCTION;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 2;
 			break;
 		case 5:
 			brushFrame.x = 1;
 			brushFrame.y = 1;
 			brushState = (int)blockState::ROUTER;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 3;
 			break;
 		default:
 			break;
@@ -364,6 +374,7 @@ void Scene2::Update()
 			brushFrame.y = 1;
 			brushState = (int)blockState::WALL;
 			brushColor = Color{ 0.5,0.5,0.5,0.5 };
+			buildCost = 6;
 		}
 		break;
 	default:
@@ -425,6 +436,7 @@ void Scene2::Update()
 			if (brushImgIdx == 3)
 			{
 				int confirmB = 0;
+				int confirmOre = 0;
 				//건설
 				for (int i = 0;i < 2;i++)
 				{
@@ -434,14 +446,37 @@ void Scene2::Update()
 						range.x = Idx.x + i;
 						range.y = Idx.y - j;
 						if (Tmap[layer]->GetTileColor(range) != BUILDED) confirmB++;
+						if (Tmap[(int)LAYER::ENVIRONMENT]->GetTileColor(range) == BUILDED) confirmOre++;
+						
 					}
 				}
 				
-				if (confirmB == 4)
+				if (ui->GetcopperCapacity() >= buildCost)
 				{
-					Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
-					bfm->SaveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
+					//드릴의 경우 아래에 광물이 있어야함
+					if (brushState == (int)blockState::DRILL)
+					{
+						if (confirmB == 4 and confirmOre > 0)
+						{
+							Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+							bfm->SaveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
+							ui->SetcopperCapacity(-buildCost);
+						}
+					}
+					else
+					{
+						if (confirmB == 4)
+						{
+							Tmap[layer]->SetTile2(Idx, brushFrame, brushImgIdx, brushState, brushColor);
+							bfm->SaveLocation(brushImgIdx, brushState, Idx, Tmap[(int)LAYER::BLOCK]);
+							ui->SetcopperCapacity(-buildCost);
+						}
+					}
 				}
+				
+
+
+				
 					
 			}
 			//1x1블럭
